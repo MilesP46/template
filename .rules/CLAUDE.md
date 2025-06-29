@@ -25,7 +25,7 @@ Claude repeats this cycle until checkpoint completion:
 3. **Process Next Task**:
    - **If Claude task**: Execute immediately, following quality gates and architecture contracts
    - **If BG-task**: Create instruction files using `.instructions/templates/`, provide enhanced prompt, continue to next task
-4. **Parallel Work**: Continue processing other Claude tasks while BG-agents execute with instruction files.
+4. **Parallel Work**: Continue processing other Claude tasks while BG-agents execute with instruction files, ensuring that all parallel work status is updated appropriately **IMMEDIATELY** in `docs/projectplan.md` prior to moving forward with any other work.
 
 5. **Integration Points**: When user reports **DONE** from BG-agent:
    - Review deliverables against original instruction files

@@ -1,0 +1,15 @@
+{
+  "name": "@doctor-dok/shared-types",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shared TypeScript types for Doctor Dok monorepo",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@doctor-dok/config": "workspace:*",
+    "typescript": "^5.0.0"
+  }
+}

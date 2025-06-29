@@ -1,0 +1,131 @@
+---
+description: Generate comprehensive .env.example for both authentication modes
+globs: 
+alwaysApply: false
+---
+# BG-SCAFFOLD Agent Instructions
+
+## Task Context
+**Task ID**: T106_phase1_cp1
+**Delegated by Claude**: 2025-01-29
+
+## Mission
+Generate a comprehensive .env.example file that includes all required environment variables for both single-tenant (encrypted DB) and multi-tenant (shared DB) authentication modes. This configuration template will guide developers in setting up their development environments correctly.
+
+## Required Resources (Request These First)
+### Rules
+- `mode-scaffolding.mdc` (primary workflow)
+- `.rules/Claude.md` (foreman workflow understanding)
+- `.rules/always/document-everything.mdc` (documentation standards)
+
+### Documentation Context
+- `docs/project-specification.md` (authentication requirements)
+- Both template codebases for existing environment variables
+- T101 architecture analysis (if available)
+
+## Claude's Task Checklist
+- [ ] Analyze Doctor-Dok backend for all environment variables
+- [ ] Analyze Rasket frontend for any environment needs
+- [ ] Document variables for single-tenant mode (encrypted DB)
+- [ ] Document variables for multi-tenant mode (shared DB)
+- [ ] Include AI service configuration variables
+- [ ] Add database configuration options
+- [ ] Include development vs production settings
+- [ ] Add security-related variables (JWT, encryption keys)
+- [ ] Create clear documentation for each variable
+- [ ] Generate example values that work out-of-the-box
+
+## Claude's Specific Expectations
+1. **Environment Variable Categories**:
+   ```
+   # Application
+   NODE_ENV=
+   PORT=
+   NEXT_PUBLIC_APP_URL=
+
+   # Authentication Mode
+   AUTH_MODE= # 'single-tenant' or 'multi-tenant'
+   
+   # Database
+   DATABASE_URL=
+   ENCRYPTION_ENABLED=
+   
+   # JWT & Security
+   JWT_SECRET=
+   REFRESH_SECRET=
+   MASTER_KEY_REQUIRED=
+   
+   # AI Services (Optional)
+   OPENAI_API_KEY=
+   GOOGLE_AI_API_KEY=
+   OLLAMA_BASE_URL=
+   
+   # Frontend Configuration
+   VITE_API_URL=
+   VITE_PUBLIC_URL=
+   ```
+
+2. **Mode-Specific Sections**:
+   - Clear sections for single-tenant specific variables
+   - Clear sections for multi-tenant specific variables
+   - Common variables used by both modes
+   - Optional features configuration
+
+3. **Documentation Requirements**:
+   - Each variable must have a comment explaining its purpose
+   - Example values that work for local development
+   - Notes on production considerations
+   - Security warnings for sensitive values
+
+## Task-Specific Success Criteria
+- All required variables from both templates included
+- Clear distinction between modes and their requirements
+- Sensible defaults for development environment
+- Security best practices documented
+- No hardcoded secrets or production values
+- Easy to understand and modify
+- Supports both frontend and backend needs
+- AI features properly configured as optional
+
+## Context Claude Provides
+**Project State**: Basic monorepo structure being set up
+**Dependencies**: Understanding of both template configurations
+**Constraints**: 
+- Must support easy switching between auth modes
+- Cannot include actual secrets or keys
+- Must work with SQLite for development
+- Should guide proper production setup
+**Integration Points**: Database, authentication, AI services, frontend-backend communication
+
+## Files Claude Expects You to Touch
+- Create: `.env.example` (root level)
+- Create: `apps/frontend/.env.example` (if frontend needs separate env)
+- Create: `apps/backend/.env.example` (if backend needs separate env)
+- Analyze: `templates/backend/doctor-dok/.env.example` (existing)
+- Analyze: Any environment configuration in Rasket template
+- Create: `reports/phase1_cp1/T106_phase1_cp1_SCAFFOLD_report.md`
+
+## GitHub Copilot CLI Integration
+You may use Copilot CLI to:
+- Generate comprehensive comments for each variable
+- Create example values based on common patterns
+- Suggest additional variables based on the tech stack
+
+Example: `gh copilot suggest "environment variables needed for JWT authentication in Next.js"`
+
+## Documentation Workflow
+Include in the .env.example file itself:
+- Header with setup instructions
+- Sections clearly marked
+- Security warnings prominently displayed
+- Links to relevant documentation
+
+## Review Criteria
+Claude will evaluate your work against:
+1. Completeness - all necessary variables included
+2. Clarity - well-documented and organized
+3. Security - no leaked secrets, good practices promoted
+4. Flexibility - supports both auth modes seamlessly
+5. Developer experience - easy to understand and use
+6. Production readiness - guides toward secure deployment
+7. Integration coverage - all services properly configured

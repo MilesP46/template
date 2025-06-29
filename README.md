@@ -1,142 +1,228 @@
-# Project Template
+# Combined Template - Rasket + Doctor-Dok
 
-**A complete development workflow template using Claude as foreman with background agents.**
+**A unified SaaS template combining Rasket's modern React UI with Doctor-Dok's secure backend authentication and AI capabilities.**
 
 ## 🚀 Quick Start
 
-### Option 1: Use GitHub Template (Recommended)
+### Prerequisites
+- Node.js >= 20.0.0
+- npm >= 10.0.0
+- Git
 
-1. Click "Use this template" button above
-2. Create your new repository
-3. Clone your new repository locally
-4. Run initialization script:
-   - **Windows**: `.\.template\scripts\init-project.ps1`
-   - **Unix/Mac**: `./.template/scripts/init-project.sh`
-
-### Option 2: Manual Clone
+### Installation
 
 ```bash
-# Replace with actual repository URL when published
-git clone <this-template-repository-url> my-new-project
-cd my-new-project
-# Windows (PowerShell):
-.\.template\scripts\init-project.ps1
-# Unix/Mac:
-./.template/scripts/init-project.sh
+# Clone the repository
+git clone <repository-url> my-saas-app
+cd my-saas-app
+
+# Install dependencies
+npm install
+
+# Copy environment configuration
+cp .env.example .env
+
+# Start development servers (frontend + backend)
+npm run dev
 ```
 
-## 🔧 What This Template Provides
+The application will be available at:
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:3000
 
-### **Claude Foreman System**
+## ✨ Features
 
-- Complete rules and workflow for Claude CLI as project foreman
-- Strategic delegation and parallel execution capabilities
-- Quality gates and traceability throughout development
+### **Modern UI Framework**
+- React 18 with TypeScript
+- Bootstrap 5 components from Rasket template
+- Responsive design with mobile-first approach
+- Rich component library (tables, charts, forms, etc.)
+- Dark/light theme support
 
-### **Background Agent System**
+### **Secure Authentication**
+- JWT-based authentication from Doctor-Dok
+- Two authentication modes:
+  - **Single-tenant**: Encrypted SQLite database per user
+  - **Multi-tenant**: Shared database with user isolation
+- Master key encryption for sensitive data
+- Secure session management
 
-- Dynamic instruction templates for background agents
-- Specialized modes: Design, Scaffold, Implementation, Validation, Release, Verification
-- GitHub Copilot CLI integration guidance
+### **Backend Architecture**
+- Next.js 14 API routes
+- SQLite with Drizzle ORM
+- Type-safe database queries
+- Built-in audit logging
+- Scalable monorepo structure
 
-### **Discovery-to-Design Workflow**
+### **AI Integration** (Optional)
+- OpenAI API support
+- Google AI integration
+- Ollama for local AI
+- Document analysis capabilities
+- Configurable AI features
 
-- Pre-Claude discovery process for 90% confidence requirements
-- Separation of WHAT (requirements) from HOW (implementation)
-- Comprehensive project specification workflow
+### **Developer Experience**
+- Hot reload for both frontend and backend
+- TypeScript throughout
+- ESLint + Prettier configuration
+- Workspace-based monorepo
+- Comprehensive documentation
 
-### **Quality & Documentation System**
-
-- Task-ID based traceability
-- Documentation staging and organization workflow
-- Architecture contracts and engineering standards
-
-## 📋 Post-Initialization Workflow
-
-After running the initialization script:
-
-### 1. **Discovery Phase**
-
-Use cursor discovery agent with the provided template to create comprehensive project specification:
-
-- Reference: `.prompts/cursor_discovery_prompt.md` (template for discovery agent)
-- Output: `docs/project-specification.md` (comprehensive requirements)
-
-### 2. **Claude Development Phase**
-
-Start Claude CLI with the enhanced prompts:
-
-- Claude reads project specification and creates `projectplan.md`
-- Claude delegates appropriate work to background agents with detailed instructions
-- Claude continues strategic foreground work
-
-### 3. **Parallel Execution**
-
-- Claude handles strategic work and integration
-- Background agents handle detailed implementation using instruction files
-- Documentation is staged and organized automatically
-
-## 🏗️ Project Structure (After Initialization)
+## 🏗️ Project Structure
 
 ```
-your-project/
-├── README.md                 # Your project README (updated by init script)
-├── .rules/                   # Claude and agent rules
-│   ├── CLAUDE.md            # Foreman rules for Claude
-│   ├── cursorrules.mdc      # Global project rules (updated with your info)
-│   ├── always/              # Always-applied rules
-│   └── requested/           # On-demand rules
-├── .instructions/            # Background agent instruction templates
-│   ├── templates/           # Dynamic instruction frameworks
-│   └── README.md           # Instruction workflow guide
-├── .prompts/                # Discovery and Claude prompts
-│   ├── cursor_discovery_prompt.md
-│   ├── claude_cli_prompts.md
-│   └── .cursor-agent-modes/
-├── docs/                    # Project documentation
-│   └── architecture/        # Architecture docs (created as needed)
-├── scripts/                 # Development utilities
-│   ├── idgen.py            # Task-ID generator
-│   ├── install-hooks.sh    # Git hooks installer
-│   ├── copilot.sh          # Copilot utilities
-│   └── hooks/              # Git hooks
-├── src/                     # Your source code (created as needed)
-├── tests/                   # Your tests (created as needed)
-└── reports/                 # Agent reports (created as needed)
+combined/
+├── apps/
+│   ├── frontend/          # React application (Rasket-based)
+│   └── backend/           # Next.js API (Doctor-Dok-based)
+├── packages/
+│   ├── shared-types/      # Shared TypeScript interfaces
+│   ├── shared-utils/      # Common utility functions
+│   └── config/            # Shared configuration files
+├── scripts/               # Development and build scripts
+├── docs/                  # Project documentation
+├── .instructions/         # Claude agent instructions
+├── .rules/                # Development rules and workflows
+├── package.json           # Monorepo workspace configuration
+├── tsconfig.json          # TypeScript configuration
+├── .eslintrc.json         # ESLint configuration
+├── .prettierrc.json       # Prettier configuration
+└── .env.example           # Environment variables template
 ```
 
-## ✨ Key Features
+## 🔧 Configuration
 
-- **Language Agnostic**: Works with any technology stack
-- **90% Confidence Principle**: Systematic requirement gathering before implementation
-- **Parallel Efficiency**: Background agents handle detailed work while Claude focuses on strategy
-- **Extended Timeline Support**: Designed for projects spanning days, weeks, or months
-- **Quality Assurance**: Built-in verification and documentation workflows
+### Environment Variables
 
-## 🎯 Benefits
+Copy `.env.example` to `.env` and configure:
 
-- **Faster Development**: Parallel execution reduces overall timeline
-- **Higher Quality**: Systematic quality gates and verification
-- **Better Documentation**: Automated documentation generation and organization
-- **Strategic Focus**: Claude handles high-level decisions while agents handle detailed work
-- **Consistent Process**: Template ensures repeatable, high-quality development workflow
+```bash
+# Authentication Mode
+AUTH_MODE=single-tenant  # or 'multi-tenant'
 
-## 📚 Learn More
+# Database
+DATABASE_URL=./data/app.db
+ENCRYPTION_ENABLED=true
 
-**Before initialization** (while .template/ exists):
+# JWT Configuration
+JWT_SECRET=your-secret-key
+REFRESH_SECRET=your-refresh-secret
 
-- `.template/docs/template-usage.md` - Detailed usage guide
-- `.template/README.md` - Template overview
+# AI Services (Optional)
+OPENAI_API_KEY=your-openai-key
+GOOGLE_AI_API_KEY=your-google-key
+```
 
-**After initialization** (in your project):
+### Authentication Modes
 
-- `.rules/CLAUDE.md` - Complete Claude foreman rules
-- `.instructions/README.md` - Background agent workflow guide
+#### Single-Tenant Mode
+- Each user gets their own encrypted SQLite database
+- Master key required for encryption
+- Complete data isolation
+- Best for sensitive data applications
+
+#### Multi-Tenant Mode
+- Shared database with row-level security
+- More efficient resource usage
+- Easier to manage and backup
+- Best for typical SaaS applications
+
+## 📦 Available Scripts
+
+### Development
+```bash
+npm run dev              # Start both frontend and backend
+npm run frontend:dev    # Start frontend only
+npm run backend:dev     # Start backend only
+```
+
+### Building
+```bash
+npm run build           # Build all packages and apps
+npm run frontend:build  # Build frontend only
+npm run backend:build   # Build backend only
+```
+
+### Database
+```bash
+npm run db:generate     # Generate database migrations
+npm run db:migrate      # Run database migrations
+```
+
+### Code Quality
+```bash
+npm run lint            # Run ESLint
+npm run format          # Format code with Prettier
+npm run type-check      # Run TypeScript checks
+```
+
+## 🚧 Development Workflow
+
+### Phase 1: Architecture & Setup ✅
+- Monorepo structure configuration
+- Development environment setup
+- Shared configuration files
+- Base documentation
+
+### Phase 2: Authentication Integration (In Progress)
+- JWT authentication implementation
+- Database mode configuration
+- User management system
+- Session handling
+
+### Phase 3: UI Integration (Upcoming)
+- Rasket component migration
+- Theme system setup
+- Responsive layouts
+- Form validation
+
+### Phase 4: API Development (Upcoming)
+- RESTful API design
+- TypeScript interfaces
+- Error handling
+- Data validation
+
+## 📚 Documentation
+
+- [Project Specification](docs/project-specification.md) - Detailed requirements
+- [Architecture Guide](docs/architecture/README.md) - System design (coming soon)
+- [API Documentation](docs/api/README.md) - Endpoint reference (coming soon)
+- [Component Library](docs/components/README.md) - UI components (coming soon)
+
+## 🛠️ Technology Stack
+
+### Frontend
+- **React 18** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **Bootstrap 5** - UI framework
+- **React Router** - Navigation
+- **React Hook Form** - Form handling
+- **Axios** - HTTP client
+
+### Backend
+- **Next.js 14** - Full-stack framework
+- **SQLite** - Database
+- **Drizzle ORM** - Type-safe ORM
+- **JWT** - Authentication
+- **Argon2** - Password hashing
+- **Zod** - Schema validation
+
+### Development
+- **npm Workspaces** - Monorepo management
+- **ESLint** - Linting
+- **Prettier** - Code formatting
+- **Husky** - Git hooks
+- **Concurrently** - Parallel commands
 
 ## 🤝 Contributing
 
-This template is designed to be customized for your organization's needs. Fork and modify as needed!
+Contributions are welcome! Please read our contributing guidelines before submitting PRs.
 
 ## 📄 License
 
 MIT License - see LICENSE file for details
+
+---
+
+**Note**: This template is actively being developed. Check back for updates and new features!

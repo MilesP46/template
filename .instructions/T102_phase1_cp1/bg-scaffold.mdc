@@ -1,0 +1,121 @@
+---
+description: Set up monorepo structure with shared configuration for Combined Template Project
+globs: 
+alwaysApply: false
+---
+# BG-SCAFFOLD Agent Instructions
+
+## Task Context
+**Task ID**: T102_phase1_cp1
+**Delegated by Claude**: 2025-01-29
+
+## Mission
+Set up a monorepo structure that consolidates the Rasket frontend and Doctor-Dok backend templates with shared configuration. This scaffolding will establish the foundation for all subsequent development work.
+
+## Required Resources (Request These First)
+### Rules
+- `mode-scaffolding.mdc` (primary workflow)
+- `.rules/Claude.md` (foreman workflow understanding)
+- `.rules/always/document-everything.mdc` (documentation standards)
+
+### Documentation Context
+- `docs/project-specification.md` (project requirements)
+- T101 architecture analysis (if available from BG-DESIGN agent)
+- **Architecture baseline**: Integration strategy from T101 (if completed)
+
+## Claude's Task Checklist
+- [ ] Create monorepo root structure with appropriate directories
+- [ ] Set up workspace configuration for npm/yarn workspaces
+- [ ] Create shared configuration directory structure
+- [ ] Scaffold frontend application directory (based on Rasket)
+- [ ] Scaffold backend application directory (based on Doctor-Dok)
+- [ ] Create shared utilities/types directory
+- [ ] Set up common development scripts directory
+- [ ] Generate placeholder files for cross-package dependencies
+- [ ] Create development environment configuration structure
+- [ ] Document the monorepo organization
+
+## Claude's Specific Expectations
+1. **Directory Structure**: Create the following monorepo structure:
+   ```
+   combined/
+   ├── apps/
+   │   ├── frontend/    # Rasket-based React app
+   │   └── backend/     # Doctor-Dok-based Next.js API
+   ├── packages/
+   │   ├── shared-types/     # Shared TypeScript types
+   │   ├── shared-utils/     # Common utilities
+   │   └── config/          # Shared configurations
+   ├── scripts/             # Development scripts
+   ├── docs/               # Project documentation
+   └── [root config files]
+   ```
+
+2. **Workspace Configuration**: Set up for proper monorepo management:
+   - Workspace definition for package manager
+   - Shared dependency management
+   - Cross-package linking setup
+   - Build order configuration
+
+3. **Shared Configuration Structure**:
+   - TypeScript base configuration
+   - ESLint/Prettier base rules
+   - Common environment variables
+   - Shared build configurations
+
+## Task-Specific Success Criteria
+- Clean separation between apps and shared packages
+- Proper workspace configuration enabling cross-package imports
+- All directories have clear purpose and README files
+- Development scripts for common tasks (build, test, dev)
+- Support for both authentication modes in structure
+- Clear boundaries between frontend and backend code
+- Extensible structure for future additions
+
+## Context Claude Provides
+**Project State**: T101 architecture analysis may be complete
+**Dependencies**: Architecture decisions from T101 (if available)
+**Constraints**: 
+- Must support both single-tenant and multi-tenant modes
+- Keep Rasket and Doctor-Dok code initially separate for migration
+- Enable gradual integration without breaking existing functionality
+- Support single command development startup
+**Integration Points**: Shared types, utilities, and configurations
+
+## Files Claude Expects You to Touch
+- Create: Complete monorepo directory structure
+- Create: `package.json` (root - workspace configuration only)
+- Create: `apps/frontend/README.md`
+- Create: `apps/backend/README.md`
+- Create: `packages/shared-types/README.md`
+- Create: `packages/shared-utils/README.md`
+- Create: `packages/config/README.md`
+- Create: `scripts/README.md`
+- Create: `.gitignore` (monorepo-aware)
+- Create: `reports/phase1_cp1/T102_phase1_cp1_SCAFFOLD_report.md`
+
+## GitHub Copilot CLI Integration
+For repetitive directory and file creation, you may use Copilot CLI to:
+- Generate multiple similar README files
+- Create boilerplate package.json files for each package
+- Generate common configuration file templates
+
+Example: `gh copilot suggest "create package.json for a TypeScript package in a monorepo"`
+
+## Documentation Workflow
+**Staging Location**: Document your work in the report file
+**Final Documentation**: 
+- Monorepo structure documentation in main README
+- Individual package READMEs explaining purpose
+- Scripts documentation for developers
+
+## Review Criteria
+Claude will evaluate your work against:
+1. Logical and scalable monorepo organization
+2. Clear separation of concerns
+3. Proper workspace configuration
+4. Support for parallel development
+5. Easy navigation and understanding
+6. Flexibility for future growth
+7. Development experience optimization
+8. Alignment with T101 architecture (if available)
