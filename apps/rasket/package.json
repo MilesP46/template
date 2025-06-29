@@ -1,0 +1,28 @@
+{
+  "name": "@doctor-dok/rasket",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Rasket admin dashboard application",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .ts,.tsx",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@doctor-dok/shared-types": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.0.0"
+  },
+  "devDependencies": {
+    "@doctor-dok/config": "workspace:*",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0"
+  }
+}

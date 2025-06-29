@@ -1,0 +1,12 @@
+{
+  "extends": "@doctor-dok/config/tsconfig.react.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@doctor-dok/shared-types": ["../../packages/shared-types/src"]
+    }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

@@ -1,0 +1,16 @@
+{
+  "extends": "./packages/config/tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@doctor-dok/config": ["./packages/config"],
+      "@doctor-dok/shared-types": ["./packages/shared-types/src"]
+    }
+  },
+  "references": [
+    { "path": "./packages/config" },
+    { "path": "./packages/shared-types" },
+    { "path": "./apps/doctor-dok" },
+    { "path": "./apps/rasket" }
+  ]
+}
