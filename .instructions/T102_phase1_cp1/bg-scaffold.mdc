@@ -1,0 +1,106 @@
+# BG-SCAFFOLD Agent Instructions
+
+## Task Context
+**Task ID**: T102_phase1_cp1
+**Delegated by Claude**: 2025-01-29
+
+## Mission
+Set up a robust monorepo structure that integrates the Rasket frontend template with the Doctor-Dok backend, establishing shared configuration and workspace management that supports both single-tenant and multi-tenant authentication modes.
+
+## Required Resources (Request These First)
+### Rules
+- `mode-scaffolding.mdc` (primary workflow)
+- `CLAUDE.md` (foreman workflow understanding)
+
+### Documentation Context
+- `docs/project-specification.md` (project requirements and constraints)
+- `docs/projectplan.md` (overall project structure and goals)
+- **Architecture specs**: Review existing structure in `templates/backend/doctor-dok/` and `templates/frontend/rasket-template/`
+- **Domain requirements**: Analyze package dependencies and configuration needs from both templates
+
+## Claude's Task Checklist
+- [ ] Create workspace-based monorepo structure with proper package organization
+- [ ] Set up shared packages directory for common code/types/configs
+- [ ] Configure Turbo/Lerna/npm workspaces for dependency management
+- [ ] Create shared TypeScript configuration package
+- [ ] Set up shared ESLint/Prettier configuration package  
+- [ ] Establish shared build tooling configuration
+- [ ] Generate stub documentation for monorepo architecture
+- [ ] Document package dependency flow and workspace relationships
+- [ ] Ensure hot-reload works across workspace packages
+- [ ] Ready for Claude review and approval
+
+## Claude's Specific Expectations
+1. **Workspace Structure**: Create a clean separation between apps (rasket, doctor-dok) and shared packages
+2. **Configuration Sharing**: All common configs should live in dedicated packages that can be imported
+3. **Type Safety**: Ensure TypeScript paths and references work seamlessly across packages
+4. **Developer Experience**: Hot reload, intellisense, and build caching must work out of the box
+5. **Flexibility**: Structure must support both auth modes without requiring reorganization
+
+## Task-Specific Success Criteria
+1. **Deliverables**:
+   - Root `package.json` with workspace configuration
+   - `turbo.json` for build orchestration  
+   - Shared packages: `@combined/config`, `@combined/shared-types`
+   - Working cross-package imports with TypeScript support
+   - Documentation in `reports/phase1_cp1/T102_SCAFFOLD_staging/monorepo-structure.md`
+
+2. **Quality Gates**:
+   - `npm install` from root installs all dependencies
+   - `npm run dev` starts both frontend and backend concurrently
+   - TypeScript compilation works across packages
+   - Shared types are accessible from both apps
+   - No circular dependencies between packages
+
+## Context Claude Provides
+**Project State**: Fresh integration project combining two mature templates
+**Dependencies**: Rasket uses Vite/React/Bootstrap5, Doctor-Dok uses Next.js/React/shadcn
+**Constraints**: Must preserve ability to run each app independently while sharing common code
+**Integration Points**: Shared auth logic, API types, configuration, and utility functions
+
+## Files Claude Expects You to Touch
+- `/package.json` (root workspace config)
+- `/turbo.json` (build orchestration)
+- `/apps/` directory restructuring
+- `/packages/config/` (new shared config package)
+- `/packages/shared-types/` (new shared types package)
+- Update `apps/rasket/package.json` and `apps/doctor-dok/package.json`
+- Update TypeScript configs to use shared base
+- Create `/docs/architecture/monorepo-structure.md`
+
+## GitHub Copilot CLI Integration
+Use Copilot CLI for:
+- Generating boilerplate package.json files for shared packages
+- Creating TypeScript configuration extensions
+- Generating workspace scripts for common tasks
+- Creating initial shared type definitions based on existing code
+
+Example commands:
+```bash
+# Generate shared config package structure
+copilot-cli scaffold typescript-package @combined/config
+
+# Create workspace management scripts
+copilot-cli generate workspace-scripts --turbo
+```
+
+## Documentation Workflow
+**Staging Location**: `reports/phase1_cp1/T102_SCAFFOLD_staging/`
+**Final Location**: `docs/architecture/monorepo-structure.md`
+
+Generate the following documentation:
+1. Monorepo architecture diagram (Mermaid)
+2. Package dependency graph
+3. Build and development workflow guide
+4. Troubleshooting common workspace issues
+
+## Review Criteria
+Claude will evaluate your work against:
+1. Clean, logical package organization
+2. Working hot reload across packages
+3. TypeScript paths resolution without errors
+4. Shared configurations properly inherited
+5. Build times optimized with proper caching
+6. Clear documentation of workspace relationships
+7. No regression in existing functionality
+8. Developer experience improvements documented
