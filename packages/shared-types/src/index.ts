@@ -5,7 +5,9 @@ export interface AuthCredentials {
   password?: string
 }
 
-export interface AuthResult {
+// Note: AuthResult is now exported from auth module with enhanced structure
+// Keeping this for backward compatibility, will be deprecated
+export interface LegacyAuthResult {
   token: string
   expiresIn: number
   permissions: string[]
@@ -112,3 +114,6 @@ export interface AppConfig {
 // export * from './database'
 // export * from './records'
 // export * from './audit'
+
+// Export new auth module
+export * from './auth';
