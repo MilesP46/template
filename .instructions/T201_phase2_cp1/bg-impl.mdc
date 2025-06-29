@@ -1,0 +1,121 @@
+---
+description: Create auth mode abstraction layer with environment variable switching
+globs: 
+alwaysApply: false
+---
+# BG-IMPL Agent Instructions
+
+## Task Context
+**Task ID**: T201_phase2_cp1
+**Delegated by Claude**: 2025-01-29
+
+## Mission
+Create an authentication mode abstraction layer that allows seamless switching between single-tenant (encrypted DB per user) and multi-tenant (shared DB with user isolation) modes via environment variable configuration. This abstraction will serve as the foundation for all authentication operations in the combined template.
+
+## Required Resources (Request These First)
+### Rules
+- `mode-implementation-tdd.mdc` (primary workflow)
+- `.rules/Claude.md` (foreman workflow understanding)
+- `.rules/always/document-everything.mdc` (documentation standards)
+- `.rules/architecture.mdc` (architecture principles)
+
+### Documentation Context
+- `docs/project-specification.md` (authentication requirements)
+- `/reports/phase1_cp1/T101_phase1_cp1_DESIGN_staging/integration-strategy.md` (integration strategy)
+- `/docs/architecture/domains/auth.md` (authentication domain architecture)
+- `.env.example` (environment variable configuration)
+
+## Claude's Task Checklist
+- [ ] Create auth mode interface defining common operations
+- [ ] Implement factory pattern for auth mode selection
+- [ ] Create base authentication service class
+- [ ] Define TypeScript interfaces for auth operations
+- [ ] Implement environment variable parsing and validation
+- [ ] Create auth configuration service
+- [ ] Add mode-specific strategy interfaces
+- [ ] Implement proper error handling for invalid modes
+- [ ] Write comprehensive unit tests using TDD
+- [ ] Document the abstraction layer architecture
+
+## Claude's Specific Expectations
+1. **Auth Mode Interface** (`packages/shared-types/src/auth/auth-mode.interface.ts`):
+   ```typescript
+   interface IAuthMode {
+     initialize(): Promise<void>;
+     createUser(userData: CreateUserDto): Promise<User>;
+     authenticateUser(credentials: LoginDto): Promise<AuthResult>;
+     refreshToken(refreshToken: string): Promise<TokenPair>;
+     logout(userId: string): Promise<void>;
+     deleteUser(userId: string): Promise<void>;
+     // Mode-specific operations
+     requiresMasterKey(): boolean;
+     supportsMultipleUsers(): boolean;
+   }
+   ```
+
+2. **Factory Implementation** (`apps/backend/src/auth/auth-mode.factory.ts`):
+   - Parse AUTH_MODE environment variable
+   - Return appropriate auth mode implementation
+   - Validate configuration completeness
+   - Provide clear error messages for misconfiguration
+
+3. **Configuration Service** (`apps/backend/src/auth/auth.config.ts`):
+   - Centralized auth configuration management
+   - Environment variable validation
+   - Default values for development
+   - Type-safe configuration object
+
+## Task-Specific Success Criteria
+- Clean abstraction hiding mode-specific implementation details
+- Type-safe interfaces throughout
+- 100% test coverage for critical paths
+- Clear error messages for configuration issues
+- Supports easy addition of new auth modes in future
+- Performance overhead < 5ms for mode selection
+- Follows SOLID principles
+
+## Context Claude Provides
+**Project State**: Phase 1 complete, monorepo structure established
+**Dependencies**: Environment configuration from T106
+**Constraints**: 
+- Must support both single-tenant and multi-tenant modes
+- Cannot break existing Doctor-Dok auth logic
+- Must integrate cleanly with React frontend
+- Environment variable driven configuration
+**Integration Points**: Will be consumed by T202-T207 tasks
+
+## Files Claude Expects You to Touch
+- Create: `packages/shared-types/src/auth/` directory structure
+- Create: `packages/shared-types/src/auth/auth-mode.interface.ts`
+- Create: `packages/shared-types/src/auth/auth.types.ts`
+- Create: `apps/backend/src/auth/auth-mode.factory.ts`
+- Create: `apps/backend/src/auth/auth.config.ts`
+- Create: `apps/backend/src/auth/strategies/base-auth.strategy.ts`
+- Create: Test files for all implementations
+- Update: `packages/shared-types/package.json` (if needed)
+- Create: `reports/phase2_cp1/T201_phase2_cp1_IMPL_report.md`
+
+## GitHub Copilot CLI Integration
+Recommended for:
+- Generating comprehensive test cases
+- Creating interface documentation
+- Implementing factory pattern boilerplate
+- Generating error handling code
+
+Example: `gh copilot suggest "factory pattern implementation for strategy selection in TypeScript"`
+
+## Documentation Workflow
+**Inline Documentation**: JSDoc comments for all public interfaces
+**Architecture Documentation**: Update `/docs/architecture/domains/auth.md` with abstraction layer details
+**Usage Examples**: Include in report showing mode switching
+
+## Review Criteria
+Claude will evaluate your work against:
+1. Clean abstraction without leaky mode-specific details
+2. Comprehensive test coverage (aim for 100%)
+3. Type safety throughout implementation
+4. Clear documentation and examples
+5. Performance considerations addressed
+6. Error handling completeness
+7. Extensibility for future auth modes
+8. Integration readiness for subsequent tasks
