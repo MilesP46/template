@@ -1,0 +1,106 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# BG-RELEASE Agent Instructions
+
+## Task Context
+**Task ID**: {TASK_ID}
+**Delegated by Claude**: {TIMESTAMP}
+
+## Mission
+{CLAUDE_SPECIFIC_MISSION_DESCRIPTION}
+
+## Required Resources (Request These First)
+### Rules
+- `mode-integration-release.mdc` (primary workflow)
+- {ADDITIONAL_RULES_CLAUDE_DETERMINES}
+
+### Documentation Context
+- {CLAUDE_SPECIFIES_RELEVANT_DOCS}
+- **Release baseline**: {CURRENT_PROJECT_STATE_DOCS}
+- **Integration requirements**: {INTEGRATION_AND_DEPLOYMENT_DOCS}
+
+## Claude's Task Checklist
+{CLAUDE_CREATES_DYNAMIC_CHECKLIST}
+- [ ] {SPECIFIC_RELEASE_TASK_1}
+- [ ] {SPECIFIC_RELEASE_TASK_2}
+- [ ] {SPECIFIC_RELEASE_TASK_3}
+- [ ] Run integration tests and CI/CD checks
+- [ ] Generate release documentation
+- [ ] Create deployment artifacts
+- [ ] Update project metadata and versioning
+- [ ] Ready for Claude review and approval
+
+## Claude's Specific Expectations
+{CLAUDE_FILLS_THIS_BASED_ON_ACTUAL_TASK}
+
+## Task-Specific Success Criteria
+{CLAUDE_DEFINES_SPECIFIC_DELIVERABLES_AND_QUALITY_GATES}
+
+## Context Claude Provides
+**Project State**: {CURRENT_PROJECT_STATE}
+**Dependencies**: {TASK_DEPENDENCIES}
+**Constraints**: {SPECIFIC_CONSTRAINTS}
+**Integration Points**: {HOW_THIS_CONNECTS_TO_OTHER_WORK}
+
+## Files Claude Expects You to Touch
+{CLAUDE_LISTS_SPECIFIC_FILES_OR_AREAS}
+
+## GitHub Copilot CLI Integration
+{COPILOT_INTEGRATION_INSTRUCTIONS}
+<!-- Claude fills this section if Copilot CLI should be used:
+- Release script generation
+- Deployment automation
+- Documentation generation
+- Version management assistance
+-->
+
+## Documentation Workflow
+**Staging Location**: `reports/phase{X}_cp{Y}/{TASK_ID}_RELEASE_staging/`
+**Final Location**: {CLAUDE_SPECIFIES_FINAL_DOC_LOCATIONS}
+
+Generate release documentation, changelogs, and deployment guides in staging area. After Claude approval, documentation will be nested in appropriate project areas.
+
+## Review Criteria
+Claude will evaluate your work against:
+{CLAUDE_SPECIFIC_REVIEW_CRITERIA}
+
+## Release Process
+1. **Integration Testing**:
+   - Run smoke tests and integration test suite
+   - Perform size audit and license scanning
+   - Ensure CI/CD pipeline is green
+
+2. **Documentation Finalization**:
+   - Create comprehensive integration review document
+   - Update CHANGELOG with all changes
+   - Verify README and documentation accuracy
+   - Update version badges and metadata
+
+3. **Release Preparation**:
+   - Tag release with proper versioning
+   - Prepare deployment artifacts
+   - Create release notes and documentation
+
+## Standard Deliverables
+1. **Integration Review**: `integration_review.mdc` document
+2. **CHANGELOG**: Updated with all changes and improvements
+3. **Release Artifacts**: Tagged release with deployment materials
+4. **Updated Documentation**: Final documentation state
+
+## Context References
+- See `context-refs.md` in this directory for:
+  - Release standards and procedures
+  - Version management requirements
+  - Deployment specifications
+  - Documentation standards
+
+## Notes
+{ADDITIONAL_CONTEXT_OR_CONSTRAINTS}
+
+
+
+
+

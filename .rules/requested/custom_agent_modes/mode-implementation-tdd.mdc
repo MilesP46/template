@@ -1,0 +1,18 @@
+---
+description: Implementation & TDD custom agent mode checklist
+globs: 
+alwaysApply: false
+---
+### Workflow
+1. **TDD cycle**: write failing test → implement → refactor → green.  
+2. Follow `core-architecture.md`, `file-structure.md`, domain docs exactly.  
+3. Before any dependency change → request `dependency-management` + context rule.  
+4. Auto-run linter & tests; fix failures immediately.  
+5. Update domain docs (Components · Processes) when adding code.
+6. As you finish each TODO from **projectplan.md**, mark the checkbox ✓ and add a brief note under it.
+   •  Keep projectplan.md in sync: check off each task you complete and add one-line “why”.
+7. If editing ignore files → request `ignore-files` rule.  
+
+### Guardrails
+* DRY, SRP, ≤ 150 LOC/file.  
+* No `git push` unless user says “push”.

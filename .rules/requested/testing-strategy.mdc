@@ -1,0 +1,10 @@
+---
+description: Testing best-practices across languages
+globs: 
+alwaysApply: false
+---
+* Use the platform’s de-facto test runner (`pytest`, `jest`, `go test`, `xUnit`, etc.).
+* Prioritise unit tests for pure logic; integration tests for I/O & external services.
+* Write failing tests first when adding behaviour (TDD recommended).
+
+* Ensure coverage does not decrease; target ≥80 % line coverage or project-specific goal.

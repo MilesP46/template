@@ -1,0 +1,13 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+* Audit template lockfiles (`poetry.lock`, `yarn.lock`) for outdated or vulnerable packages.
+* Replace template-only placeholders (e.g. `"TODO_ORG_NAME"`) in `pyproject.toml` / `package.json`.
+* Remove demo or example-only dependencies before adding new ones.
+* Run template’s setup script (if any), then bump versions with:
+  * Python → `poetry update --no-interactive`.
+  * Node   → `yarn upgrade-interactive`.
+
+* Commit the cleaned lockfiles as the project baseline.

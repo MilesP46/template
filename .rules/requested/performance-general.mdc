@@ -1,0 +1,10 @@
+---
+description: Universal performance optimisation heuristics
+globs: 
+alwaysApply: false
+---
+* Choose the least-complex algorithm that meets requirements; avoid O(n²)+ in hot paths.
+* Cache results of expensive pure functions (memoisation, in-memory LRU, Redis, etc.).
+* Lazy-load non-critical assets (modules, images) where platform allows.
+
+* Write small benchmarks before and after major changes; flag >10 % regressions.

@@ -1,0 +1,11 @@
+---
+description: Security checklist for any runtime
+globs: 
+alwaysApply: false
+---
+1. Treat all external input as untrusted (validate & escape).
+2. Never hard-code credentials; rely on environment variables, vaults, or secret managers.
+3. Use parameterized queries / prepared statements for any data store.
+4. Protect sensitive logs: redact tokens, passwords, personal data by default.
+
+5. Pin dependency versions; run vulnerability scans (`npm audit`, `pip-audit`, etc.) before release.

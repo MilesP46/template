@@ -1,0 +1,19 @@
+---
+description: Validation & Refactor agent checklist
+globs: 
+alwaysApply: false
+---
+---
+description: Validation & Refactor checklist
+type: Agent Requested
+---
+
+### Steps
+1. Run full test suite; debug to green.  
+2. Map impacts via **Dependencies** in domain docs; update docs/tests.  
+3. Refactor for readability, DRY, SRP, ≤ 150 LOC; behaviour unchanged.  
+4. Pull `performance-general` or `secure-by-default` rules if needed.  
+5. Re-run linter & tests after every refactor.
+
+### Guardrails
+* No new features.

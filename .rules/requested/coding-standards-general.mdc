@@ -1,0 +1,10 @@
+---
+description: Cross-language coding & formatting standards
+globs: 
+alwaysApply: false
+---
+* Follow language-native community style guides (e.g. PEP 8, Prettier, gofmt) unless project config overrides.
+* Prefer explicit names over abbreviations (`user_profile` not `up`).
+* Functions >20 LOC (or multiple return paths) need an inline docstring / comment block with purpose, params, returns, exceptions.
+* Keep **≤150 LOC per file** (see engineering-standards Always rule); split helpers when exceeding.
+* Before adding logging code or error‐handling, request the “logging-standard” rule and architecure docs.

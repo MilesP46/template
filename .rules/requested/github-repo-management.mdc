@@ -1,0 +1,28 @@
+---
+description: Before running ANY git or gh command, request the “github-repo-management” rule and follow it verbatim.
+globs: 
+alwaysApply: false
+---
+## 1 • Create a private GitHub repo if none exists
+1. Check for a `.git` directory.  
+2. If absent:  
+   a. Run `git init`.  
+   b. Use the GitHub CLI (`gh repo create <name> --private --source . --remote origin --push=false`)  
+      – OR call the GitHub REST API – but **never** embed tokens in code; read from `$GITHUB_TOKEN`.  
+   c. Add a `.gitignore` (Python, Node, Docker, etc.) and commit it.
+
+## 2 • Commit & branch etiquette
+* Commit messages: `<feat|fix|refactor|docs>: brief message` (72-char max subject).  
+* Keep work on a feature branch; rebase/merge to `main` only when tests pass.
+
+## 3 • Pushing policy
+* **Do not run `git push` automatically.**  
+* Wait for an explicit user command such as “Push to GitHub now.”  
+* If `--force` is required, ask for confirmation in chat first.
+
+## 4 • Secrets & artefacts
+* Verify no secrets (`*.env`, private keys) in the diff.  
+* Don’t commit build artefacts or `.cursor/session*` files unless user requests.
+
+> **Use this rule every time you plan to initialise a repo, add a remote, or push upstream.**
+

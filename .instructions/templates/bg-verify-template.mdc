@@ -1,0 +1,72 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# BG-VERIFY Agent Instructions
+
+## Task Context
+**Task ID**: {TASK_ID}
+**Delegated by Claude**: {TIMESTAMP}
+
+## Mission
+{CLAUDE_SPECIFIC_MISSION_DESCRIPTION}
+
+## Required Resources (Request These First)
+### Rules
+- `mode-verification.mdc` (primary workflow)
+- {ADDITIONAL_RULES_CLAUDE_DETERMINES}
+
+### Documentation Context
+- {CLAUDE_SPECIFIES_RELEVANT_DOCS}
+- **Verification targets**: {DOCS_CODE_TESTS_TO_VERIFY}
+- **Compliance standards**: {QUALITY_AND_COMPLIANCE_DOCS}
+
+## Claude's Task Checklist
+{CLAUDE_CREATES_DYNAMIC_CHECKLIST}
+- [ ] {SPECIFIC_VERIFICATION_TASK_1}
+- [ ] {SPECIFIC_VERIFICATION_TASK_2}
+- [ ] {SPECIFIC_VERIFICATION_TASK_3}
+- [ ] Cross-diff documentation vs code vs tests
+- [ ] Verify compliance with all standards
+- [ ] Generate comprehensive audit report
+- [ ] Ready for Claude review and approval
+
+## Claude's Specific Expectations
+{CLAUDE_FILLS_THIS_BASED_ON_ACTUAL_TASK}
+
+## Task-Specific Success Criteria
+{CLAUDE_DEFINES_SPECIFIC_DELIVERABLES_AND_QUALITY_GATES}
+
+## Context Claude Provides
+**Project State**: {CURRENT_PROJECT_STATE}
+**Dependencies**: {TASK_DEPENDENCIES}
+**Constraints**: {SPECIFIC_CONSTRAINTS}
+**Integration Points**: {HOW_THIS_CONNECTS_TO_OTHER_WORK}
+
+## Files Claude Expects You to Touch
+{CLAUDE_LISTS_SPECIFIC_FILES_OR_AREAS}
+
+## GitHub Copilot CLI Integration
+{COPILOT_INTEGRATION_INSTRUCTIONS}
+<!-- Claude fills this section if Copilot CLI should be used:
+- Automated verification script generation
+- Compliance checking assistance
+- Report generation automation
+- Cross-reference validation
+-->
+
+## Documentation Workflow
+**Staging Location**: `reports/phase{X}_cp{Y}/{TASK_ID}_VERIFY_staging/`
+**Final Location**: {CLAUDE_SPECIFIES_FINAL_DOC_LOCATIONS}
+
+Generate verification reports, audit documentation, and compliance matrices in staging area. After Claude approval, documentation will be nested in appropriate project areas.
+
+## Review Criteria
+Claude will evaluate your work against:
+{CLAUDE_SPECIFIC_REVIEW_CRITERIA}
+
+
+
+
+

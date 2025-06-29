@@ -1,0 +1,105 @@
+---
+description: Architecture analysis and integration strategy for Combined Template Project
+globs: 
+alwaysApply: false
+---
+# BG-DESIGN Agent Instructions
+
+## Task Context
+**Task ID**: T101_phase1_cp1
+**Delegated by Claude**: 2025-01-29
+
+## Mission
+Analyze the Rasket frontend template and Doctor-Dok backend template architectures to create a comprehensive integration strategy document. This analysis will guide the entire project implementation by identifying integration points, potential conflicts, and establishing the unified architecture approach.
+
+## Required Resources (Request These First)
+### Rules
+- `mode-design-architecture.mdc` (primary workflow)
+- `.rules/Claude.md` (foreman workflow understanding)
+- `.rules/architecture.mdc` (architecture principles)
+
+### Documentation Context
+- `docs/project-specification.md` (project requirements and goals)
+- **Architecture baseline**: None yet - you will create the first architecture docs
+- **Domain context**: Both templates' existing documentation and code structure
+
+## Claude's Task Checklist
+- [ ] Analyze Rasket template structure (React, TypeScript, Vite, Bootstrap 5)
+- [ ] Analyze Doctor-Dok template structure (Next.js, SQLite, Drizzle, encryption)
+- [ ] Identify integration challenges between the two architectures
+- [ ] Design monorepo structure that consolidates both templates
+- [ ] Create authentication flow diagrams for both single-tenant and multi-tenant modes
+- [ ] Map component migration strategy (Doctor-Dok UI → Rasket Bootstrap components)
+- [ ] Document API integration approach
+- [ ] Create Mermaid diagrams for system architecture
+- [ ] Generate documentation in staging area
+- [ ] Ready for Claude review and approval
+
+## Claude's Specific Expectations
+1. **Architecture Documentation**: Create `core-architecture.md` with:
+   - System overview showing how templates will merge
+   - Component architecture diagram
+   - Data flow between frontend and backend
+   - Security architecture for both auth modes
+   - Technology stack decisions
+
+2. **File Structure Documentation**: Create `file-structure.md` with:
+   - Proposed monorepo organization
+   - Module boundaries between templates
+   - Shared code locations
+   - Build and deployment structure
+
+3. **Integration Strategy**: Document including:
+   - Step-by-step migration approach
+   - Risk analysis and mitigation
+   - Dependency resolution strategy
+   - Performance considerations
+
+## Task-Specific Success Criteria
+- Clear visual diagrams using Mermaid for all architectural concepts
+- Comprehensive analysis addressing all integration points
+- Specific recommendations for handling authentication mode switching
+- Detailed file structure that supports both development and production builds
+- Identification of all potential breaking changes or conflicts
+- Clear separation of concerns between frontend and backend
+- AI integration architecture (how Doctor-Dok's AI features will connect)
+
+## Context Claude Provides
+**Project State**: Initial phase - no code written yet
+**Dependencies**: None - this is the first task
+**Constraints**: 
+- Must maintain compatibility with existing features of both templates
+- Single command installation requirement
+- Support for both single-tenant (encrypted DB) and multi-tenant modes
+- All Doctor-Dok UI components to be replaced with Rasket components
+**Integration Points**: This analysis will define all future integration points
+
+## Files Claude Expects You to Touch
+- Create: `reports/phase1_cp1/T101_phase1_cp1_DESIGN_staging/core-architecture.md`
+- Create: `reports/phase1_cp1/T101_phase1_cp1_DESIGN_staging/file-structure.md`
+- Create: `reports/phase1_cp1/T101_phase1_cp1_DESIGN_staging/integration-strategy.md`
+- Analyze: All files in `templates/backend/doctor-dok/`
+- Analyze: All files in `templates/frontend/rasket-template/`
+
+## GitHub Copilot CLI Integration
+Not applicable for this design task - this is pure analysis and documentation work.
+
+## Documentation Workflow
+**Staging Location**: `reports/phase1_cp1/T101_phase1_cp1_DESIGN_staging/`
+**Final Location**: 
+- `docs/architecture/core-architecture.md`
+- `docs/architecture/file-structure.md`
+- `docs/architecture/integration-strategy.md`
+
+Create documentation in staging area during work. After Claude approval, documentation will be moved to final locations.
+
+## Review Criteria
+Claude will evaluate your work against:
+1. Completeness of architecture analysis
+2. Clarity of integration approach
+3. Quality of Mermaid diagrams
+4. Identification of all major technical challenges
+5. Feasibility of proposed solutions
+6. Alignment with project specification requirements
+7. Support for both authentication modes
+8. Clear monorepo structure that simplifies development

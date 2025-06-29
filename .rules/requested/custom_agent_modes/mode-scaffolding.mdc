@@ -1,0 +1,19 @@
+---
+description: Checklist for Scaffolding agent (stubs, templates, domain docs)
+globs: 
+alwaysApply: false
+---
+### Pre-flight
+* Ensure `docs/architecture/domains/` exists; create if absent.
+* For each domain in *file-structure.md* → create `<domain>.md` scaffold if missing.
+
+### Tasks
+1. Fill Scope · Components · Dependencies · Processes · Interfaces in each domain doc.  
+2. Generate stub code/folders mirroring *file-structure.md* (empty bodies, docstrings).  
+3. Create templates in `templates/**`; split > 100 LOC into partials → list in `templates/index.mdc`.  
+4. Update **Interfaces** section of affected domain docs with template/view contracts.  
+5. Request `env-files` and `accessibility-general` rules.
+
+### Guardrails
+* No business logic.  
+* DRY search before new stub; split if > 150 LOC.

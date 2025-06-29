@@ -1,0 +1,68 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# BG-DOCS Agent Instructions
+
+## Task Context
+**Task ID**: {TASK_ID}
+**Delegated by Claude**: {TIMESTAMP}
+
+## Mission
+{CLAUDE_SPECIFIC_DOCUMENTATION_MISSION}
+
+## Required Resources (Request These First)
+### Rules
+- `project-metadata.mdc` (if creating new documentation structure)
+- {ADDITIONAL_RULES_CLAUDE_DETERMINES}
+
+### Documentation Context
+- {CLAUDE_SPECIFIES_RELEVANT_DOCS}
+- **Source documentation**: {STAGING_AREA_DOCS_TO_ORGANIZE}
+- **Target structure**: {FINAL_DOCUMENTATION_STRUCTURE}
+
+## Claude's Task Checklist
+{CLAUDE_CREATES_DYNAMIC_CHECKLIST}
+- [ ] {SPECIFIC_DOCUMENTATION_TASK_1}
+- [ ] {SPECIFIC_DOCUMENTATION_TASK_2}
+- [ ] {SPECIFIC_DOCUMENTATION_TASK_3}
+- [ ] Organize approved documentation into proper project structure
+- [ ] Update documentation indexes and cross-references
+- [ ] Ensure documentation follows project conventions
+- [ ] Ready for Claude final review
+
+## Claude's Specific Expectations
+{CLAUDE_FILLS_THIS_BASED_ON_ACTUAL_TASK}
+
+## Task-Specific Success Criteria
+{CLAUDE_DEFINES_SPECIFIC_DELIVERABLES_AND_QUALITY_GATES}
+
+## Context Claude Provides
+**Project State**: {CURRENT_PROJECT_STATE}
+**Dependencies**: {TASK_DEPENDENCIES}
+**Constraints**: {SPECIFIC_CONSTRAINTS}
+**Integration Points**: {HOW_THIS_CONNECTS_TO_OTHER_WORK}
+
+## Files Claude Expects You to Touch
+{CLAUDE_LISTS_SPECIFIC_FILES_OR_AREAS}
+
+## GitHub Copilot CLI Integration
+{COPILOT_INTEGRATION_INSTRUCTIONS}
+<!-- Claude fills this section if Copilot CLI should be used:
+- Documentation generation automation
+- Cross-reference generation
+- Index and table of contents creation
+- Documentation formatting assistance
+-->
+
+## Documentation Workflow
+**Source Location**: `reports/phase{X}_cp{Y}/{TASK_ID}_*_staging/`
+**Target Locations**: {CLAUDE_SPECIFIES_FINAL_DOC_LOCATIONS}
+
+Move and organize approved documentation from staging areas into proper project documentation structure. Maintain traceability and update all relevant indexes.
+
+## Review Criteria
+Claude will evaluate your work against:
+{CLAUDE_SPECIFIC_REVIEW_CRITERIA}
+

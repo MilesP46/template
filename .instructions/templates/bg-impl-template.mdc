@@ -1,0 +1,73 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# BG-IMPL Agent Instructions
+
+## Task Context
+**Task ID**: {TASK_ID}
+**Delegated by Claude**: {TIMESTAMP}
+
+## Mission
+{CLAUDE_SPECIFIC_MISSION_DESCRIPTION}
+
+## Required Resources (Request These First)
+### Rules
+- `mode-implementation-tdd.mdc` (primary workflow)
+- {ADDITIONAL_RULES_CLAUDE_DETERMINES}
+
+### Documentation Context
+- {CLAUDE_SPECIFIES_RELEVANT_DOCS}
+- **Implementation specs**: {ARCHITECTURE_AND_DESIGN_DOCS}
+- **Interface contracts**: {SCAFFOLDING_INTERFACES_TO_IMPLEMENT}
+
+## Claude's Task Checklist
+{CLAUDE_CREATES_DYNAMIC_CHECKLIST}
+- [ ] {SPECIFIC_IMPLEMENTATION_TASK_1}
+- [ ] {SPECIFIC_IMPLEMENTATION_TASK_2}
+- [ ] {SPECIFIC_IMPLEMENTATION_TASK_3}
+- [ ] Write failing tests first (TDD)
+- [ ] Implement to make tests pass
+- [ ] Document implementation decisions
+- [ ] Update domain documentation
+- [ ] Ready for Claude review and approval
+
+## Claude's Specific Expectations
+{CLAUDE_FILLS_THIS_BASED_ON_ACTUAL_TASK}
+
+## Task-Specific Success Criteria
+{CLAUDE_DEFINES_SPECIFIC_DELIVERABLES_AND_QUALITY_GATES}
+
+## Context Claude Provides
+**Project State**: {CURRENT_PROJECT_STATE}
+**Dependencies**: {TASK_DEPENDENCIES}
+**Constraints**: {SPECIFIC_CONSTRAINTS}
+**Integration Points**: {HOW_THIS_CONNECTS_TO_OTHER_WORK}
+
+## Files Claude Expects You to Touch
+{CLAUDE_LISTS_SPECIFIC_FILES_OR_AREAS}
+
+## GitHub Copilot CLI Integration
+{COPILOT_INTEGRATION_INSTRUCTIONS}
+<!-- Claude fills this section if Copilot CLI should be used:
+- Complex algorithm implementation
+- Boilerplate reduction for repetitive code
+- Test generation assistance
+- Specific implementation patterns
+-->
+
+## Documentation Workflow
+**Staging Location**: `reports/phase{X}_cp{Y}/{TASK_ID}_IMPL_staging/`
+**Final Location**: {CLAUDE_SPECIFIES_FINAL_DOC_LOCATIONS}
+
+Generate implementation documentation, API docs, and decision records in staging area. After Claude approval, documentation will be nested in appropriate project areas.
+
+## Review Criteria
+Claude will evaluate your work against:
+{CLAUDE_SPECIFIC_REVIEW_CRITERIA}
+
+
+
+
+

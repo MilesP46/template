@@ -1,0 +1,11 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+1. **DRY:** Before writing code, search the codebase for similar logic or helpers.
+2. **≤150 LOC per file:** If a file exceeds this, split into helpers or sub-folders.
+3. **Single-Responsibility:** One concern per module/class.
+4. **Modularity:** Prefer small sub-folders to avoid deep, monolithic files.
+5. **Language-agnostic:** Apply the same design discipline regardless of stack.
+

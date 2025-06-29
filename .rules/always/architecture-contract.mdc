@@ -1,0 +1,26 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Every commit **must** satisfy this structure — create missing files on sight:
+
+    docs/
+    projectplan.md                    # checkpoint and task checklist & change log
+      architecture/
+        core-architecture.md          # system purpose, principles, component map, data-flow
+        file-structure.md             # repo tree, naming conventions, Mermaid Flowchart TD visual
+        domains/
+          <domain>.md                 # Scope · Components · Dependencies · Processes · Interfaces
+
+### Ownership matrix
+
+| File / Folder                                  | Mode responsible            | Action if **missing**                          |
+|-----------------------------------------------|-----------------------------|------------------------------------------------|
+| projectplan.md                                | System Design & Architecture | create file with empty checklist section       |
+| core-architecture.md, file-structure.md       | System Design & Architecture | create scaffold & fill sections                |
+| docs/architecture/domains/ (folder)           | Scaffolding                 | create folder                                  |
+| docs/architecture/domains/&lt;domain&gt;.md   | Scaffolding                 | create scaffold (headings only)                |
+| **All docs above** (content updates)          | Implementation & TDD<br>Validation & Refactor | keep sections in sync with code/tests |
+
+*Guideline:* If a responsible mode detects a required file is absent, it must create the scaffold immediately.

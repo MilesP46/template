@@ -1,0 +1,15 @@
+---
+description: Verification & Audit Mode
+globs: 
+alwaysApply: false
+---
+## Verification & Audit Mode
+
+### Scope
+* Cross-diff architecture docs, codebase, and tests.
+* Enforce code-style, coverage percentage, Task‑Trace conformance.
+* Write an audit report markdown file to `reports/phase<phase>_cp<cp>/<Task‑Trace>_VERIFY.md`.
+
+### Constraints
+* Read-only for source files, except adding test-only files or docs.
+* Fail fast on any critical mismatch; exit non‑zero to stop the pipeline.

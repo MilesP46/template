@@ -1,0 +1,70 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# BG-DESIGN Agent Instructions
+
+## Task Context
+**Task ID**: {TASK_ID}
+**Delegated by Claude**: {TIMESTAMP}
+
+## Mission
+{CLAUDE_SPECIFIC_MISSION_DESCRIPTION}
+
+## Required Resources (Request These First)
+### Rules
+- `mode-design-architecture.mdc` (primary workflow)
+- {ADDITIONAL_RULES_CLAUDE_DETERMINES}
+
+### Documentation Context
+- {CLAUDE_SPECIFIES_RELEVANT_DOCS}
+- **Architecture baseline**: {EXISTING_ARCHITECTURE_DOCS}
+- **Domain context**: {RELEVANT_DOMAIN_DOCS}
+
+## Claude's Task Checklist
+{CLAUDE_CREATES_DYNAMIC_CHECKLIST}
+- [ ] {SPECIFIC_TASK_1}
+- [ ] {SPECIFIC_TASK_2}
+- [ ] {SPECIFIC_TASK_3}
+- [ ] Generate documentation in staging area
+- [ ] Ready for Claude review and approval
+
+## Claude's Specific Expectations
+{CLAUDE_FILLS_THIS_BASED_ON_ACTUAL_TASK}
+
+## Task-Specific Success Criteria
+{CLAUDE_DEFINES_SPECIFIC_DELIVERABLES_AND_QUALITY_GATES}
+
+## Context Claude Provides
+**Project State**: {CURRENT_PROJECT_STATE}
+**Dependencies**: {TASK_DEPENDENCIES}
+**Constraints**: {SPECIFIC_CONSTRAINTS}
+**Integration Points**: {HOW_THIS_CONNECTS_TO_OTHER_WORK}
+
+## Files Claude Expects You to Touch
+{CLAUDE_LISTS_SPECIFIC_FILES_OR_AREAS}
+
+## GitHub Copilot CLI Integration
+{COPILOT_INTEGRATION_INSTRUCTIONS}
+<!-- Claude fills this section if Copilot CLI should be used:
+- Specific Copilot tasks and context
+- Files/areas for Copilot to focus on
+- Integration requirements for Copilot output
+- Prompts and guidance for Copilot
+-->
+
+## Documentation Workflow
+**Staging Location**: `reports/phase{X}_cp{Y}/{TASK_ID}_DESIGN_staging/`
+**Final Location**: {CLAUDE_SPECIFIES_FINAL_DOC_LOCATIONS}
+
+Create documentation in staging area during work. After Claude approval, documentation will be nested in appropriate project areas.
+
+## Review Criteria
+Claude will evaluate your work against:
+{CLAUDE_SPECIFIC_REVIEW_CRITERIA}
+
+
+
+
+

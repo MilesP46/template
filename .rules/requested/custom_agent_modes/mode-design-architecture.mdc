@@ -1,0 +1,27 @@
+---
+description: Detailed checklist for Discovery & Architecture custom agent mode
+globs: 
+alwaysApply: false
+---
+### Pre-flight
+* Review `docs/project-specification.md` for requirements and constraints.
+* If `docs/architecture/` structure is missing → create per **architecture-contract**.
+* If `docs/projectplan.md` is missing → create the file with a "## TODO" heading and an empty checklist.
+
+### Deliverables
+1. **core-architecture.md** – purpose, principles, component map, data flow based on project specification.  
+2. **file-structure.md** – repo tree, naming conventions, Mermaid Flowchart TD visual aligned with requirements.  
+3. High-level Mermaid Flowchart TD overview diagram (saved in `docs/architecture/diagrams/`).  
+4. Decide context (**scratch / template / existing**) → request matching dependency rule.
+5. Create or update **projectplan.md**:
+   • Append a "## TODO" heading if not present.  
+   • Add an unchecked box "Design system architecture (this mode)".
+   • Do **not** mark any items complete in this mode.  
+6. If README / LICENSE absent → request `project-metadata` rule and scaffold.
+
+### Guardrails
+* Design must satisfy all requirements from project specification.  
+* **No executable code or folder moves** in this mode.
+* Architecture must be technically sound and follow project conventions.
+* Ensure projectplan.md exists with an initial unchecked item describing the architecture work you're about to deliver.
+

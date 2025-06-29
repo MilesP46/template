@@ -1,0 +1,13 @@
+---
+description: tarting dependencies from scratch – read before adding the FIRST library.
+globs: 
+alwaysApply: false
+---
+* Initialise the package manager:
+  * Python → `poetry init` (non-interactive flags preferred).
+  * Node   → `yarn init -y`.
+* Pin the baseline runtime in the lockfile (`poetry.lock`, `yarn.lock`); commit both.
+* Add core libs with explicit semver (`poetry add <pkg>` / `yarn add <pkg>`).
+* Scaffold a minimal `docker-compose.yml` with dev profiles + hot-reload volumes if full-stack.
+
+* Push the first green CI run **before** adding optional/dev libs.

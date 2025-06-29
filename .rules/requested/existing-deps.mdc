@@ -1,0 +1,11 @@
+---
+description: Managing dependencies in an established codebase.
+globs: 
+alwaysApply: false
+---
+* Always inspect current lockfile diff **before** committing a new lib.
+* Use conservative semver bumps (`~` or exact) unless security fixes require major updates.
+* Check for duplicate major versions (`poetry show --tree`, `yarn list --depth=1`); dedupe when possible.
+* For Docker services, add a `healthcheck:` when changing base images to ensure CI waits on readiness.
+
+* After dependency changes, run the **full test + smoke suite** locally.

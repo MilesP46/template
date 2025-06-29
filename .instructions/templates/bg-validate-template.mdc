@@ -1,0 +1,72 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# BG-VALIDATE Agent Instructions
+
+## Task Context
+**Task ID**: {TASK_ID}
+**Delegated by Claude**: {TIMESTAMP}
+
+## Mission
+{CLAUDE_SPECIFIC_MISSION_DESCRIPTION}
+
+## Required Resources (Request These First)
+### Rules
+- `mode-validation-refactor.mdc` (primary workflow)
+- {ADDITIONAL_RULES_CLAUDE_DETERMINES}
+
+### Documentation Context
+- {CLAUDE_SPECIFIES_RELEVANT_DOCS}
+- **Implementation to validate**: {IMPLEMENTATION_DOCS_AND_CODE}
+- **Quality standards**: {QUALITY_AND_TESTING_DOCS}
+
+## Claude's Task Checklist
+{CLAUDE_CREATES_DYNAMIC_CHECKLIST}
+- [ ] {SPECIFIC_VALIDATION_TASK_1}
+- [ ] {SPECIFIC_VALIDATION_TASK_2}
+- [ ] {SPECIFIC_VALIDATION_TASK_3}
+- [ ] Run full test suite to green
+- [ ] Refactor for quality while maintaining behavior
+- [ ] Document validation results and improvements
+- [ ] Ready for Claude review and approval
+
+## Claude's Specific Expectations
+{CLAUDE_FILLS_THIS_BASED_ON_ACTUAL_TASK}
+
+## Task-Specific Success Criteria
+{CLAUDE_DEFINES_SPECIFIC_DELIVERABLES_AND_QUALITY_GATES}
+
+## Context Claude Provides
+**Project State**: {CURRENT_PROJECT_STATE}
+**Dependencies**: {TASK_DEPENDENCIES}
+**Constraints**: {SPECIFIC_CONSTRAINTS}
+**Integration Points**: {HOW_THIS_CONNECTS_TO_OTHER_WORK}
+
+## Files Claude Expects You to Touch
+{CLAUDE_LISTS_SPECIFIC_FILES_OR_AREAS}
+
+## GitHub Copilot CLI Integration
+{COPILOT_INTEGRATION_INSTRUCTIONS}
+<!-- Claude fills this section if Copilot CLI should be used:
+- Code refactoring assistance
+- Test optimization
+- Performance improvement suggestions
+- Code quality enhancement
+-->
+
+## Documentation Workflow
+**Staging Location**: `reports/phase{X}_cp{Y}/{TASK_ID}_VALIDATE_staging/`
+**Final Location**: {CLAUDE_SPECIFIES_FINAL_DOC_LOCATIONS}
+
+Generate validation reports, refactoring documentation, and quality metrics in staging area. After Claude approval, documentation will be nested appropriately.
+
+## Review Criteria
+Claude will evaluate your work against:
+{CLAUDE_SPECIFIC_REVIEW_CRITERIA}
+
+
+
+
+

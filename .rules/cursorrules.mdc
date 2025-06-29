@@ -1,0 +1,101 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Charter & Global Rules  
+*(file path: `.rules/cursorrules.mdc` — auto-maintained)*
+
+
+## Overview  *(populated by Mode 0)*
+
+| Field                   | Value |
+|-------------------------|-------|
+| **Purpose**             | _(filled during Discovery & Architecture)_ |
+| **Primary Deliverable** | _(app / library / service)_ |
+| **Tech Stack**          | _(languages / frameworks / infra)_ |
+
+> **Agent note**  
+> – If a field is blank or outdated, update it in **Discovery & Architecture**.  
+> – Treat the Charter as global truth thereafter.
+
+
+## Canonical Directory Skeleton (high-level)
+
+    src/                    ← main code, mirrors docs/architecture/file-structure.md
+    templates/              ← presentation-only templates (guarded)
+    docs/projectplan.md     ← living checklist & change log
+    docs/architecture/      ← living architecture docs (see architecture-contract)
+    tests/                  ← unit & integration tests
+
+*(The full, auto-validated tree is enforced by `always/architecture-contract.mdc`.)*
+
+
+## Rule Directory Map
+
+.rules/
+    always/
+        architecture-contract.mdc
+        engineering-standards.mdc
+
+    auto/
+        template-guard.mdc
+        python-poetry.mdc
+        node-yarn.mdc
+        docker-compose-watch.mdc
+
+    requested/
+        logging-standard.mdc
+        coding-standards-general.mdc
+        dependency-management.mdc
+        ignore-files.mdc
+        github-repo-management.mdc
+        project-metadata.mdc
+        ci-setup.mdc
+        code-formatting.mdc
+        env-files.mdc
+        performance-general.mdc
+        secure-by-default.mdc
+        accessibility-general.mdc
+        testing-strategy.mdc
+
+        dependency-rules/
+        scratch-deps.mdc
+        template-deps.mdc
+        existing-deps.mdc
+
+        custom_agent_modes/
+        mode-design-architecture.mdc
+        mode-scaffolding.mdc
+        mode-implementation-tdd.mdc
+        mode-validation-refactor.mdc
+        mode-integration-release.mdc
+
+    lang/
+        python-style.mdc
+        typescript-style.mdc
+
+
+## Mode ↔ Rule Handshake
+
+Add this first bullet to every mode’s instructions:
+
+    • At mode start, request rule "mode-<mode-name>" for detailed checklist.
+
+| Mode                      | Companion rule file                       |
+|---------------------------|-------------------------------------------|
+| System Design & Architecture | `mode-design-architecture.mdc`           |
+| Scaffolding               | `mode-scaffolding.mdc`                   |
+| Implementation & TDD      | `mode-implementation-tdd.mdc`            |
+| Validation & Refactor     | `mode-validation-refactor.mdc`           |
+| Integration & Release     | `mode-integration-release.mdc`           |
+| *Any mode touching logging* | logging-standard.mdc (Agent-Requested)  |
+
+
+## Global Directives
+
+1. **Finish every task completely** — deliver full, executable code when asked.  
+2. Follow **`always/architecture-contract.mdc`**; create missing docs immediately.
+3. Keep **docs/projectplan.md** in sync: add unchecked items during planning modes, tick them off during implementation, append a Review section when done.  
+4. Include the handshake bullet at the start of each mode (see above).  
+5. Auto-Attached rules fire on pattern match; request Agent-Requested rules as needed.

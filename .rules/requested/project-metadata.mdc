@@ -1,0 +1,10 @@
+---
+description:  When README / LICENSE / CODE_OF_CONDUCT don’t exist, request this rule.
+globs: 
+alwaysApply: false
+---
+1. Create `README.md` with: Project name, purpose, quick-start, tech stack, contact links.
+2. Add `LICENSE` (default MIT unless user specifies another).
+3. If public / OSS, add `CODE_OF_CONDUCT.md` (Contributor Covenant v2.1).
+4. Auto-update project badges (build, coverage) once CI is configured.
+

@@ -1,0 +1,16 @@
+---
+description: Rules surrounding use of GitHub Copilot CLI
+globs: 
+alwaysApply: false
+---
+# mode-copilot-assist.mdc — Copilot helper tasks
+## Responsibilities
+• Run GitHub Copilot CLI (`gh copilot …`) for the scoped files.
+• Determine what docs and rules will need for the scoped files to carry out its work properly.
+• Provide answers if asked questions by GitHub Copilot CLI until it understands what is needed.
+• Save the raw Copilot patch or snippet as `reports/BG-COPILOT_<ID>.md`.
+• Do **NOT** commit code; leave a local patch file plus linter/test output.
+
+## Standard prompt footer
+"Run linter & tests after generation; abort on failure.
+(Ref: <Phase> › <Checkpoint>)"

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+PATTERN='T[0-9]\{3\}_phase[0-9]\+_cp[0-9]\+'
+if ! grep -qE "$PATTERN" "$1"; then
+  echo "❌  Commit message missing Task-Trace ID (T###_phaseX_cpY)" >&2
+  exit 1
+fi

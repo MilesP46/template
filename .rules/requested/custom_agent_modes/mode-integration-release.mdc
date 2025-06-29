@@ -1,0 +1,20 @@
+---
+description: Integration & Release custom agent mode checklist
+globs: 
+alwaysApply: false
+---
+---
+description: Integration & Release checklist
+type: Agent Requested
+---
+
+### Release pipeline
+1. Run smoke/integration tests, size audit, licence scan; ensure CI green.  
+2. Generate `integration_review.mdc` + CHANGELOG; update README badges.  
+3. Tag release (vX.Y.Z) & build artefacts.  
+4. Before any git/gh command → request `github-repo-management` rule.  
+5. Final sync: confirm core-architecture & domain docs match release state.
+
+### Guardrails
+* Docs/packaging only; no feature code.  
+* Require explicit user confirmation before `git push`.
