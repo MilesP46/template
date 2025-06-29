@@ -4,9 +4,19 @@
     "composite": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@doctor-dok/shared-types": ["../../packages/shared-types/src"]
-    }
+      "@/*": [
+        "./src/*"
+      ],
+      "@doctor-dok/shared-types": [
+        "../../packages/shared-types/src"
+      ]
+    },
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
