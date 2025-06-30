@@ -3,18 +3,18 @@
  * Provides common authentication functionality extracted from Doctor-Dok
  */
 
-import { JWTService, TokenPair, TokenPayload } from '../utils/jwt';
+import { JWTService } from '../utils/jwt';
+import type { TokenPair, TokenPayload } from '../utils/jwt';
 import { EncryptionUtils } from '../utils/crypto';
-import { 
+import type { 
   User, 
   AuthResult, 
   LoginDto, 
   CreateUserDto, 
-  AuthError, 
-  AuthErrorCode,
   KeyData,
   HashParams 
 } from '../types/auth.types';
+import { AuthError, AuthErrorCode } from '../types/auth.types';
 
 export interface AuthServiceConfig {
   jwtAccessSecret: string;
@@ -35,8 +35,8 @@ export abstract class BaseAuthService {
     this.jwtService = new JWTService({
       accessTokenSecret: config.jwtAccessSecret,
       refreshTokenSecret: config.jwtRefreshSecret,
-      accessTokenExpiry: config.jwtAccessExpiry,
-      refreshTokenExpiry: config.jwtRefreshExpiry,
+      accessTokenExpiry: config.jwtAccessExpiry || '15m',
+      refreshTokenExpiry: config.jwtRefreshExpiry || '7d',
     });
 
     if (config.encryptionEnabled && config.masterKeyRequired) {
@@ -175,7 +175,7 @@ export abstract class BaseAuthService {
       userId: user.id,
       databaseId: user.databaseId,
       keyId: keyData.id,
-      role: user.role,
+      role: user.role || 'user',
     };
 
     return await this.jwtService.generateTokenPair(payload);

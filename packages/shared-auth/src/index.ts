@@ -24,9 +24,21 @@ export {
   type JWTConfig 
 } from './utils/jwt';
 
+export {
+  InputSanitizer,
+  type SanitizeOptions
+} from './utils/input-sanitizer';
+
 // Middleware
 export { 
   createAuthMiddleware, 
   getUserFromRequest,
   type AuthMiddlewareConfig 
 } from './middleware/auth.middleware';
+
+export {
+  CSRFProtection,
+  csrfProtection,
+  type CSRFConfig,
+  type CSRFTokenData
+} from './middleware/csrf.middleware';

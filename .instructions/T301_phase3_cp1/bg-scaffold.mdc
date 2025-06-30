@@ -1,0 +1,169 @@
+# BG-SCAFFOLD Instructions: Component Mapping & Migration Scaffolding
+
+**Task ID**: T301_phase3_cp1  
+**Phase**: 3 - UI Component Migration  
+**Goal**: Create component mapping document (Doctor-Dok ↔ Rasket equivalents) and scaffold migration structure
+
+## Objective
+Analyze the existing Doctor-Dok UI components and create a comprehensive mapping to Rasket's Bootstrap 5 equivalents, then scaffold the migration structure for Phase 3.
+
+## Scope of Work
+
+### 1. Component Discovery & Analysis
+
+**Doctor-Dok Components to Analyze** (in `/templates/backend/doctor-dok/src/components/`):
+- Form components (authorization forms, create database forms, settings)
+- Layout components (headers, navigation, authorization guards)
+- UI elements (buttons, modals, alerts, cards)  
+- Data display (record items, folder lists, stats)
+- Interactive elements (chat, file uploaders, popups)
+
+**Rasket Components to Map** (in `/templates/frontend/rasket-template/src/components/`):
+- Bootstrap 5 form components
+- Layout and navigation structures  
+- UI component library
+- Data tables and lists
+- Theme and styling system
+
+### 2. Required Deliverables
+
+#### A. Component Mapping Document
+Create: `/docs/architecture/phase3/COMPONENT_MAPPING.md`
+
+Structure:
+```markdown
+# Doctor-Dok to Rasket Component Migration Map
+
+## Overview
+- Total Doctor-Dok components: [COUNT]
+- Direct mappings available: [COUNT]  
+- Custom components needed: [COUNT]
+- Migration complexity: [HIGH/MEDIUM/LOW]
+
+## Category Mappings
+
+### Authentication & Forms
+| Doctor-Dok Component | Path | Rasket Equivalent | Path | Migration Notes |
+|---------------------|------|------------------|------|-----------------|
+| authorize-database-form.tsx | /components/ | [Rasket form] | /components/form/ | [Complexity/Notes] |
+
+### Layout & Navigation  
+| Doctor-Dok Component | Rasket Equivalent | Migration Strategy |
+|---------------------|------------------|-------------------|
+
+### Data Display
+| Doctor-Dok Component | Rasket Equivalent | Migration Strategy |
+|---------------------|------------------|-------------------|
+
+### Interactive Elements
+| Doctor-Dok Component | Rasket Equivalent | Migration Strategy |
+|---------------------|------------------|-------------------|
+
+## Migration Priorities
+1. **High Priority** (blocking Phase 3): [List components]
+2. **Medium Priority**: [List components]  
+3. **Low Priority**: [List components]
+
+## Custom Components Required
+[List any components that need to be built from scratch]
+
+## Styling Migration Strategy
+- Bootstrap 5 classes mapping
+- Theme system integration
+- Responsive design considerations
+```
+
+#### B. Migration Structure Scaffolding
+Create the directory structure for Phase 3 work:
+
+```
+/apps/combined-template/
+  /src/
+    /components/
+      /migrated/           # New migrated components
+        /auth/            # Auth-related components
+        /layout/          # Layout components  
+        /ui/              # Basic UI components
+        /data/            # Data display components
+      /legacy/            # Temporary Doctor-Dok components
+    /styles/
+      /migration/         # Migration-specific styles
+```
+
+#### C. Migration Planning Documents
+Create: `/docs/architecture/phase3/MIGRATION_PLAN.md`
+
+Include:
+- Component-by-component migration order
+- Dependencies and blockers
+- Testing strategy for each component
+- Rollback plan if needed
+
+### 3. Technical Analysis Requirements
+
+#### Component Analysis Checklist
+For each Doctor-Dok component, document:
+- **Props interface**: What data it expects
+- **State management**: Internal state and external dependencies  
+- **Styling approach**: CSS modules, inline styles, or classes
+- **Dependencies**: Other components it uses or that use it
+- **Functionality**: Key features and behaviors
+- **Bootstrap equivalent**: Direct mapping or custom implementation needed
+
+#### Rasket Integration Points
+- **Theme system**: How to integrate with Rasket's theming
+- **Layout compatibility**: Fitting into Rasket's layout structure
+- **Bootstrap 5 classes**: Specific classes to use for styling
+- **Responsive behavior**: Mobile/desktop considerations
+
+### 4. Implementation Guidelines
+
+#### Naming Conventions
+- Migrated components: `[ComponentName]Migrated.tsx`
+- Keep original names where possible for easier mapping
+- Use consistent directory structure
+
+#### Migration Strategy
+- **Phase 3a**: Core authentication and layout components
+- **Phase 3b**: Data display and form components  
+- **Phase 3c**: Advanced interactive components
+- **Phase 3d**: Polish and optimization
+
+#### Quality Gates
+- Each component mapping must include complexity assessment
+- Migration plan must identify all dependencies
+- Scaffolding must support parallel development (old + new components)
+
+## Expected Deliverables
+
+1. **Component Mapping Document**: Comprehensive mapping with complexity analysis
+2. **Migration Scaffolding**: Directory structure and initial component shells
+3. **Migration Plan**: Detailed phase-by-phase implementation strategy
+4. **Dependency Analysis**: Component interaction map
+5. **Testing Strategy**: Plan for validating migrated components
+
+## Success Criteria
+
+- [ ] All Doctor-Dok UI components catalogued and mapped
+- [ ] Rasket equivalent identified for each component (or custom implementation planned)
+- [ ] Migration complexity assessed (HIGH/MEDIUM/LOW) for each component
+- [ ] Phase 3 directory structure created and ready for development
+- [ ] Migration dependencies mapped to prevent blocking issues
+- [ ] Testing strategy defined for component validation
+
+## Notes for Implementation
+
+- **Preserve Functionality**: Ensure no features are lost in migration
+- **Bootstrap 5 First**: Always prefer existing Rasket/Bootstrap components
+- **Incremental Migration**: Plan for gradual component replacement
+- **Fallback Strategy**: Keep Doctor-Dok components as fallback during migration
+- **Performance**: Consider bundle size impact of component changes
+
+---
+
+**Context**: This scaffolding work enables the systematic migration from Doctor-Dok's custom UI to Rasket's Bootstrap 5 based components, ensuring feature parity while improving design consistency and maintainability.
+
+**Reference**: 
+- Doctor-Dok components: `/templates/backend/doctor-dok/src/components/`
+- Rasket components: `/templates/frontend/rasket-template/src/components/`
+- Project plan: Phase 3 tasks T301-T309

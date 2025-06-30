@@ -1,4 +1,4 @@
-import { describe, it, expect } from '@jest/globals';
+import { describe, it, expect } from 'vitest';
 import { TEST_CONFIGS, TEST_USERS, PERFORMANCE_TARGETS } from './test.config';
 
 describe('Test Environment Setup', () => {

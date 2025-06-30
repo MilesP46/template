@@ -3,13 +3,14 @@
  * Updated to use the new unified auth system
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Alert, Button, Form, Spinner } from 'react-bootstrap';
 import { useRegister, useAuthMode } from '@doctor-dok/shared-auth-react';
+import { InputSanitizer } from '@doctor-dok/shared-auth';
 import PasswordInput from '@/components/PasswordInput';
 import MasterKeyInput from './MasterKeyInput';
 
@@ -49,15 +50,27 @@ export default function SignUpForm() {
   });
 
   const onSubmit = async (data: SignUpFormData) => {
-    const result = await signUp({
-      email: data.email,
-      username: data.username,
-      password: data.password,
-      masterKey: data.masterKey,
-    });
+    try {
+      // Sanitize inputs to prevent XSS attacks (T215_phase2.6_cp1)
+      const sanitizedData = InputSanitizer.sanitizeRegistrationData({
+        email: data.email,
+        password: data.password,
+        masterKey: data.masterKey,
+      });
 
-    if (result.success) {
-      navigate('/dashboard');
+      const result = await signUp({
+        email: sanitizedData.email,
+        username: data.username ? InputSanitizer.sanitizeForDatabase(data.username, 50) : undefined,
+        password: sanitizedData.password,
+        masterKey: sanitizedData.masterKey,
+      });
+
+      if (result.success) {
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      // Input sanitization errors will be caught here
+      console.error('Registration form validation error:', error);
     }
   };
 

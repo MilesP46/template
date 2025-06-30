@@ -11,7 +11,8 @@
       "Bash(chmod:*)",
       "Bash(./scripts/verify-build.sh:*)",
       "Bash(grep:*)",
-      "Bash(./scripts/setup-test-env.sh:*)"
+      "Bash(./scripts/setup-test-env.sh:*)",
+      "Bash(npm install:*)"
     ],
     "deny": []
   }

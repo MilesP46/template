@@ -1,6 +1,7 @@
 import type { CreateUserDto, User, LoginDto, AuthResult, FullAuthConfig } from '@doctor-dok/shared-types';
 import { AuthError, AuthErrorCode } from '@doctor-dok/shared-types';
 import { BaseAuthStrategy } from './base-auth.strategy';
+import { InputSanitizer } from '@doctor-dok/shared-auth/utils/input-sanitizer';
 
 /**
  * Single-tenant authentication strategy.
@@ -43,11 +44,19 @@ export class SingleTenantAuthMode extends BaseAuthStrategy {
       );
     }
 
+    // Sanitize user input to prevent XSS attacks
+    const sanitizedData = InputSanitizer.sanitizeRegistrationData({
+      email: userData.email,
+      password: userData.password,
+      masterKey: userData.encryptionKey,
+      databaseId: userData.databaseId
+    });
+
     // Create user with encrypted database
     const user: User = {
       id: 'single-user-' + Date.now(),
-      email: userData.email,
-      username: userData.username || userData.email,
+      email: sanitizedData.email,
+      username: userData.username ? InputSanitizer.sanitizeForDatabase(userData.username, 50) : sanitizedData.email,
       createdAt: new Date(),
       updatedAt: new Date(),
       metadata: userData.metadata || {}
@@ -74,8 +83,15 @@ export class SingleTenantAuthMode extends BaseAuthStrategy {
       );
     }
 
+    // Sanitize login credentials to prevent XSS attacks
+    const sanitizedCredentials = InputSanitizer.sanitizeLoginData({
+      email: credentials.email,
+      password: credentials.password,
+      masterKey: credentials.encryptionKey
+    });
+
     // Validate master key
-    if (!credentials.encryptionKey || credentials.encryptionKey !== this.config.singleTenant?.masterKey) {
+    if (!sanitizedCredentials.masterKey || sanitizedCredentials.masterKey !== this.config.singleTenant?.masterKey) {
       throw new AuthError(
         AuthErrorCode.INVALID_CREDENTIALS,
         'Invalid encryption key',

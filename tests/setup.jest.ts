@@ -1,3 +1,8 @@
+/**
+ * Jest Test Setup
+ * T220_phase2.6_cp1: Fix test coverage instrumentation
+ */
+
 import { beforeAll, afterAll, beforeEach } from '@jest/globals';
 import { cleanupTestEnvironment } from './test.config';
 

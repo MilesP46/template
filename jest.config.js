@@ -21,7 +21,7 @@ module.exports = {
       }
     }]
   },
-  setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.jest.ts'],
   collectCoverageFrom: [
     'packages/*/src/**/*.{ts,tsx}',
     'apps/*/src/**/*.{ts,tsx}',

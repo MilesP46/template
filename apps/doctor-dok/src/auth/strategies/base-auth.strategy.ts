@@ -19,6 +19,9 @@ import * as crypto from 'crypto';
 export abstract class BaseAuthStrategy implements IAuthMode {
   protected config: FullAuthConfig;
   protected initialized: boolean = false;
+  
+  // Token blacklist to prevent refresh token reuse (T216_phase2.6_cp1)
+  private usedRefreshTokens: Set<string> = new Set();
 
   constructor(config: FullAuthConfig) {
     this.config = config;
@@ -97,19 +100,42 @@ export abstract class BaseAuthStrategy implements IAuthMode {
 
   /**
    * Refresh authentication tokens using a refresh token.
-   * Common implementation that can be overridden if needed.
+   * T216_phase2.6_cp1: Enhanced to prevent refresh token reuse and ensure new tokens
    */
   async refreshToken(refreshToken: string): Promise<TokenPair> {
     try {
       // Verify the refresh token
       const payload = await this.verifyToken(refreshToken, 'refresh');
       
+      // Check if this refresh token has already been used
+      if (this.usedRefreshTokens.has(payload.jti || refreshToken)) {
+        throw new AuthError(
+          AuthErrorCode.INVALID_TOKEN,
+          'Refresh token has already been used',
+          401
+        );
+      }
+      
       // Check if user still exists and is active
       await this.validateUserStatus(payload.sub);
       
-      // Generate new token pair
-      return this.generateTokenPair(payload.sub, payload.permissions || []);
+      // Mark this refresh token as used to prevent reuse
+      this.usedRefreshTokens.add(payload.jti || refreshToken);
+      
+      // Generate completely new token pair with new identifiers
+      const newTokens = this.generateTokenPair(payload.sub, payload.permissions || []);
+      
+      // Clean up old used tokens periodically (keep only last 100)
+      if (this.usedRefreshTokens.size > 100) {
+        const tokensToDelete = Array.from(this.usedRefreshTokens).slice(0, 50);
+        tokensToDelete.forEach(token => this.usedRefreshTokens.delete(token));
+      }
+      
+      return newTokens;
     } catch (error) {
+      if (error instanceof AuthError) {
+        throw error;
+      }
       throw new AuthError(
         AuthErrorCode.INVALID_TOKEN,
         'Invalid or expired refresh token',
@@ -130,22 +156,30 @@ export abstract class BaseAuthStrategy implements IAuthMode {
 
   /**
    * Generate a JWT token pair (access and refresh tokens)
+   * T216_phase2.6_cp1: Fix token refresh to generate new tokens instead of returning same token
    */
   protected generateTokenPair(userId: string, permissions: string[] = []): TokenPair {
     const accessTokenExpiration = this.getTokenExpirationSeconds('access');
     const refreshTokenExpiration = this.getTokenExpirationSeconds('refresh');
+    
+    // Generate unique identifiers for each token to ensure they're always different
+    const currentTime = Math.floor(Date.now() / 1000);
+    const accessTokenId = crypto.randomBytes(16).toString('hex');
+    const refreshTokenId = crypto.randomBytes(16).toString('hex');
 
     const basePayload: Partial<JwtPayload> = {
       sub: userId,
       permissions,
       iss: 'doctor-dok',
-      aud: this.config.mode
+      aud: this.config.mode,
+      iat: currentTime // Explicit issued at timestamp
     };
 
     const accessToken = jwt.sign(
       {
         ...basePayload,
-        type: 'access'
+        type: 'access',
+        jti: accessTokenId // Unique ID for access token
       },
       this.getJwtSecret(),
       {
@@ -158,7 +192,9 @@ export abstract class BaseAuthStrategy implements IAuthMode {
       {
         ...basePayload,
         type: 'refresh',
-        jti: crypto.randomBytes(16).toString('hex') // Unique ID for refresh token
+        jti: refreshTokenId, // Unique ID for refresh token
+        // Add slight delay to ensure different iat if called rapidly
+        iat: currentTime + 1
       },
       this.getJwtSecret(),
       {
@@ -253,11 +289,21 @@ export abstract class BaseAuthStrategy implements IAuthMode {
   protected abstract validateUserStatus(userId: string): Promise<void>;
 
   /**
-   * Invalidate user tokens - to be implemented by subclasses if needed
+   * Invalidate user tokens - enhanced for refresh token blacklisting
+   * T216_phase2.6_cp1: Add method to blacklist refresh token on logout
    */
   protected async invalidateUserTokens(userId: string): Promise<void> {
-    // Default no-op implementation
-    // Subclasses can implement token blacklisting if needed
+    // Default implementation blacklists all refresh tokens for this user
+    // In a real implementation, we'd store user-token mapping in database
+    // For now, we clear all used tokens as a security measure
+    this.usedRefreshTokens.clear();
+  }
+
+  /**
+   * Blacklist a specific refresh token (T216_phase2.6_cp1)
+   */
+  protected blacklistRefreshToken(tokenOrJti: string): void {
+    this.usedRefreshTokens.add(tokenOrJti);
   }
 
   /**

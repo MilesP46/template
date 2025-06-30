@@ -1,6 +1,7 @@
 import type { CreateUserDto, User, LoginDto, AuthResult, FullAuthConfig } from '@doctor-dok/shared-types';
 import { AuthError, AuthErrorCode } from '@doctor-dok/shared-types';
 import { BaseAuthStrategy } from './base-auth.strategy';
+import { InputSanitizer } from '@doctor-dok/shared-auth/utils/input-sanitizer';
 
 /**
  * Multi-tenant authentication strategy.
@@ -38,8 +39,15 @@ export class MultiTenantAuthMode extends BaseAuthStrategy {
    * Create a new user in the shared database
    */
   async createUser(userData: CreateUserDto): Promise<User> {
+    // Sanitize user input to prevent XSS attacks
+    const sanitizedData = InputSanitizer.sanitizeRegistrationData({
+      email: userData.email,
+      password: userData.password,
+      databaseId: userData.databaseId
+    });
+
     // Check if user already exists
-    const existingUser = Array.from(this.users.values()).find(u => u.email === userData.email);
+    const existingUser = Array.from(this.users.values()).find(u => u.email === sanitizedData.email);
     if (existingUser) {
       throw new AuthError(
         AuthErrorCode.MODE_NOT_SUPPORTED,
@@ -63,8 +71,8 @@ export class MultiTenantAuthMode extends BaseAuthStrategy {
     // Create new user
     const user: User = {
       id: 'user-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
-      email: userData.email,
-      username: userData.username || userData.email,
+      email: sanitizedData.email,
+      username: userData.username ? InputSanitizer.sanitizeForDatabase(userData.username, 50) : sanitizedData.email,
       createdAt: new Date(),
       updatedAt: new Date(),
       metadata: {
@@ -79,7 +87,7 @@ export class MultiTenantAuthMode extends BaseAuthStrategy {
     // 3. Set up row-level security
     
     this.users.set(user.id, user);
-    this.userPasswords.set(user.id, userData.password); // In real app, this would be hashed
+    this.userPasswords.set(user.id, sanitizedData.password); // In real app, this would be hashed
 
     return user;
   }
@@ -88,9 +96,15 @@ export class MultiTenantAuthMode extends BaseAuthStrategy {
    * Authenticate a user from the shared database
    */
   async authenticateUser(credentials: LoginDto): Promise<AuthResult> {
+    // Sanitize login credentials to prevent XSS attacks
+    const sanitizedCredentials = InputSanitizer.sanitizeLoginData({
+      email: credentials.email,
+      password: credentials.password
+    });
+
     // Find user by email or username
     const user = Array.from(this.users.values()).find(u => 
-      u.email === credentials.email || 
+      u.email === sanitizedCredentials.email || 
       u.username === credentials.username
     );
 
@@ -104,7 +118,7 @@ export class MultiTenantAuthMode extends BaseAuthStrategy {
 
     // Verify password
     const storedPassword = this.userPasswords.get(user.id);
-    if (!storedPassword || storedPassword !== credentials.password) {
+    if (!storedPassword || storedPassword !== sanitizedCredentials.password) {
       throw new AuthError(
         AuthErrorCode.INVALID_CREDENTIALS,
         'Invalid credentials',

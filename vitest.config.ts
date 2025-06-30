@@ -5,7 +5,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    setupFiles: ['./tests/setup.ts'],
+    setupFiles: ['./tests/setup.vitest.ts'],
     include: [
       'tests/**/*.test.ts',
       'packages/*/src/**/*.test.ts',
@@ -13,7 +13,7 @@ export default defineConfig({
     ],
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'json', 'html'],
+      reporter: ['text', 'json', 'html', 'text-summary'],
       reportsDirectory: './coverage',
       include: [
         'packages/*/src/**/*.ts',
@@ -25,14 +25,17 @@ export default defineConfig({
         '**/*.d.ts',
         '**/*.test.ts',
         '**/*.spec.ts',
-        '**/index.ts'
+        '**/index.ts',
+        'templates/**/*'
       ],
       thresholds: {
         lines: 90,
         functions: 90,
         branches: 90,
         statements: 90
-      }
+      },
+      all: true,
+      skipFull: false
     }
   },
   resolve: {

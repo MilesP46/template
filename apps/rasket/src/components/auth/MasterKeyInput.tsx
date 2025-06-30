@@ -3,9 +3,9 @@
  * Specialized input for master key with strength indicator and security tips
  */
 
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Form, InputGroup, Button, ProgressBar, Alert } from 'react-bootstrap';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 
 interface MasterKeyInputProps {
   name: string;

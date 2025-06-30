@@ -3,13 +3,14 @@
  * Updated to use the new unified auth system
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Alert, Button, Form, Spinner } from 'react-bootstrap';
 import { useLogin } from '@doctor-dok/shared-auth-react';
+import { InputSanitizer } from '@doctor-dok/shared-auth';
 import PasswordInput from '@/components/PasswordInput';
 
 // Validation schema
@@ -38,14 +39,22 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    const result = await login({
-      databaseId: data.databaseId,
-      password: data.password,
-      keepLoggedIn: data.rememberMe,
-    });
+    try {
+      // Sanitize inputs to prevent XSS attacks (T215_phase2.6_cp1)
+      const sanitizedData = {
+        databaseId: InputSanitizer.sanitizeForDatabase(data.databaseId),
+        password: InputSanitizer.sanitizePassword(data.password),
+        keepLoggedIn: data.rememberMe,
+      };
 
-    if (result.success) {
-      navigate('/dashboard');
+      const result = await login(sanitizedData);
+
+      if (result.success) {
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      // Input sanitization errors will be caught here
+      console.error('Login form validation error:', error);
     }
   };
 

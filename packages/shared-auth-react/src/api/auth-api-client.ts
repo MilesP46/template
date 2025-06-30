@@ -12,10 +12,12 @@ import type {
   AuthError,
   AuthErrorCode,
 } from '@doctor-dok/shared-auth';
+import { InputSanitizer } from '@doctor-dok/shared-auth';
 
 export class AuthApiClient {
   private axios: AxiosInstance;
   private authToken: string | null = null;
+  private csrfToken: string | null = null;
 
   constructor(baseURL: string) {
     this.axios = axios.create({
@@ -25,21 +27,35 @@ export class AuthApiClient {
       },
     });
 
-    // Request interceptor to add auth token
+    // Request interceptor to add auth token and CSRF token
     this.axios.interceptors.request.use((config) => {
       if (this.authToken) {
         config.headers.Authorization = `Bearer ${this.authToken}`;
       }
+      if (this.csrfToken) {
+        config.headers['X-CSRF-Token'] = this.csrfToken;
+      }
       return config;
     });
 
-    // Response interceptor for error handling
+    // Response interceptor for error handling and CSRF token updates
     this.axios.interceptors.response.use(
-      (response) => response,
+      (response) => {
+        // Update CSRF token from response headers
+        const newCsrfToken = response.headers['x-csrf-token'];
+        if (newCsrfToken) {
+          this.csrfToken = newCsrfToken;
+        }
+        return response;
+      },
       (error: AxiosError) => {
         if (error.response?.status === 401) {
           // Token expired or invalid
           this.authToken = null;
+        }
+        if (error.response?.status === 403) {
+          // CSRF token invalid - clear it
+          this.csrfToken = null;
         }
         return Promise.reject(this.transformError(error));
       }
@@ -61,18 +77,74 @@ export class AuthApiClient {
   }
 
   /**
-   * Login with credentials
+   * Set CSRF token (T219_phase2.6_cp1)
+   */
+  setCsrfToken(token: string) {
+    this.csrfToken = token;
+  }
+
+  /**
+   * Get CSRF token from server (T219_phase2.6_cp1)
+   */
+  async getCsrfToken(): Promise<string> {
+    const response = await this.axios.get('/api/auth/login');
+    const token = response.data.csrfToken || response.headers['x-csrf-token'];
+    if (token) {
+      this.csrfToken = token;
+    }
+    return token;
+  }
+
+  /**
+   * Login with credentials (T219_phase2.6_cp1: Enhanced with CSRF protection)
    */
   async login(credentials: LoginDto): Promise<AuthResult> {
-    const response = await this.axios.post<AuthResult>('/api/auth/login', credentials);
+    // Get CSRF token if we don't have one
+    if (!this.csrfToken) {
+      await this.getCsrfToken();
+    }
+
+    // Sanitize login credentials to prevent XSS attacks (T215_phase2.6_cp1)
+    const sanitizedCredentials = InputSanitizer.sanitizeLoginData({
+      email: credentials.email,
+      password: credentials.password,
+      masterKey: credentials.encryptionKey
+    });
+
+    const response = await this.axios.post<AuthResult>('/api/auth/login', {
+      ...credentials,
+      email: sanitizedCredentials.email,
+      password: sanitizedCredentials.password,
+      encryptionKey: sanitizedCredentials.masterKey
+    });
     return response.data;
   }
 
   /**
-   * Register new user
+   * Register new user (T219_phase2.6_cp1: Enhanced with CSRF protection)
    */
   async register(data: CreateUserDto): Promise<AuthResult> {
-    const response = await this.axios.post<AuthResult>('/api/auth/register', data);
+    // Get CSRF token if we don't have one
+    if (!this.csrfToken) {
+      await this.getCsrfToken();
+    }
+
+    // Sanitize registration data to prevent XSS attacks (T215_phase2.6_cp1)
+    const sanitizedData = InputSanitizer.sanitizeRegistrationData({
+      email: data.email,
+      password: data.password,
+      masterKey: data.encryptionKey,
+      databaseId: data.databaseId
+    });
+
+    const response = await this.axios.post<AuthResult>('/api/auth/register', {
+      ...data,
+      email: sanitizedData.email,
+      password: sanitizedData.password,
+      encryptionKey: sanitizedData.masterKey,
+      databaseId: sanitizedData.databaseId,
+      username: data.username ? InputSanitizer.sanitizeForDatabase(data.username, 50) : undefined
+    });
     return response.data;
   }
 

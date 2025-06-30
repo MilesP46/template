@@ -8,10 +8,9 @@ import type {
   User, 
   AuthSession, 
   LoginDto, 
-  CreateUserDto,
-  AuthError,
-  AuthErrorCode 
+  CreateUserDto
 } from '@doctor-dok/shared-auth';
+import { AuthError, AuthErrorCode } from '@doctor-dok/shared-auth';
 import { AuthApiClient } from '../api/auth-api-client';
 import { StorageService } from '../services/storage.service';
 
