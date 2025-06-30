@@ -87,3 +87,142 @@
     }
   }
 }
+
+// Form Component Theme Styles
+// Ensures form controls work properly in both light and dark themes
+
+// Base form control styling
+.form-control,
+.form-select {
+  background-color: var(--card);
+  border-color: var(--border);
+  color: var(--card-foreground);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  
+  &::placeholder {
+    color: var(--muted-foreground);
+    opacity: 0.7;
+  }
+  
+  &:focus {
+    background-color: var(--card);
+    border-color: var(--ring);
+    color: var(--card-foreground);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+  }
+  
+  &:disabled,
+  &[readonly] {
+    background-color: var(--muted);
+    opacity: 0.65;
+  }
+}
+
+// Form labels
+.form-label {
+  color: var(--foreground);
+  font-weight: 500;
+  margin-bottom: 0.375rem;
+}
+
+// Form text helpers
+.form-text {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+// Input groups
+.input-group {
+  .input-group-text {
+    background-color: var(--muted);
+    border-color: var(--border);
+    color: var(--muted-foreground);
+  }
+  
+  // Fix focus states within input groups
+  .form-control:focus ~ .input-group-text,
+  .form-select:focus ~ .input-group-text {
+    border-color: var(--ring);
+  }
+}
+
+// Checkboxes and radios
+.form-check-input {
+  background-color: var(--card);
+  border-color: var(--border);
+  
+  &:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+  }
+  
+  &:focus {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+// Form validation states
+.form-control {
+  &.is-valid {
+    border-color: var(--success);
+    
+    &:focus {
+      border-color: var(--success);
+      box-shadow: 0 0 0 0.25rem rgba(var(--bs-success-rgb), 0.25);
+    }
+  }
+  
+  &.is-invalid {
+    border-color: var(--destructive);
+    
+    &:focus {
+      border-color: var(--destructive);
+      box-shadow: 0 0 0 0.25rem rgba(var(--bs-danger-rgb), 0.25);
+    }
+  }
+}
+
+// Floating labels
+.form-floating {
+  > .form-control,
+  > .form-select {
+    background-color: var(--card);
+    
+    &:focus,
+    &:not(:placeholder-shown) {
+      background-color: var(--card);
+    }
+  }
+  
+  > label {
+    color: var(--muted-foreground);
+    
+    &::after {
+      background-color: var(--card);
+    }
+  }
+}
+
+// Range inputs
+.form-range {
+  &::-webkit-slider-thumb {
+    background-color: var(--primary);
+  }
+  
+  &::-moz-range-thumb {
+    background-color: var(--primary);
+  }
+  
+  &::-webkit-slider-runnable-track {
+    background-color: var(--border);
+  }
+  
+  &::-moz-range-track {
+    background-color: var(--border);
+  }
+}

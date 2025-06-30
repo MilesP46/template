@@ -103,3 +103,186 @@
     }
   }
 }
+
+// Modal Component Theme Styles
+// Theme-aware styling for modals and dialogs
+
+// Modal theming
+.modal {
+  .modal-content {
+    background-color: var(--popover);
+    border-color: var(--border);
+    color: var(--popover-foreground);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    
+    [data-bs-theme="dark"] & {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+  }
+  
+  .modal-header {
+    background-color: var(--card);
+    border-bottom-color: var(--border);
+    
+    .modal-title {
+      color: var(--foreground);
+      font-weight: 600;
+    }
+    
+    .btn-close {
+      [data-bs-theme="dark"] & {
+        filter: invert(1) grayscale(100%) brightness(200%);
+      }
+    }
+  }
+  
+  .modal-body {
+    color: var(--popover-foreground);
+    
+    // Ensure forms in modals have correct styling
+    .form-control,
+    .form-select {
+      background-color: var(--card);
+      border-color: var(--border);
+      color: var(--card-foreground);
+    }
+  }
+  
+  .modal-footer {
+    background-color: var(--muted);
+    border-top-color: var(--border);
+  }
+}
+
+// Modal backdrop
+.modal-backdrop {
+  &.show {
+    opacity: 0.5;
+    
+    [data-bs-theme="dark"] & {
+      opacity: 0.8;
+    }
+  }
+}
+
+// Toast notifications
+.toast {
+  background-color: var(--card);
+  border-color: var(--border);
+  color: var(--card-foreground);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  .toast-header {
+    background-color: var(--muted);
+    border-bottom-color: var(--border);
+    color: var(--foreground);
+    
+    .btn-close {
+      [data-bs-theme="dark"] & {
+        filter: invert(1) grayscale(100%) brightness(200%);
+      }
+    }
+  }
+  
+  .toast-body {
+    color: var(--card-foreground);
+  }
+}
+
+// Popovers
+.popover {
+  background-color: var(--popover);
+  border-color: var(--border);
+  
+  .popover-header {
+    background-color: var(--muted);
+    border-bottom-color: var(--border);
+    color: var(--foreground);
+    font-weight: 600;
+  }
+  
+  .popover-body {
+    color: var(--popover-foreground);
+  }
+  
+  &.bs-popover-top,
+  &.bs-popover-auto[data-popper-placement^="top"] {
+    > .popover-arrow::before {
+      border-top-color: var(--border);
+    }
+    
+    > .popover-arrow::after {
+      border-top-color: var(--popover);
+    }
+  }
+  
+  &.bs-popover-end,
+  &.bs-popover-auto[data-popper-placement^="right"] {
+    > .popover-arrow::before {
+      border-right-color: var(--border);
+    }
+    
+    > .popover-arrow::after {
+      border-right-color: var(--popover);
+    }
+  }
+  
+  &.bs-popover-bottom,
+  &.bs-popover-auto[data-popper-placement^="bottom"] {
+    > .popover-arrow::before {
+      border-bottom-color: var(--border);
+    }
+    
+    > .popover-arrow::after {
+      border-bottom-color: var(--muted);
+    }
+  }
+  
+  &.bs-popover-start,
+  &.bs-popover-auto[data-popper-placement^="left"] {
+    > .popover-arrow::before {
+      border-left-color: var(--border);
+    }
+    
+    > .popover-arrow::after {
+      border-left-color: var(--popover);
+    }
+  }
+}
+
+// Tooltips
+.tooltip {
+  .tooltip-inner {
+    background-color: var(--foreground);
+    color: var(--background);
+    font-size: 0.875rem;
+  }
+  
+  &.bs-tooltip-top,
+  &.bs-tooltip-auto[data-popper-placement^="top"] {
+    .tooltip-arrow::before {
+      border-top-color: var(--foreground);
+    }
+  }
+  
+  &.bs-tooltip-end,
+  &.bs-tooltip-auto[data-popper-placement^="right"] {
+    .tooltip-arrow::before {
+      border-right-color: var(--foreground);
+    }
+  }
+  
+  &.bs-tooltip-bottom,
+  &.bs-tooltip-auto[data-popper-placement^="bottom"] {
+    .tooltip-arrow::before {
+      border-bottom-color: var(--foreground);
+    }
+  }
+  
+  &.bs-tooltip-start,
+  &.bs-tooltip-auto[data-popper-placement^="left"] {
+    .tooltip-arrow::before {
+      border-left-color: var(--foreground);
+    }
+  }
+}

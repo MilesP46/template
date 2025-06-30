@@ -1,153 +1,240 @@
-import React, { useState } from 'react';
-import { Button } from './Button';
-import { Label } from './Label';
-import { RadioGroup, RadioGroupItem } from './RadioGroup';
-import { useTheme } from '../../../providers/ThemeProvider';
-import type { Theme } from '../../../hooks/useTheme';
+'use client';
 
-export interface ThemeCustomizerProps {
-  open: boolean;
-  onClose: () => void;
+import React, { useState } from 'react';
+import { useThemeContext } from '../../../providers/ThemeProvider';
+import type { Theme } from '../../../hooks/useTheme';
+import { Button } from './Button';
+
+interface ThemeCustomizerProps {
+  className?: string;
 }
 
-export function ThemeCustomizer({ open, onClose }: ThemeCustomizerProps) {
-  const { theme, setTheme, effectiveTheme } = useTheme();
-  const [primaryColor, setPrimaryColor] = useState('#0d6efd');
+const primaryColors = [
+  { name: 'Blue', value: '#0d6efd' },
+  { name: 'Indigo', value: '#6610f2' },
+  { name: 'Purple', value: '#6f42c1' },
+  { name: 'Pink', value: '#d63384' },
+  { name: 'Red', value: '#dc3545' },
+  { name: 'Orange', value: '#fd7e14' },
+  { name: 'Yellow', value: '#ffc107' },
+  { name: 'Green', value: '#198754' },
+  { name: 'Teal', value: '#20c997' },
+  { name: 'Cyan', value: '#0dcaf0' },
+];
 
-  const handleThemeChange = (value: string) => {
-    setTheme(value as Theme);
+const fontSizes = [
+  { name: 'Small', value: '14px' },
+  { name: 'Default', value: '16px' },
+  { name: 'Large', value: '18px' },
+];
+
+export function ThemeCustomizer({ className }: ThemeCustomizerProps) {
+  const { theme, setTheme, effectiveTheme } = useThemeContext();
+  const [isOpen, setIsOpen] = useState(false);
+  const [primaryColor, setPrimaryColor] = useState('#0d6efd');
+  const [fontSize, setFontSize] = useState('16px');
+
+  const handleThemeChange = (newTheme: Theme) => {
+    setTheme(newTheme);
   };
 
   const handlePrimaryColorChange = (color: string) => {
     setPrimaryColor(color);
-    // Apply custom primary color
-    document.documentElement.style.setProperty('--bs-primary', color);
+    // Apply the color to CSS variable
     document.documentElement.style.setProperty('--primary', color);
   };
 
-  const resetSettings = () => {
-    setTheme('auto');
+  const handleFontSizeChange = (size: string) => {
+    setFontSize(size);
+    // Apply the font size
+    document.documentElement.style.fontSize = size;
+  };
+
+  const resetCustomizations = () => {
     setPrimaryColor('#0d6efd');
-    document.documentElement.style.removeProperty('--bs-primary');
+    setFontSize('16px');
     document.documentElement.style.removeProperty('--primary');
+    document.documentElement.style.fontSize = '16px';
   };
 
   return (
-    <div
-      className={`offcanvas offcanvas-end ${open ? 'show' : ''}`}
-      style={{ visibility: open ? 'visible' : 'hidden' }}
-      tabIndex={-1}
-    >
-      <div className="offcanvas-header bg-primary text-white">
-        <h5 className="offcanvas-title">Theme Settings</h5>
-        <button
-          type="button"
-          className="btn-close btn-close-white"
-          onClick={onClose}
-          aria-label="Close"
-        />
-      </div>
-      
-      <div className="offcanvas-body">
-        <div className="mb-4">
-          <h6 className="mb-3">Color Scheme</h6>
-          <RadioGroup value={theme} onValueChange={handleThemeChange}>
-            <div className="mb-2">
-              <div className="form-check">
-                <RadioGroupItem value="light" id="theme-light" />
-                <Label htmlFor="theme-light" className="form-check-label ms-2">
-                  Light
-                </Label>
-              </div>
-            </div>
-            <div className="mb-2">
-              <div className="form-check">
-                <RadioGroupItem value="dark" id="theme-dark" />
-                <Label htmlFor="theme-dark" className="form-check-label ms-2">
-                  Dark
-                </Label>
-              </div>
-            </div>
-            <div className="mb-2">
-              <div className="form-check">
-                <RadioGroupItem value="auto" id="theme-auto" />
-                <Label htmlFor="theme-auto" className="form-check-label ms-2">
-                  Auto (System)
-                </Label>
-              </div>
-            </div>
-          </RadioGroup>
-        </div>
+    <>
+      {/* Floating Button */}
+      <button
+        className={`btn btn-primary rounded-circle position-fixed ${className}`}
+        style={{
+          bottom: '20px',
+          right: '20px',
+          width: '56px',
+          height: '56px',
+          zIndex: 1040,
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        }}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Open theme customizer"
+      >
+        <i className="bi bi-palette-fill"></i>
+      </button>
 
-        <div className="mb-4">
-          <h6 className="mb-3">Primary Color</h6>
-          <div className="d-flex gap-2 flex-wrap">
-            {[
-              { color: '#0d6efd', name: 'Blue' },
-              { color: '#6610f2', name: 'Indigo' },
-              { color: '#6f42c1', name: 'Purple' },
-              { color: '#d63384', name: 'Pink' },
-              { color: '#dc3545', name: 'Red' },
-              { color: '#fd7e14', name: 'Orange' },
-              { color: '#ffc107', name: 'Yellow' },
-              { color: '#198754', name: 'Green' },
-              { color: '#20c997', name: 'Teal' },
-              { color: '#0dcaf0', name: 'Cyan' },
-            ].map(({ color, name }) => (
-              <button
-                key={color}
-                type="button"
-                className={`btn btn-sm position-relative ${
-                  primaryColor === color ? 'border-primary border-2' : 'border'
-                }`}
-                style={{
-                  backgroundColor: color,
-                  width: '40px',
-                  height: '40px',
-                }}
-                onClick={() => handlePrimaryColorChange(color)}
-                title={name}
-              >
-                {primaryColor === color && (
-                  <span className="position-absolute top-50 start-50 translate-middle">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="white"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
-                    </svg>
-                  </span>
-                )}
-              </button>
-            ))}
+      {/* Customizer Panel */}
+      <div
+        className={`offcanvas offcanvas-end ${isOpen ? 'show' : ''}`}
+        style={{
+          visibility: isOpen ? 'visible' : 'hidden',
+          transition: 'transform 0.3s ease-in-out',
+        }}
+        tabIndex={-1}
+      >
+        <div className="offcanvas-header">
+          <h5 className="offcanvas-title">Theme Customizer</h5>
+          <button
+            type="button"
+            className="btn-close"
+            onClick={() => setIsOpen(false)}
+            aria-label="Close"
+          ></button>
+        </div>
+        
+        <div className="offcanvas-body">
+          {/* Theme Mode Section */}
+          <div className="mb-4">
+            <h6 className="mb-3">Theme Mode</h6>
+            <div className="btn-group w-100" role="group">
+              <input
+                type="radio"
+                className="btn-check"
+                name="theme"
+                id="theme-light"
+                autoComplete="off"
+                checked={theme === 'light'}
+                onChange={() => handleThemeChange('light')}
+              />
+              <label className="btn btn-outline-primary" htmlFor="theme-light">
+                <i className="bi bi-sun-fill me-2"></i>Light
+              </label>
+
+              <input
+                type="radio"
+                className="btn-check"
+                name="theme"
+                id="theme-dark"
+                autoComplete="off"
+                checked={theme === 'dark'}
+                onChange={() => handleThemeChange('dark')}
+              />
+              <label className="btn btn-outline-primary" htmlFor="theme-dark">
+                <i className="bi bi-moon-fill me-2"></i>Dark
+              </label>
+
+              <input
+                type="radio"
+                className="btn-check"
+                name="theme"
+                id="theme-auto"
+                autoComplete="off"
+                checked={theme === 'auto'}
+                onChange={() => handleThemeChange('auto')}
+              />
+              <label className="btn btn-outline-primary" htmlFor="theme-auto">
+                <i className="bi bi-circle-half me-2"></i>Auto
+              </label>
+            </div>
+            {theme === 'auto' && (
+              <small className="text-muted d-block mt-2">
+                Currently using {effectiveTheme} theme based on system preference
+              </small>
+            )}
+          </div>
+
+          <hr />
+
+          {/* Primary Color Section */}
+          <div className="mb-4">
+            <h6 className="mb-3">Primary Color</h6>
+            <div className="row g-2">
+              {primaryColors.map((color) => (
+                <div key={color.value} className="col-4">
+                  <button
+                    className={`btn w-100 p-3 border ${
+                      primaryColor === color.value ? 'border-primary border-2' : ''
+                    }`}
+                    style={{ backgroundColor: color.value }}
+                    onClick={() => handlePrimaryColorChange(color.value)}
+                    title={color.name}
+                  >
+                    {primaryColor === color.value && (
+                      <i className="bi bi-check text-white"></i>
+                    )}
+                  </button>
+                  <small className="d-block text-center mt-1">{color.name}</small>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <hr />
+
+          {/* Font Size Section */}
+          <div className="mb-4">
+            <h6 className="mb-3">Font Size</h6>
+            <div className="btn-group w-100" role="group">
+              {fontSizes.map((size) => (
+                <React.Fragment key={size.value}>
+                  <input
+                    type="radio"
+                    className="btn-check"
+                    name="fontSize"
+                    id={`fontSize-${size.value}`}
+                    autoComplete="off"
+                    checked={fontSize === size.value}
+                    onChange={() => handleFontSizeChange(size.value)}
+                  />
+                  <label
+                    className="btn btn-outline-primary"
+                    htmlFor={`fontSize-${size.value}`}
+                  >
+                    {size.name}
+                  </label>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+
+          <hr />
+
+          {/* Reset Button */}
+          <div className="d-grid">
+            <Button
+              variant="outline"
+              className="btn-outline-secondary"
+              onClick={resetCustomizations}
+            >
+              <i className="bi bi-arrow-clockwise me-2"></i>
+              Reset Customizations
+            </Button>
+          </div>
+
+          {/* Info Section */}
+          <div className="mt-4 p-3 bg-light rounded">
+            <h6 className="mb-2">
+              <i className="bi bi-info-circle me-2"></i>About
+            </h6>
+            <small className="text-muted">
+              Customize the appearance of your application. Changes are saved automatically
+              and persist across sessions.
+            </small>
           </div>
         </div>
-
-        <div className="mb-4">
-          <h6 className="mb-3">Preview</h6>
-          <div className="card">
-            <div className="card-body">
-              <p className="text-muted mb-2">Current theme: {effectiveTheme}</p>
-                             <div className="d-flex gap-2">
-                 <Button variant="default" size="sm">Default</Button>
-                 <Button variant="secondary" size="sm">Secondary</Button>
-                 <Button variant="outline" size="sm">Outline</Button>
-                 <Button variant="destructive" size="sm">Destructive</Button>
-               </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="d-grid">
-          <Button variant="destructive" onClick={resetSettings}>
-            Reset Settings
-          </Button>
-        </div>
       </div>
-    </div>
+
+      {/* Backdrop */}
+      {isOpen && (
+        <div
+          className="offcanvas-backdrop fade show"
+          onClick={() => setIsOpen(false)}
+        ></div>
+      )}
+    </>
   );
 }
 
@@ -157,7 +244,7 @@ export interface ThemeTogglerProps {
 }
 
 export function ThemeToggler({ className = '' }: ThemeTogglerProps) {
-  const { effectiveTheme, toggleTheme } = useTheme();
+  const { effectiveTheme, toggleTheme } = useThemeContext();
   const isDark = effectiveTheme === 'dark';
 
   return (

@@ -117,3 +117,189 @@
 .z-40 { z-index: 40 !important; }
 .z-50 { z-index: 50 !important; }
 .z-auto { z-index: auto !important; }
+
+// Theme-specific visibility
+.theme-light-only {
+  [data-bs-theme="dark"] & {
+    display: none !important;
+  }
+}
+
+.theme-dark-only {
+  :root:not([data-bs-theme="dark"]) & {
+    display: none !important;
+  }
+}
+
+// Background utilities with CSS variables
+.bg-background {
+  background-color: var(--background) !important;
+}
+
+.bg-foreground {
+  background-color: var(--foreground) !important;
+}
+
+.bg-card {
+  background-color: var(--card) !important;
+}
+
+.bg-popover {
+  background-color: var(--popover) !important;
+}
+
+.bg-muted-subtle {
+  background-color: var(--muted) !important;
+}
+
+// Text color utilities with CSS variables
+.text-foreground {
+  color: var(--foreground) !important;
+}
+
+.text-card-foreground {
+  color: var(--card-foreground) !important;
+}
+
+.text-popover-foreground {
+  color: var(--popover-foreground) !important;
+}
+
+// Border utilities with CSS variables
+.border-default {
+  border-color: var(--border) !important;
+}
+
+.border-input {
+  border-color: var(--input) !important;
+}
+
+// Shadow utilities
+.shadow-sm-dark {
+  [data-bs-theme="dark"] & {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+  }
+}
+
+.shadow-dark {
+  [data-bs-theme="dark"] & {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+  }
+}
+
+.shadow-lg-dark {
+  [data-bs-theme="dark"] & {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3) !important;
+  }
+}
+
+// Focus ring utilities
+.focus-ring-primary {
+  &:focus {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+// Hover utilities
+.hover-bg-muted {
+  &:hover {
+    background-color: var(--muted) !important;
+  }
+}
+
+.hover-text-primary {
+  &:hover {
+    color: var(--primary) !important;
+  }
+}
+
+// Opacity utilities
+.opacity-85 {
+  opacity: 0.85 !important;
+}
+
+.opacity-90 {
+  opacity: 0.9 !important;
+}
+
+// Z-index utilities
+.z-dropdown {
+  z-index: 1000;
+}
+
+.z-sticky {
+  z-index: 1020;
+}
+
+.z-fixed {
+  z-index: 1030;
+}
+
+.z-modal-backdrop {
+  z-index: 1040;
+}
+
+.z-modal {
+  z-index: 1050;
+}
+
+.z-popover {
+  z-index: 1060;
+}
+
+.z-tooltip {
+  z-index: 1070;
+}
+
+// Cursor utilities
+.cursor-grab {
+  cursor: grab !important;
+}
+
+.cursor-grabbing {
+  cursor: grabbing !important;
+}
+
+// User select utilities
+.user-select-auto {
+  user-select: auto !important;
+}
+
+// Pointer events utilities
+.pointer-events-none {
+  pointer-events: none !important;
+}
+
+.pointer-events-auto {
+  pointer-events: auto !important;
+}
+
+// Scrollbar styling for dark mode
+[data-bs-theme="dark"] {
+  // Webkit browsers
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--muted);
+    border-radius: 6px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 6px;
+    
+    &:hover {
+      background: var(--muted-foreground);
+    }
+  }
+  
+  // Firefox
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) var(--muted);
+  }
+}

@@ -23,11 +23,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#0d6efd" />
       </head>
       <body className={inter.className} suppressHydrationWarning>
-        <ThemeProvider
-          defaultTheme="auto"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider defaultTheme="auto">
           {children}
         </ThemeProvider>
       </body>

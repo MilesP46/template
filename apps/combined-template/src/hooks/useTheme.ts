@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 export type Theme = 'light' | 'dark' | 'auto';
 export type EffectiveTheme = 'light' | 'dark';
 
-interface UseThemeReturn {
+export interface UseThemeReturn {
   theme: Theme;
   effectiveTheme: EffectiveTheme;
   setTheme: (theme: Theme) => void;

@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext } from 'react';
 import type { ReactNode } from 'react';
-import { useTheme as useThemeHook } from '../hooks/useTheme';
+import { useTheme } from '../hooks/useTheme';
 import type { Theme, EffectiveTheme } from '../hooks/useTheme';
 
 interface ThemeContextValue {
@@ -17,64 +17,32 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
-export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-}
-
 interface ThemeProviderProps {
   children: ReactNode;
   defaultTheme?: Theme;
-  storageKey?: string;
-  enableSystem?: boolean;
-  disableTransitionOnChange?: boolean;
 }
 
-export function ThemeProvider({
-  children,
-  defaultTheme = 'auto',
-  storageKey = 'combined-theme-preference',
-  enableSystem = true,
-  disableTransitionOnChange = true,
-}: ThemeProviderProps) {
-  const themeState = useThemeHook();
-
-  // Handle transition disabling
-  React.useEffect(() => {
-    if (disableTransitionOnChange) {
-      const css = document.createElement('style');
-      css.appendChild(
-        document.createTextNode(
-          `* {
-             -webkit-transition: none !important;
-             -moz-transition: none !important;
-             -o-transition: none !important;
-             -ms-transition: none !important;
-             transition: none !important;
-          }`
-        )
-      );
-      document.head.appendChild(css);
-
-      // Force reflow
-      (() => window.getComputedStyle(document.body))();
-
-      // Remove the style after a frame
-      setTimeout(() => {
-        document.head.removeChild(css);
-      }, 1);
-    }
-  }, [themeState.effectiveTheme, disableTransitionOnChange]);
+export function ThemeProvider({ children, defaultTheme = 'auto' }: ThemeProviderProps) {
+  const themeData = useTheme();
 
   return (
-    <ThemeContext.Provider value={themeState}>
+    <ThemeContext.Provider value={themeData}>
       {children}
     </ThemeContext.Provider>
   );
 }
+
+export function useThemeContext() {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useThemeContext must be used within a ThemeProvider');
+  }
+  return context;
+}
+
+// Re-export for convenience
+export { useTheme } from '../hooks/useTheme';
+export type { Theme, EffectiveTheme } from '../hooks/useTheme';
 
 // Export a client-side only hook for components
 export function useClientTheme() {

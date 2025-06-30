@@ -7,11 +7,7 @@ import './styles/app.scss';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ThemeProvider
-      defaultTheme="auto"
-      enableSystem
-      disableTransitionOnChange
-    >
+    <ThemeProvider defaultTheme="auto">
       <App />
     </ThemeProvider>
   </React.StrictMode>

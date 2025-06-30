@@ -1,102 +1,249 @@
-// Theme Bridge - Maps Doctor-Dok CSS variables to Bootstrap variables
-// This ensures components from both systems work seamlessly together
+// Theme Bridge - Maps Doctor-Dok CSS variables to Bootstrap theming system
+// This ensures compatibility between both theming approaches
 
-// Import Bootstrap functions and variables
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins";
+// Import Bootstrap variables
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
 
-// Light theme (default)
+// Light theme (default) - Map Doctor-Dok variables to Bootstrap
 :root {
-  // Doctor-Dok compatibility variables
+  // Background and foreground colors
   --background: #{$body-bg};
   --foreground: #{$body-color};
-  --card: #{$card-bg};
-  --card-foreground: #{$card-color};
-  --popover: #{$dropdown-bg};
-  --popover-foreground: #{$dropdown-color};
+  
+  // Primary colors
   --primary: #{$primary};
   --primary-foreground: #{$white};
+  
+  // Secondary colors
   --secondary: #{$secondary};
   --secondary-foreground: #{$white};
-  --muted: #{$gray-100};
-  --muted-foreground: #{$gray-600};
+  
+  // Accent colors
   --accent: #{$info};
   --accent-foreground: #{$white};
+  
+  // Muted colors
+  --muted: #{$gray-100};
+  --muted-foreground: #{$gray-600};
+  
+  // Card colors
+  --card: #{$white};
+  --card-foreground: #{$body-color};
+  
+  // Popover colors
+  --popover: #{$white};
+  --popover-foreground: #{$body-color};
+  
+  // Border colors
+  --border: #{$border-color};
+  --input: #{$input-border-color};
+  
+  // Ring colors (focus states)
+  --ring: #{$primary};
+  
+  // Chart colors
+  --chart-1: #{$primary};
+  --chart-2: #{$success};
+  --chart-3: #{$warning};
+  --chart-4: #{$danger};
+  --chart-5: #{$info};
+  
+  // Radius values
+  --radius: #{$border-radius};
+  
+  // Destructive colors
   --destructive: #{$danger};
   --destructive-foreground: #{$white};
-  --border: #{$border-color};
-  --input: #{$input-bg};
-  --ring: #{$primary};
-  --radius: #{$border-radius};
-
-  // Additional Doctor-Dok variables
-  --chart-1: #{$blue};
-  --chart-2: #{$indigo};
-  --chart-3: #{$purple};
-  --chart-4: #{$pink};
-  --chart-5: #{$orange};
-
-  // Shadows
-  --shadow-sm: #{$box-shadow-sm};
-  --shadow: #{$box-shadow};
-  --shadow-lg: #{$box-shadow-lg};
+  
+  // Success colors
+  --success: #{$success};
+  --success-foreground: #{$white};
+  
+  // Warning colors
+  --warning: #{$warning};
+  --warning-foreground: #{$dark};
+  
+  // Info colors
+  --info: #{$info};
+  --info-foreground: #{$white};
 }
 
-// Dark theme
+// Dark theme - Map Doctor-Dok variables to Bootstrap dark theme
 [data-bs-theme="dark"] {
-  // Bootstrap dark mode colors
-  --bs-body-bg: #1a1a1a;
-  --bs-body-color: #e9ecef;
-  --bs-emphasis-color: #fff;
-  --bs-secondary-color: rgba(233, 236, 239, 0.75);
-  --bs-tertiary-color: rgba(233, 236, 239, 0.5);
-  --bs-tertiary-bg: #2b3035;
-  --bs-border-color: #495057;
-  --bs-border-color-translucent: rgba(255, 255, 255, 0.15);
+  // Background and foreground colors
+  --background: #{$dark};
+  --foreground: #{$light};
   
-  // Doctor-Dok compatibility variables
-  --background: #1a1a1a;
-  --foreground: #e9ecef;
-  --card: #212529;
-  --card-foreground: #e9ecef;
-  --popover: #212529;
-  --popover-foreground: #e9ecef;
-  --primary: #4c9eff;
-  --primary-foreground: #000;
-  --secondary: #6c757d;
-  --secondary-foreground: #fff;
-  --muted: #343a40;
-  --muted-foreground: #adb5bd;
-  --accent: #0dcaf0;
-  --accent-foreground: #000;
-  --destructive: #dc3545;
-  --destructive-foreground: #fff;
-  --border: #495057;
-  --input: #212529;
-  --ring: #4c9eff;
-
-  // Charts in dark mode
-  --chart-1: #4c9eff;
-  --chart-2: #6610f2;
-  --chart-3: #6f42c1;
-  --chart-4: #e83e8c;
-  --chart-5: #fd7e14;
-
-  // Dark mode specific Bootstrap overrides
-  --bs-link-color: #4c9eff;
-  --bs-link-hover-color: #6cb2ff;
-  --bs-code-color: #e83e8c;
+  // Primary colors
+  --primary: #{$primary};
+  --primary-foreground: #{$white};
   
-  // Component-specific dark mode
-  --bs-card-bg: #212529;
-  --bs-card-border-color: var(--bs-border-color);
-  --bs-modal-bg: #212529;
-  --bs-modal-header-border-color: var(--bs-border-color);
-  --bs-modal-footer-border-color: var(--bs-border-color);
-  --bs-dropdown-bg: #212529;
-  --bs-dropdown-border-color: var(--bs-border-color);
-  --bs-dropdown-link-hover-bg: #343a40;
+  // Secondary colors
+  --secondary: #{$gray-600};
+  --secondary-foreground: #{$white};
+  
+  // Accent colors
+  --accent: #{lighten($info, 10%)};
+  --accent-foreground: #{$white};
+  
+  // Muted colors
+  --muted: #{$gray-800};
+  --muted-foreground: #{$gray-400};
+  
+  // Card colors
+  --card: #{$gray-900};
+  --card-foreground: #{$light};
+  
+  // Popover colors
+  --popover: #{$gray-900};
+  --popover-foreground: #{$light};
+  
+  // Border colors
+  --border: #{$gray-700};
+  --input: #{$gray-600};
+  
+  // Ring colors (focus states)
+  --ring: #{lighten($primary, 10%)};
+  
+  // Chart colors (slightly lighter for dark theme)
+  --chart-1: #{lighten($primary, 10%)};
+  --chart-2: #{lighten($success, 10%)};
+  --chart-3: #{lighten($warning, 10%)};
+  --chart-4: #{lighten($danger, 10%)};
+  --chart-5: #{lighten($info, 10%)};
+  
+  // Destructive colors
+  --destructive: #{lighten($danger, 10%)};
+  --destructive-foreground: #{$white};
+  
+  // Success colors
+  --success: #{lighten($success, 10%)};
+  --success-foreground: #{$white};
+  
+  // Warning colors
+  --warning: #{lighten($warning, 10%)};
+  --warning-foreground: #{$dark};
+  
+  // Info colors
+  --info: #{lighten($info, 10%)};
+  --info-foreground: #{$white};
+}
+
+// Additional theme-specific utility classes
+.dark {
+  color-scheme: dark;
+}
+
+// Smooth theme transitions
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *:before,
+html.theme-transition *:after {
+  transition: all 200ms ease-in-out !important;
+  transition-delay: 0 !important;
+}
+
+// Bootstrap component overrides for better theme integration
+[data-bs-theme="dark"] {
+  // Forms
+  .form-control,
+  .form-select {
+    background-color: var(--card);
+    border-color: var(--border);
+    color: var(--card-foreground);
+    
+    &:focus {
+      background-color: var(--card);
+      border-color: var(--ring);
+      color: var(--card-foreground);
+    }
+  }
+  
+  // Buttons
+  .btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+    
+    &:hover {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+  }
+  
+  // Cards
+  .card {
+    background-color: var(--card);
+    border-color: var(--border);
+    color: var(--card-foreground);
+  }
+  
+  // Modals
+  .modal-content {
+    background-color: var(--popover);
+    border-color: var(--border);
+    color: var(--popover-foreground);
+  }
+  
+  // Dropdowns
+  .dropdown-menu {
+    background-color: var(--popover);
+    border-color: var(--border);
+    
+    .dropdown-item {
+      color: var(--popover-foreground);
+      
+      &:hover,
+      &:focus {
+        background-color: var(--muted);
+        color: var(--popover-foreground);
+      }
+    }
+  }
+  
+  // Tables
+  .table {
+    color: var(--card-foreground);
+    
+    > :not(caption) > * > * {
+      background-color: transparent;
+      border-bottom-color: var(--border);
+    }
+  }
+  
+  // Alerts
+  .alert {
+    &.alert-primary {
+      background-color: rgba(var(--bs-primary-rgb), 0.1);
+      border-color: rgba(var(--bs-primary-rgb), 0.2);
+      color: var(--primary);
+    }
+    
+    &.alert-danger {
+      background-color: rgba(var(--bs-danger-rgb), 0.1);
+      border-color: rgba(var(--bs-danger-rgb), 0.2);
+      color: var(--destructive);
+    }
+    
+    &.alert-success {
+      background-color: rgba(var(--bs-success-rgb), 0.1);
+      border-color: rgba(var(--bs-success-rgb), 0.2);
+      color: var(--success);
+    }
+    
+    &.alert-warning {
+      background-color: rgba(var(--bs-warning-rgb), 0.1);
+      border-color: rgba(var(--bs-warning-rgb), 0.2);
+      color: var(--warning);
+    }
+    
+    &.alert-info {
+      background-color: rgba(var(--bs-info-rgb), 0.1);
+      border-color: rgba(var(--bs-info-rgb), 0.2);
+      color: var(--info);
+    }
+  }
 }
 
 // Utility classes for theme-aware components

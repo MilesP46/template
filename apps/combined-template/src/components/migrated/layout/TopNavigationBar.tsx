@@ -31,7 +31,7 @@ import {
   Bell
 } from 'lucide-react';
 import { useAuth } from '@doctor-dok/shared-auth-react';
-import { useTheme } from '../../../providers/ThemeProvider';
+import { useThemeContext } from '../../../providers/ThemeProvider';
 
 interface TopNavigationBarProps {
   logoSrc?: string;
@@ -47,7 +47,7 @@ const TopNavigationBar: React.FC<TopNavigationBarProps> = ({
   showSidebar = true
 }) => {
   const { user, logout, authMode } = useAuth();
-  const { effectiveTheme, toggleTheme } = useTheme();
+  const { effectiveTheme, toggleTheme } = useThemeContext();
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 

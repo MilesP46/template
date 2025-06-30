@@ -78,3 +78,84 @@
     transform: rotate(360deg);
   }
 }
+
+// Button Component Theme Styles
+// Custom button styling for theme integration
+
+// Custom button transitions
+.btn {
+  transition: all 0.2s ease-in-out;
+  
+  // Ghost button variant (Doctor-Dok compatibility)
+  &.btn-outline-light {
+    &:hover {
+      background-color: var(--muted);
+      border-color: var(--muted);
+      color: var(--muted-foreground);
+    }
+  }
+}
+
+// Dark theme button adjustments
+[data-bs-theme="dark"] {
+  // Primary button contrast
+  .btn-primary {
+    --bs-btn-bg: var(--primary);
+    --bs-btn-border-color: var(--primary);
+    --bs-btn-hover-bg: var(--primary);
+    --bs-btn-hover-border-color: var(--primary);
+    --bs-btn-active-bg: var(--primary);
+    --bs-btn-active-border-color: var(--primary);
+    --bs-btn-disabled-bg: var(--primary);
+    --bs-btn-disabled-border-color: var(--primary);
+    
+    // Better contrast in dark mode
+    filter: brightness(1.1);
+    
+    &:hover {
+      filter: brightness(1.2);
+    }
+  }
+  
+  // Secondary button adjustments
+  .btn-secondary {
+    --bs-btn-bg: var(--secondary);
+    --bs-btn-border-color: var(--secondary);
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+  }
+  
+  // Danger/Destructive button
+  .btn-danger {
+    --bs-btn-bg: var(--destructive);
+    --bs-btn-border-color: var(--destructive);
+  }
+  
+  // Link button color
+  .btn-link {
+    color: var(--primary);
+    
+    &:hover {
+      color: var(--ring);
+    }
+  }
+}
+
+// Loading state styles
+.btn {
+  .spinner-border {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+}
+
+// Focus states
+.btn:focus-visible {
+  box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}

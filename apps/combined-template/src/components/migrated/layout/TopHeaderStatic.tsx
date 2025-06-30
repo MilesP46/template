@@ -8,7 +8,7 @@
 import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useTheme } from '../../../providers/ThemeProvider';
+import { useThemeContext } from '../../../providers/ThemeProvider';
 
 interface TopHeaderStaticProps {
   logoSrc?: string;
@@ -25,7 +25,7 @@ const TopHeaderStatic: React.FC<TopHeaderStaticProps> = ({
   backLinkText = 'Go back to app',
   backLinkTo = '/'
 }) => {
-  const { effectiveTheme } = useTheme();
+  const { effectiveTheme } = useThemeContext();
   
   // Determine logo source based on theme (mimicking Doctor-Dok pattern)
   const defaultLogoSrc = effectiveTheme === 'dark' 
