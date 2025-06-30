@@ -8,6 +8,7 @@
 import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../../../providers/ThemeProvider';
 
 interface TopHeaderStaticProps {
   logoSrc?: string;
@@ -15,7 +16,6 @@ interface TopHeaderStaticProps {
   showBackLink?: boolean;
   backLinkText?: string;
   backLinkTo?: string;
-  theme?: 'light' | 'dark';
 }
 
 const TopHeaderStatic: React.FC<TopHeaderStaticProps> = ({
@@ -23,11 +23,12 @@ const TopHeaderStatic: React.FC<TopHeaderStaticProps> = ({
   appName = 'Combined Template',
   showBackLink = true,
   backLinkText = 'Go back to app',
-  backLinkTo = '/',
-  theme = 'light'
+  backLinkTo = '/'
 }) => {
+  const { effectiveTheme } = useTheme();
+  
   // Determine logo source based on theme (mimicking Doctor-Dok pattern)
-  const defaultLogoSrc = theme === 'dark' 
+  const defaultLogoSrc = effectiveTheme === 'dark' 
     ? '/img/combined-template-logo-white.svg' 
     : '/img/combined-template-logo.svg';
   
@@ -36,7 +37,7 @@ const TopHeaderStatic: React.FC<TopHeaderStaticProps> = ({
   return (
     <Navbar 
       expand="lg" 
-      className={`border-bottom ${theme === 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}
+      className={`border-bottom ${effectiveTheme === 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}
       style={{ zIndex: 1000 }}
     >
       <Container fluid>

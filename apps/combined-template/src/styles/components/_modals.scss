@@ -1,0 +1,105 @@
+// Modal Theme Overrides
+// Custom modal styles for combined template
+
+// Modal dark theme support
+.modal {
+  [data-bs-theme="dark"] & {
+    .modal-content {
+      background-color: var(--bs-modal-bg);
+      border-color: var(--bs-border-color);
+      color: var(--bs-body-color);
+    }
+    
+    .modal-header {
+      border-color: var(--bs-modal-header-border-color);
+      
+      .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+      }
+    }
+    
+    .modal-footer {
+      border-color: var(--bs-modal-footer-border-color);
+    }
+    
+    .modal-title {
+      color: var(--bs-emphasis-color);
+    }
+  }
+}
+
+// Offcanvas dark theme support
+.offcanvas {
+  [data-bs-theme="dark"] & {
+    background-color: var(--bs-modal-bg);
+    border-color: var(--bs-border-color);
+    color: var(--bs-body-color);
+    
+    .offcanvas-header {
+      border-color: var(--bs-modal-header-border-color);
+      
+      .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+      }
+    }
+    
+    .offcanvas-title {
+      color: var(--bs-emphasis-color);
+    }
+  }
+}
+
+// Toast dark theme support
+.toast {
+  [data-bs-theme="dark"] & {
+    background-color: var(--bs-modal-bg);
+    border-color: var(--bs-border-color);
+    color: var(--bs-body-color);
+    
+    .toast-header {
+      background-color: var(--bs-tertiary-bg);
+      border-color: var(--bs-border-color);
+      color: var(--bs-emphasis-color);
+      
+      .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+      }
+    }
+  }
+}
+
+// Popover dark theme support
+.popover {
+  [data-bs-theme="dark"] & {
+    background-color: var(--bs-modal-bg);
+    border-color: var(--bs-border-color);
+    
+    .popover-header {
+      background-color: var(--bs-tertiary-bg);
+      border-color: var(--bs-border-color);
+      color: var(--bs-emphasis-color);
+    }
+    
+    .popover-body {
+      color: var(--bs-body-color);
+    }
+    
+    .popover-arrow::after {
+      border-color: var(--bs-modal-bg);
+    }
+  }
+}
+
+// Tooltip dark theme support
+.tooltip {
+  [data-bs-theme="dark"] & {
+    .tooltip-inner {
+      background-color: var(--bs-emphasis-color);
+      color: var(--bs-body-bg);
+    }
+    
+    .tooltip-arrow::before {
+      border-color: var(--bs-emphasis-color);
+    }
+  }
+}

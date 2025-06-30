@@ -1,0 +1,61 @@
+// Combined Template Main Styles
+// Imports Bootstrap, theme configurations, and custom components
+
+// 1. Bootstrap Configuration and Theme
+@import "./themes/bootstrap-themes";
+
+// 2. Bootstrap Core (with our variable overrides)
+@import "bootstrap/scss/bootstrap";
+
+// 3. Theme Bridge (Doctor-Dok CSS variable compatibility)
+@import "./migration/theme-bridge";
+
+// 4. Component-specific styles
+@import "./components/buttons";
+@import "./components/forms";
+@import "./components/navigation";
+@import "./components/modals";
+
+// 5. Utility classes and helpers
+@import "./utilities";
+
+// 6. Migration-specific overrides
+@import "./migration/tailwind-to-bootstrap";
+
+// 7. Global application styles
+body {
+  font-family: var(--bs-font-family-base);
+  font-size: var(--bs-font-size-base);
+  line-height: var(--bs-line-height-base);
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Ensure full height layouts
+html,
+body,
+#root,
+#__next {
+  height: 100%;
+}
+
+// Custom focus styles
+:focus-visible {
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
+// Remove default focus for mouse users
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+// Print styles
+@media print {
+  [data-bs-theme="dark"] {
+    --bs-body-bg: #fff;
+    --bs-body-color: #000;
+  }
+}

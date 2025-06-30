@@ -31,25 +31,23 @@ import {
   Bell
 } from 'lucide-react';
 import { useAuth } from '@doctor-dok/shared-auth-react';
+import { useTheme } from '../../../providers/ThemeProvider';
 
 interface TopNavigationBarProps {
   logoSrc?: string;
   appName?: string;
   onMenuToggle?: () => void;
   showSidebar?: boolean;
-  theme?: 'light' | 'dark';
-  onThemeToggle?: () => void;
 }
 
 const TopNavigationBar: React.FC<TopNavigationBarProps> = ({
   logoSrc,
   appName = 'Combined Template',
   onMenuToggle,
-  showSidebar = true,
-  theme = 'light',
-  onThemeToggle
+  showSidebar = true
 }) => {
   const { user, logout, authMode } = useAuth();
+  const { effectiveTheme, toggleTheme } = useTheme();
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -73,7 +71,7 @@ const TopNavigationBar: React.FC<TopNavigationBarProps> = ({
     <>
       <Navbar 
         expand="lg" 
-        className={`topbar border-bottom ${theme === 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-white'} shadow-sm`}
+        className={`topbar border-bottom ${effectiveTheme === 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-white'} shadow-sm`}
         style={{ zIndex: 1020 }}
       >
         <Container fluid>
@@ -135,10 +133,10 @@ const TopNavigationBar: React.FC<TopNavigationBarProps> = ({
             <Button 
               variant="link"
               className="text-reset border-0 p-2"
-              onClick={onThemeToggle}
-              title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+              onClick={toggleTheme}
+              title={`Switch to ${effectiveTheme === 'dark' ? 'light' : 'dark'} mode`}
             >
-              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              {effectiveTheme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             </Button>
 
             {/* Fullscreen toggle */}

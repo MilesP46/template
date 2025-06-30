@@ -1,0 +1,163 @@
+// Bootstrap Theme Configuration
+// Handles both light and dark themes with comprehensive variable overrides
+
+// Import Bootstrap core
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+
+// Light theme overrides (Bootstrap defaults with customizations)
+$primary: #0d6efd;
+$secondary: #6c757d;
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #212529;
+
+// Custom color additions
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #d63384;
+$teal: #20c997;
+$cyan: #0dcaf0;
+
+// Typography
+$font-family-base: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+$font-size-base: 1rem;
+$line-height-base: 1.5;
+
+// Spacing
+$spacer: 1rem;
+
+// Border radius
+$border-radius: 0.375rem;
+$border-radius-sm: 0.25rem;
+$border-radius-lg: 0.5rem;
+$border-radius-pill: 50rem;
+
+// Shadows
+$box-shadow-sm: 0 0.125rem 0.25rem rgba($black, 0.075);
+$box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
+$box-shadow-lg: 0 1rem 3rem rgba($black, 0.175);
+
+// Component-specific customizations
+$card-border-color: var(--bs-border-color);
+$card-cap-bg: rgba($black, 0.03);
+$card-shadow: $box-shadow-sm;
+
+$dropdown-min-width: 12rem;
+$dropdown-padding-y: 0.5rem;
+$dropdown-border-radius: $border-radius;
+$dropdown-box-shadow: $box-shadow;
+
+$navbar-padding-y: 0.5rem;
+$navbar-light-color: rgba($black, 0.55);
+$navbar-light-hover-color: rgba($black, 0.7);
+$navbar-light-active-color: rgba($black, 0.9);
+
+// Dark theme overrides
+[data-bs-theme="dark"] {
+  // Core colors
+  --bs-primary: #4c9eff;
+  --bs-secondary: #8a96a3;
+  --bs-success: #2db85d;
+  --bs-info: #3dd9ff;
+  --bs-warning: #ffc83d;
+  --bs-danger: #ff5861;
+  --bs-light: #343a40;
+  --bs-dark: #adb5bd;
+  
+  // Background colors
+  --bs-body-bg: #1a1a1a;
+  --bs-secondary-bg: #212529;
+  --bs-tertiary-bg: #2b3035;
+  
+  // Text colors
+  --bs-body-color: #e9ecef;
+  --bs-emphasis-color: #fff;
+  --bs-secondary-color: rgba(233, 236, 239, 0.75);
+  --bs-tertiary-color: rgba(233, 236, 239, 0.5);
+  
+  // Border colors
+  --bs-border-color: #495057;
+  --bs-border-color-translucent: rgba(255, 255, 255, 0.15);
+  
+  // Component overrides
+  --bs-card-bg: #212529;
+  --bs-card-cap-bg: rgba(255, 255, 255, 0.03);
+  --bs-card-border-color: var(--bs-border-color);
+  
+  --bs-modal-bg: #212529;
+  --bs-modal-header-border-color: var(--bs-border-color);
+  --bs-modal-footer-border-color: var(--bs-border-color);
+  
+  --bs-dropdown-bg: #212529;
+  --bs-dropdown-border-color: var(--bs-border-color);
+  --bs-dropdown-link-color: var(--bs-body-color);
+  --bs-dropdown-link-hover-color: #fff;
+  --bs-dropdown-link-hover-bg: #343a40;
+  
+  --bs-navbar-color: rgba(255, 255, 255, 0.55);
+  --bs-navbar-hover-color: rgba(255, 255, 255, 0.75);
+  --bs-navbar-active-color: #fff;
+  
+  // Form controls
+  --bs-form-control-bg: #212529;
+  --bs-form-control-disabled-bg: #343a40;
+  
+  // Tables
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: rgba(255, 255, 255, 0.05);
+  --bs-table-hover-bg: rgba(255, 255, 255, 0.075);
+  --bs-table-border-color: var(--bs-border-color);
+  
+  // Buttons
+  .btn-outline-primary {
+    --bs-btn-color: #4c9eff;
+    --bs-btn-border-color: #4c9eff;
+    --bs-btn-hover-bg: #4c9eff;
+    --bs-btn-hover-border-color: #4c9eff;
+  }
+  
+  .btn-outline-secondary {
+    --bs-btn-color: #8a96a3;
+    --bs-btn-border-color: #8a96a3;
+    --bs-btn-hover-bg: #8a96a3;
+    --bs-btn-hover-border-color: #8a96a3;
+  }
+}
+
+// Utility classes for theme-specific styles
+.theme-light-only {
+  [data-bs-theme="dark"] & {
+    display: none !important;
+  }
+}
+
+.theme-dark-only {
+  :root:not([data-bs-theme="dark"]) & {
+    display: none !important;
+  }
+}
+
+// Smooth transitions for theme switching
+body,
+.navbar,
+.card,
+.btn,
+.form-control,
+.form-select,
+.dropdown-menu,
+.modal-content,
+.offcanvas,
+.toast {
+  transition: 
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}

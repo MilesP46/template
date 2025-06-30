@@ -20,3 +20,5 @@ export {
   CardTitle, 
   CardFooter 
 } from './Card';
+export { RadioGroup, RadioGroupItem } from './RadioGroup';
+export { ThemeCustomizer, ThemeToggler } from './ThemeCustomizer';

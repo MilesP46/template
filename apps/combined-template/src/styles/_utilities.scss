@@ -1,0 +1,119 @@
+// Utility Classes
+// Additional utility classes for the combined template
+
+// Theme-aware backgrounds
+.bg-muted {
+  background-color: var(--muted) !important;
+}
+
+.bg-accent {
+  background-color: var(--accent) !important;
+}
+
+.bg-destructive {
+  background-color: var(--destructive) !important;
+}
+
+// Theme-aware text colors
+.text-muted-foreground {
+  color: var(--muted-foreground) !important;
+}
+
+.text-accent {
+  color: var(--accent) !important;
+}
+
+.text-destructive {
+  color: var(--destructive) !important;
+}
+
+// Theme-aware borders
+.border-muted {
+  border-color: var(--muted) !important;
+}
+
+.border-accent {
+  border-color: var(--accent) !important;
+}
+
+.border-destructive {
+  border-color: var(--destructive) !important;
+}
+
+// Responsive visibility utilities
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    .show-#{$breakpoint} {
+      display: block !important;
+    }
+    
+    .hide-#{$breakpoint} {
+      display: none !important;
+    }
+  }
+}
+
+// Spacing utilities extension
+.gap-0 { gap: 0 !important; }
+.gap-1 { gap: 0.25rem !important; }
+.gap-2 { gap: 0.5rem !important; }
+.gap-3 { gap: 1rem !important; }
+.gap-4 { gap: 1.5rem !important; }
+.gap-5 { gap: 3rem !important; }
+
+// Transition utilities
+.transition-none {
+  transition: none !important;
+}
+
+.transition-all {
+  transition: all 0.3s ease !important;
+}
+
+.transition-colors {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
+
+// Cursor utilities
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}
+
+.cursor-wait {
+  cursor: wait !important;
+}
+
+// Selection utilities
+.user-select-all {
+  user-select: all !important;
+}
+
+.user-select-none {
+  user-select: none !important;
+}
+
+// Backdrop utilities
+.backdrop-blur {
+  backdrop-filter: blur(10px);
+}
+
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+
+.backdrop-blur-lg {
+  backdrop-filter: blur(20px);
+}
+
+// Z-index utilities
+.z-0 { z-index: 0 !important; }
+.z-10 { z-index: 10 !important; }
+.z-20 { z-index: 20 !important; }
+.z-30 { z-index: 30 !important; }
+.z-40 { z-index: 40 !important; }
+.z-50 { z-index: 50 !important; }
+.z-auto { z-index: auto !important; }

@@ -12,6 +12,7 @@ import type { FormLabelProps } from 'react-bootstrap';
 export interface LabelProps extends FormLabelProps {
   // Doctor-Dok label API compatibility
   htmlFor?: string;
+  children?: React.ReactNode;
 }
 
 const Label = React.forwardRef<HTMLLabelElement, LabelProps>(

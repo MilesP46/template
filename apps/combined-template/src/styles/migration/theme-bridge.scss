@@ -1,0 +1,147 @@
+// Theme Bridge - Maps Doctor-Dok CSS variables to Bootstrap variables
+// This ensures components from both systems work seamlessly together
+
+// Import Bootstrap functions and variables
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+// Light theme (default)
+:root {
+  // Doctor-Dok compatibility variables
+  --background: #{$body-bg};
+  --foreground: #{$body-color};
+  --card: #{$card-bg};
+  --card-foreground: #{$card-color};
+  --popover: #{$dropdown-bg};
+  --popover-foreground: #{$dropdown-color};
+  --primary: #{$primary};
+  --primary-foreground: #{$white};
+  --secondary: #{$secondary};
+  --secondary-foreground: #{$white};
+  --muted: #{$gray-100};
+  --muted-foreground: #{$gray-600};
+  --accent: #{$info};
+  --accent-foreground: #{$white};
+  --destructive: #{$danger};
+  --destructive-foreground: #{$white};
+  --border: #{$border-color};
+  --input: #{$input-bg};
+  --ring: #{$primary};
+  --radius: #{$border-radius};
+
+  // Additional Doctor-Dok variables
+  --chart-1: #{$blue};
+  --chart-2: #{$indigo};
+  --chart-3: #{$purple};
+  --chart-4: #{$pink};
+  --chart-5: #{$orange};
+
+  // Shadows
+  --shadow-sm: #{$box-shadow-sm};
+  --shadow: #{$box-shadow};
+  --shadow-lg: #{$box-shadow-lg};
+}
+
+// Dark theme
+[data-bs-theme="dark"] {
+  // Bootstrap dark mode colors
+  --bs-body-bg: #1a1a1a;
+  --bs-body-color: #e9ecef;
+  --bs-emphasis-color: #fff;
+  --bs-secondary-color: rgba(233, 236, 239, 0.75);
+  --bs-tertiary-color: rgba(233, 236, 239, 0.5);
+  --bs-tertiary-bg: #2b3035;
+  --bs-border-color: #495057;
+  --bs-border-color-translucent: rgba(255, 255, 255, 0.15);
+  
+  // Doctor-Dok compatibility variables
+  --background: #1a1a1a;
+  --foreground: #e9ecef;
+  --card: #212529;
+  --card-foreground: #e9ecef;
+  --popover: #212529;
+  --popover-foreground: #e9ecef;
+  --primary: #4c9eff;
+  --primary-foreground: #000;
+  --secondary: #6c757d;
+  --secondary-foreground: #fff;
+  --muted: #343a40;
+  --muted-foreground: #adb5bd;
+  --accent: #0dcaf0;
+  --accent-foreground: #000;
+  --destructive: #dc3545;
+  --destructive-foreground: #fff;
+  --border: #495057;
+  --input: #212529;
+  --ring: #4c9eff;
+
+  // Charts in dark mode
+  --chart-1: #4c9eff;
+  --chart-2: #6610f2;
+  --chart-3: #6f42c1;
+  --chart-4: #e83e8c;
+  --chart-5: #fd7e14;
+
+  // Dark mode specific Bootstrap overrides
+  --bs-link-color: #4c9eff;
+  --bs-link-hover-color: #6cb2ff;
+  --bs-code-color: #e83e8c;
+  
+  // Component-specific dark mode
+  --bs-card-bg: #212529;
+  --bs-card-border-color: var(--bs-border-color);
+  --bs-modal-bg: #212529;
+  --bs-modal-header-border-color: var(--bs-border-color);
+  --bs-modal-footer-border-color: var(--bs-border-color);
+  --bs-dropdown-bg: #212529;
+  --bs-dropdown-border-color: var(--bs-border-color);
+  --bs-dropdown-link-hover-bg: #343a40;
+}
+
+// Utility classes for theme-aware components
+.theme-transition {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+// Doctor-Dok class compatibility
+.dark {
+  @extend [data-bs-theme="dark"];
+}
+
+// Theme-aware scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 4px;
+  
+  &:hover {
+    background: var(--foreground);
+  }
+}
+
+// Theme-aware focus states
+.focus-ring {
+  &:focus {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+// Ensure smooth theme transitions for specific elements
+body,
+.navbar,
+.sidebar,
+.card,
+.modal-content,
+.dropdown-menu {
+  @extend .theme-transition;
+}
