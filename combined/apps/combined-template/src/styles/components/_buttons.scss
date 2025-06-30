@@ -1,0 +1,164 @@
+// Button Theme Variations
+// Provides theme-specific styles for button components
+
+// Ghost button styles
+.btn-ghost {
+  background-color: transparent;
+  border-color: transparent;
+  
+  &:hover {
+    background-color: var(--bs-gray-100);
+    border-color: var(--bs-gray-100);
+  }
+  
+  &:active,
+  &.active {
+    background-color: var(--bs-gray-200);
+    border-color: var(--bs-gray-200);
+  }
+}
+
+// Dark theme ghost button
+[data-bs-theme="dark"] {
+  .btn-ghost,
+  .btn-ghost-dark {
+    color: var(--bs-gray-300);
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: transparent;
+      color: var(--bs-white);
+    }
+    
+    &:active,
+    &.active {
+      background-color: rgba(255, 255, 255, 0.15);
+      border-color: transparent;
+      color: var(--bs-white);
+    }
+  }
+}
+
+// Light theme ghost button
+[data-bs-theme="light"] {
+  .btn-ghost-light {
+    color: var(--bs-gray-700);
+    
+    &:hover {
+      background-color: var(--bs-gray-100);
+      border-color: transparent;
+      color: var(--bs-gray-900);
+    }
+    
+    &:active,
+    &.active {
+      background-color: var(--bs-gray-200);
+      border-color: transparent;
+      color: var(--bs-gray-900);
+    }
+  }
+}
+
+// Icon button styles
+.btn-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  &.btn-sm {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  &.btn-lg {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+// Gradient buttons for dark theme
+[data-bs-theme="dark"] {
+  .btn-gradient-primary {
+    background: linear-gradient(135deg, var(--bs-primary) 0%, lighten($primary, 15%) 100%);
+    border: none;
+    color: white;
+    
+    &:hover {
+      background: linear-gradient(135deg, lighten($primary, 5%) 0%, lighten($primary, 20%) 100%);
+    }
+  }
+}
+
+// Loading state
+.btn-loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    top: 50%;
+    left: 50%;
+    margin-left: -0.5rem;
+    margin-top: -0.5rem;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spinner-border 0.75s linear infinite;
+  }
+}
+
+// Button group theme adjustments
+[data-bs-theme="dark"] {
+  .btn-group {
+    > .btn:not(:last-child):not(.dropdown-toggle),
+    > .btn-group:not(:last-child) > .btn {
+      border-right-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+// Floating action button
+.btn-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  box-shadow: var(--bs-box-shadow-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+  
+  &.btn-fab-extended {
+    width: auto;
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+  }
+}
+
+// Theme toggle button
+.btn-theme-toggle {
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: rotate(180deg);
+  }
+  
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}

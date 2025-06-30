@@ -1,0 +1,197 @@
+// Theme Bridge - Maps Doctor-Dok CSS variables to Bootstrap theming system
+// This ensures compatibility between both theming approaches
+
+// Import Bootstrap functions and variables
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/variables-dark';
+
+// Light theme mapping (default)
+:root {
+  // Primary colors
+  --primary: #{$primary};
+  --primary-rgb: #{to-rgb($primary)};
+  --primary-foreground: #{$white};
+  
+  // Secondary colors
+  --secondary: #{$secondary};
+  --secondary-rgb: #{to-rgb($secondary)};
+  --secondary-foreground: #{$white};
+  
+  // Background and foreground
+  --background: #{$body-bg};
+  --foreground: #{$body-color};
+  
+  // Card colors
+  --card: #{$card-bg};
+  --card-foreground: #{$card-color};
+  
+  // Muted colors
+  --muted: #{$gray-100};
+  --muted-foreground: #{$gray-600};
+  
+  // Accent colors
+  --accent: #{$gray-100};
+  --accent-foreground: #{$gray-900};
+  
+  // Destructive (danger) colors
+  --destructive: #{$danger};
+  --destructive-foreground: #{$white};
+  
+  // Border and input
+  --border: #{$border-color};
+  --input: #{$input-bg};
+  --ring: #{$primary};
+  
+  // Additional Doctor-Dok variables
+  --radius: #{$border-radius};
+  
+  // Success, warning, info states
+  --success: #{$success};
+  --success-foreground: #{$white};
+  --warning: #{$warning};
+  --warning-foreground: #{$dark};
+  --info: #{$info};
+  --info-foreground: #{$white};
+  
+  // Shadows
+  --shadow-sm: #{$box-shadow-sm};
+  --shadow: #{$box-shadow};
+  --shadow-lg: #{$box-shadow-lg};
+}
+
+// Dark theme mapping
+[data-bs-theme="dark"] {
+  // Primary colors
+  --primary: #{$primary};
+  --primary-rgb: #{to-rgb($primary)};
+  --primary-foreground: #{$white};
+  
+  // Secondary colors  
+  --secondary: #{lighten($secondary, 10%)};
+  --secondary-rgb: #{to-rgb(lighten($secondary, 10%))};
+  --secondary-foreground: #{$white};
+  
+  // Background and foreground
+  --background: #0a0a0a; // Doctor-Dok dark background
+  --foreground: #fafafa; // Doctor-Dok dark foreground
+  
+  // Card colors
+  --card: #1a1a1a;
+  --card-foreground: #fafafa;
+  
+  // Muted colors
+  --muted: #262626;
+  --muted-foreground: #a3a3a3;
+  
+  // Accent colors
+  --accent: #262626;
+  --accent-foreground: #fafafa;
+  
+  // Destructive (danger) colors
+  --destructive: #{$danger};
+  --destructive-foreground: #{$white};
+  
+  // Border and input
+  --border: #262626;
+  --input: #262626;
+  --ring: #{$primary};
+  
+  // Success, warning, info states
+  --success: #{lighten($success, 10%)};
+  --success-foreground: #{$white};
+  --warning: #{$warning};
+  --warning-foreground: #{$dark};
+  --info: #{lighten($info, 10%)};
+  --info-foreground: #{$white};
+  
+  // Dark mode specific Bootstrap overrides
+  --bs-body-bg: var(--background);
+  --bs-body-color: var(--foreground);
+  --bs-border-color: var(--border);
+  --bs-card-bg: var(--card);
+  --bs-card-color: var(--card-foreground);
+}
+
+// Utility classes for Doctor-Dok compatibility
+.bg-background {
+  background-color: var(--background) !important;
+}
+
+.bg-foreground {
+  background-color: var(--foreground) !important;
+}
+
+.text-foreground {
+  color: var(--foreground) !important;
+}
+
+.bg-card {
+  background-color: var(--card) !important;
+}
+
+.text-card-foreground {
+  color: var(--card-foreground) !important;
+}
+
+.bg-muted {
+  background-color: var(--muted) !important;
+}
+
+.text-muted-foreground {
+  color: var(--muted-foreground) !important;
+}
+
+.bg-accent {
+  background-color: var(--accent) !important;
+}
+
+.text-accent-foreground {
+  color: var(--accent-foreground) !important;
+}
+
+.bg-destructive {
+  background-color: var(--destructive) !important;
+}
+
+.text-destructive {
+  color: var(--destructive) !important;
+}
+
+.border-border {
+  border-color: var(--border) !important;
+}
+
+// Animation classes for theme transitions
+.theme-transition * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
+
+// Remove transitions during theme switch to prevent flash
+html.theme-switching * {
+  transition: none !important;
+}
+
+// Font scale support
+html {
+  font-size: calc(var(--font-scale, 1) * 16px);
+}
+
+// Custom scrollbar theming
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 4px;
+  
+  &:hover {
+    background: var(--foreground);
+  }
+}

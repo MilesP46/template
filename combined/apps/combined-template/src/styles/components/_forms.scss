@@ -1,0 +1,244 @@
+// Form Control Theme Variations
+// Provides theme-specific styles for form components
+
+// Base form control adjustments
+.form-control,
+.form-select {
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+// Dark theme form controls
+[data-bs-theme="dark"] {
+  // Input fields
+  .form-control {
+    &::placeholder {
+      color: var(--bs-secondary-color);
+      opacity: 0.8;
+    }
+    
+    &:focus {
+      box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+    }
+    
+    // File input
+    &[type="file"] {
+      &::file-selector-button {
+        background-color: var(--bs-tertiary-bg);
+        color: var(--bs-body-color);
+        border-color: var(--bs-border-color);
+        
+        &:hover {
+          background-color: var(--bs-secondary-bg);
+        }
+      }
+    }
+  }
+  
+  // Select elements
+  .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23fafafa' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    
+    &:focus {
+      box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+    }
+  }
+  
+  // Checkbox and radio
+  .form-check-input {
+    background-color: var(--bs-tertiary-bg);
+    border-color: var(--bs-border-color);
+    
+    &:checked {
+      background-color: var(--bs-primary);
+      border-color: var(--bs-primary);
+    }
+    
+    &:focus {
+      box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+    }
+  }
+  
+  // Switch
+  .form-switch {
+    .form-check-input {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23a3a3a3'/%3e%3c/svg%3e");
+      
+      &:checked {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+      }
+    }
+  }
+  
+  // Range slider
+  .form-range {
+    &::-webkit-slider-track {
+      background-color: var(--bs-tertiary-bg);
+    }
+    
+    &::-webkit-slider-thumb {
+      background-color: var(--bs-primary);
+      
+      &:active {
+        background-color: lighten($primary, 10%);
+      }
+    }
+    
+    &::-moz-range-track {
+      background-color: var(--bs-tertiary-bg);
+    }
+    
+    &::-moz-range-thumb {
+      background-color: var(--bs-primary);
+      
+      &:active {
+        background-color: lighten($primary, 10%);
+      }
+    }
+  }
+  
+  // Floating labels
+  .form-floating {
+    > label {
+      color: var(--bs-secondary-color);
+    }
+    
+    > .form-control:focus ~ label,
+    > .form-control:not(:placeholder-shown) ~ label,
+    > .form-select ~ label {
+      color: var(--bs-primary);
+      opacity: 0.85;
+    }
+  }
+  
+  // Input groups
+  .input-group-text {
+    background-color: var(--bs-tertiary-bg);
+    border-color: var(--bs-border-color);
+    color: var(--bs-body-color);
+  }
+  
+  // Validation states
+  .valid-feedback,
+  .valid-tooltip {
+    color: var(--bs-success);
+  }
+  
+  .invalid-feedback,
+  .invalid-tooltip {
+    color: var(--bs-danger);
+  }
+  
+  .was-validated .form-control:valid,
+  .form-control.is-valid {
+    border-color: var(--bs-success);
+    
+    &:focus {
+      border-color: var(--bs-success);
+      box-shadow: 0 0 0 0.25rem rgba(var(--bs-success-rgb), 0.25);
+    }
+  }
+  
+  .was-validated .form-control:invalid,
+  .form-control.is-invalid {
+    border-color: var(--bs-danger);
+    
+    &:focus {
+      border-color: var(--bs-danger);
+      box-shadow: 0 0 0 0.25rem rgba(var(--bs-danger-rgb), 0.25);
+    }
+  }
+}
+
+// Custom form styles
+.form-control-borderless {
+  border: none;
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+  
+  &:focus {
+    box-shadow: none;
+    border-bottom: 2px solid var(--bs-primary);
+  }
+}
+
+// Material-style floating label
+.form-material {
+  position: relative;
+  margin-bottom: 1.5rem;
+  
+  .form-control {
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+    height: auto;
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background-color: transparent;
+    
+    &:focus {
+      box-shadow: none;
+      border-bottom-color: var(--bs-primary);
+      
+      + label {
+        color: var(--bs-primary);
+        font-size: 0.75rem;
+        top: 0;
+      }
+    }
+    
+    &:not(:placeholder-shown) + label {
+      font-size: 0.75rem;
+      top: 0;
+    }
+  }
+  
+  label {
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    color: var(--bs-secondary-color);
+  }
+}
+
+// Toggle group (button group as radio/checkbox)
+.toggle-group {
+  .btn-check {
+    &:checked + .btn {
+      background-color: var(--bs-primary);
+      border-color: var(--bs-primary);
+      color: white;
+    }
+  }
+  
+  [data-bs-theme="dark"] & {
+    .btn-check:not(:checked) + .btn {
+      background-color: var(--bs-tertiary-bg);
+      border-color: var(--bs-border-color);
+      color: var(--bs-body-color);
+      
+      &:hover {
+        background-color: var(--bs-secondary-bg);
+      }
+    }
+  }
+}
+
+// Color picker custom styling
+.form-control-color {
+  [data-bs-theme="dark"] & {
+    background-color: var(--bs-tertiary-bg);
+    border-color: var(--bs-border-color);
+    
+    &::-moz-color-swatch {
+      border-color: var(--bs-border-color);
+    }
+    
+    &::-webkit-color-swatch {
+      border-color: var(--bs-border-color);
+    }
+  }
+}

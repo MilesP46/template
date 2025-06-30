@@ -1,0 +1,282 @@
+// Bootstrap Theme Configuration
+// Defines theme variables for light and dark modes
+
+// Import Bootstrap functions first
+@import '~bootstrap/scss/functions';
+
+// Light theme variables (Bootstrap defaults with some customization)
+$primary: #0d6efd;
+$secondary: #6c757d;
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #212529;
+
+// Body colors
+$body-bg: #ffffff;
+$body-color: #212529;
+
+// Card colors
+$card-bg: #ffffff;
+$card-color: null;
+$card-border-color: rgba(0, 0, 0, 0.125);
+
+// Border color
+$border-color: #dee2e6;
+
+// Input colors
+$input-bg: #ffffff;
+$input-color: $body-color;
+$input-border-color: #ced4da;
+
+// Link colors
+$link-color: $primary;
+$link-hover-color: shift-color($primary, -15%);
+
+// Component variables
+$component-active-bg: $primary;
+$component-active-color: #ffffff;
+
+// Shadows
+$box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+$box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+$box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+
+// Import Bootstrap with our custom variables
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/variables-dark';
+@import '~bootstrap/scss/maps';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/root';
+
+// Dark theme overrides using CSS custom properties
+[data-bs-theme="dark"] {
+  // Color overrides
+  --bs-primary: #4c9eff;
+  --bs-primary-rgb: 76, 158, 255;
+  --bs-secondary: #8a96a3;
+  --bs-secondary-rgb: 138, 150, 163;
+  --bs-success: #2db85d;
+  --bs-success-rgb: 45, 184, 93;
+  --bs-info: #3fc3ff;
+  --bs-info-rgb: 63, 195, 255;
+  --bs-warning: #ffc107;
+  --bs-warning-rgb: 255, 193, 7;
+  --bs-danger: #ff5757;
+  --bs-danger-rgb: 255, 87, 87;
+  --bs-light: #424649;
+  --bs-light-rgb: 66, 70, 73;
+  --bs-dark: #f8f9fa;
+  --bs-dark-rgb: 248, 249, 250;
+
+  // Body colors
+  --bs-body-bg: #0a0a0a;
+  --bs-body-bg-rgb: 10, 10, 10;
+  --bs-body-color: #fafafa;
+  --bs-body-color-rgb: 250, 250, 250;
+
+  // Emphasis colors
+  --bs-emphasis-color: #ffffff;
+  --bs-emphasis-color-rgb: 255, 255, 255;
+
+  // Secondary colors
+  --bs-secondary-color: rgba(250, 250, 250, 0.75);
+  --bs-secondary-color-rgb: 250, 250, 250;
+  --bs-secondary-bg: #1a1a1a;
+  --bs-secondary-bg-rgb: 26, 26, 26;
+
+  // Tertiary colors
+  --bs-tertiary-color: rgba(250, 250, 250, 0.5);
+  --bs-tertiary-color-rgb: 250, 250, 250;
+  --bs-tertiary-bg: #262626;
+  --bs-tertiary-bg-rgb: 38, 38, 38;
+
+  // Border colors
+  --bs-border-color: #262626;
+  --bs-border-color-translucent: rgba(255, 255, 255, 0.15);
+
+  // Card colors
+  --bs-card-bg: #1a1a1a;
+  --bs-card-border-color: var(--bs-border-color);
+
+  // Modal colors
+  --bs-modal-bg: #1a1a1a;
+  --bs-modal-border-color: var(--bs-border-color);
+
+  // Dropdown colors
+  --bs-dropdown-bg: #1a1a1a;
+  --bs-dropdown-border-color: var(--bs-border-color);
+  --bs-dropdown-link-hover-bg: #262626;
+
+  // Form colors
+  --bs-form-control-bg: #262626;
+  --bs-form-control-disabled-bg: #1a1a1a;
+
+  // Code colors
+  --bs-code-color: #e685b5;
+  --bs-pre-color: #fafafa;
+
+  // Link colors
+  --bs-link-color: var(--bs-primary);
+  --bs-link-hover-color: #7bb3ff;
+}
+
+// Additional theme-specific utilities
+.theme-light {
+  color-scheme: light;
+}
+
+.theme-dark {
+  color-scheme: dark;
+}
+
+// Smooth theme transitions
+.theme-transition {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+// Component-specific theme overrides
+[data-bs-theme="dark"] {
+  // Buttons
+  .btn-primary {
+    --bs-btn-bg: var(--bs-primary);
+    --bs-btn-border-color: var(--bs-primary);
+    --bs-btn-hover-bg: #6aadff;
+    --bs-btn-hover-border-color: #6aadff;
+    --bs-btn-active-bg: #7bb3ff;
+    --bs-btn-active-border-color: #7bb3ff;
+  }
+
+  .btn-outline-primary {
+    --bs-btn-color: var(--bs-primary);
+    --bs-btn-border-color: var(--bs-primary);
+    --bs-btn-hover-bg: var(--bs-primary);
+    --bs-btn-hover-border-color: var(--bs-primary);
+  }
+
+  // Forms
+  .form-control,
+  .form-select {
+    background-color: var(--bs-form-control-bg);
+    border-color: var(--bs-border-color);
+    color: var(--bs-body-color);
+
+    &:focus {
+      background-color: var(--bs-form-control-bg);
+      border-color: var(--bs-primary);
+      color: var(--bs-body-color);
+    }
+
+    &:disabled {
+      background-color: var(--bs-form-control-disabled-bg);
+      color: var(--bs-secondary-color);
+    }
+  }
+
+  // Cards
+  .card {
+    background-color: var(--bs-card-bg);
+    border-color: var(--bs-card-border-color);
+  }
+
+  // Modals
+  .modal-content {
+    background-color: var(--bs-modal-bg);
+    border-color: var(--bs-modal-border-color);
+  }
+
+  // Dropdowns
+  .dropdown-menu {
+    background-color: var(--bs-dropdown-bg);
+    border-color: var(--bs-dropdown-border-color);
+  }
+
+  .dropdown-item {
+    color: var(--bs-body-color);
+
+    &:hover,
+    &:focus {
+      background-color: var(--bs-dropdown-link-hover-bg);
+      color: var(--bs-emphasis-color);
+    }
+  }
+
+  // Tables
+  .table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--bs-body-color);
+    --bs-table-border-color: var(--bs-border-color);
+    --bs-table-striped-bg: rgba(255, 255, 255, 0.05);
+    --bs-table-hover-bg: rgba(255, 255, 255, 0.075);
+  }
+
+  // Pagination
+  .pagination {
+    --bs-pagination-bg: var(--bs-tertiary-bg);
+    --bs-pagination-border-color: var(--bs-border-color);
+    --bs-pagination-hover-bg: var(--bs-secondary-bg);
+    --bs-pagination-hover-border-color: var(--bs-border-color);
+  }
+
+  // Alerts
+  .alert-primary {
+    --bs-alert-bg: rgba(76, 158, 255, 0.1);
+    --bs-alert-border-color: rgba(76, 158, 255, 0.2);
+    --bs-alert-color: #a8cdff;
+  }
+
+  .alert-secondary {
+    --bs-alert-bg: rgba(138, 150, 163, 0.1);
+    --bs-alert-border-color: rgba(138, 150, 163, 0.2);
+    --bs-alert-color: #c5cdd5;
+  }
+
+  .alert-success {
+    --bs-alert-bg: rgba(45, 184, 93, 0.1);
+    --bs-alert-border-color: rgba(45, 184, 93, 0.2);
+    --bs-alert-color: #96dcae;
+  }
+
+  .alert-danger {
+    --bs-alert-bg: rgba(255, 87, 87, 0.1);
+    --bs-alert-border-color: rgba(255, 87, 87, 0.2);
+    --bs-alert-color: #ffabab;
+  }
+
+  .alert-warning {
+    --bs-alert-bg: rgba(255, 193, 7, 0.1);
+    --bs-alert-border-color: rgba(255, 193, 7, 0.2);
+    --bs-alert-color: #ffe083;
+  }
+
+  .alert-info {
+    --bs-alert-bg: rgba(63, 195, 255, 0.1);
+    --bs-alert-border-color: rgba(63, 195, 255, 0.2);
+    --bs-alert-color: #9fe1ff;
+  }
+
+  // Badges
+  .badge {
+    &.bg-primary {
+      background-color: var(--bs-primary) !important;
+    }
+    &.bg-secondary {
+      background-color: var(--bs-secondary) !important;
+    }
+    &.bg-success {
+      background-color: var(--bs-success) !important;
+    }
+    &.bg-danger {
+      background-color: var(--bs-danger) !important;
+    }
+    &.bg-warning {
+      background-color: var(--bs-warning) !important;
+      color: var(--bs-dark) !important;
+    }
+    &.bg-info {
+      background-color: var(--bs-info) !important;
+    }
+  }
+}
