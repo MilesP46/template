@@ -1,78 +1,114 @@
 /**
- * Example migration: Button component
- * From: Doctor-Dok shadcn/ui button with Tailwind
- * To: React Bootstrap Button
+ * EXAMPLE: Button Component Migration Pattern
+ * 
+ * This demonstrates how to migrate Doctor-Dok components to Bootstrap equivalents
+ * while maintaining API compatibility and improving functionality.
  */
 
 import React from 'react';
-import { Button as BSButton, ButtonProps as BSButtonProps } from 'react-bootstrap';
-import { type VariantProps } from 'class-variance-authority';
+import { Button as BootstrapButton, Spinner } from 'react-bootstrap';
 
-// Original Doctor-Dok button variants mapping
-const variantMapping = {
-  default: 'primary',
-  destructive: 'danger',
-  outline: 'outline-primary',
-  secondary: 'secondary',
-  ghost: 'link',
-  link: 'link'
-} as const;
-
-const sizeMapping = {
-  default: undefined,
-  sm: 'sm',
-  lg: 'lg',
-  icon: 'sm' // Special handling needed
-} as const;
-
-// Interface matching original Doctor-Dok button props
-interface ButtonProps extends 
-  Omit<BSButtonProps, 'variant' | 'size'>,
-  VariantProps<typeof buttonVariants> {
-  variant?: keyof typeof variantMapping;
-  size?: keyof typeof sizeMapping;
+// Original Doctor-Dok Button interface (for reference)
+interface OriginalButtonProps {
+  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+  size?: 'sm' | 'lg';
+  asChild?: boolean;
+  className?: string;
+  children: React.ReactNode;
+  onClick?: () => void;
+  disabled?: boolean;
 }
 
-// Dummy buttonVariants for type compatibility
-const buttonVariants = {} as any;
+// Enhanced Bootstrap Button with Doctor-Dok compatibility
+interface MigratedButtonProps extends OriginalButtonProps {
+  loading?: boolean; // New feature: loading state
+  icon?: React.ReactNode; // New feature: icon support
+}
 
 /**
- * Migrated Button component maintaining Doctor-Dok API
- * while using Bootstrap 5 under the hood
+ * MIGRATION PATTERN EXAMPLE
+ * 
+ * 1. Keep original API intact for compatibility
+ * 2. Map variants to Bootstrap equivalents  
+ * 3. Add new features that Bootstrap enables
+ * 4. Use Bootstrap classes while maintaining behavior
  */
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'default', size = 'default', ...props }, ref) => {
-    // Map Doctor-Dok variants to Bootstrap variants
-    const bsVariant = variantMapping[variant];
-    const bsSize = sizeMapping[size];
+const ButtonExample = React.forwardRef<HTMLButtonElement, MigratedButtonProps>(
+  ({ 
+    variant = 'default', 
+    size, 
+    loading, 
+    disabled,
+    icon,
+    children, 
+    className = '',
+    ...props 
+  }, ref) => {
     
-    // Handle icon-only button case
-    const isIconButton = size === 'icon';
-    const iconClasses = isIconButton ? 'd-inline-flex align-items-center justify-content-center p-2' : '';
-    
+    // MAPPING PATTERN: Doctor-Dok variants → Bootstrap variants
+    const mapVariant = (variant: string) => {
+      const variantMap = {
+        'default': 'primary',
+        'destructive': 'danger',
+        'outline': 'outline-primary',
+        'secondary': 'secondary',
+        'ghost': 'outline-light',
+        'link': 'link'
+      };
+      return variantMap[variant] || 'primary';
+    };
+
     return (
-      <BSButton
+      <BootstrapButton
         ref={ref}
-        variant={bsVariant}
-        size={bsSize as BSButtonProps['size']}
-        className={`${iconClasses} ${className || ''}`}
+        variant={mapVariant(variant)}
+        size={size}
+        disabled={disabled || loading}
+        className={className}
         {...props}
-      />
+      >
+        {/* NEW FEATURE: Loading spinner */}
+        {loading && (
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            className="me-2"
+            aria-hidden="true"
+          />
+        )}
+        
+        {/* NEW FEATURE: Icon support */}
+        {icon && !loading && (
+          <span className="me-2">{icon}</span>
+        )}
+        
+        {children}
+      </BootstrapButton>
     );
   }
 );
 
-Button.displayName = 'Button';
+ButtonExample.displayName = 'ButtonExample';
 
-/* 
-Migration Notes:
-1. Maintains same API as Doctor-Dok button
-2. Maps Tailwind variants to Bootstrap variants
-3. Preserves forwardRef functionality
-4. Icon button requires custom classes for proper sizing
+export default ButtonExample;
 
-Usage remains the same:
-<Button variant="destructive" size="sm">Delete</Button>
-<Button variant="outline">Cancel</Button>
-<Button variant="default">Save</Button>
-*/
+/**
+ * USAGE EXAMPLES:
+ * 
+ * // Original Doctor-Dok usage (still works)
+ * <Button variant="destructive">Delete</Button>
+ * 
+ * // Enhanced with new features
+ * <Button variant="destructive" loading>Deleting...</Button>
+ * <Button variant="default" icon={<PlusIcon />}>Add Item</Button>
+ * 
+ * TESTING CHECKLIST:
+ * - [ ] All original variants work
+ * - [ ] All original sizes work  
+ * - [ ] All original props are respected
+ * - [ ] New features work correctly
+ * - [ ] Bootstrap styling applied
+ * - [ ] Accessibility maintained
+ * - [ ] Performance is equal or better
+ */

@@ -1,0 +1,270 @@
+# BG-IMPL Instructions: Theme Switching Implementation
+
+**Task ID**: T306_phase3_cp1  
+**Phase**: 3 - UI Component Migration  
+**Goal**: Implement theme switching using Rasket's system for the migrated components
+
+## Objective
+
+Implement comprehensive theme switching functionality that integrates Doctor-Dok's theme preferences with Rasket's Bootstrap 5 theming system, ensuring all migrated components support dark/light mode switching.
+
+## Scope of Work
+
+### 1. Theme System Integration
+
+**Current State Assessment**:
+- Doctor-Dok uses next-themes with CSS variables for theming
+- Rasket uses Bootstrap 5 with SCSS variables and data-bs-theme attribute
+- Basic useTheme hook already created at `/apps/combined-template/src/hooks/useTheme.ts`
+
+**Integration Requirements**:
+- Create compatibility layer between both theming approaches
+- Support Doctor-Dok's theme persistence logic
+- Maintain Bootstrap 5's data-bs-theme attribute system
+- Ensure smooth theme transitions
+
+### 2. Required Implementation
+
+#### A. Enhanced Theme Hook
+File: `/apps/combined-template/src/hooks/useTheme.ts`
+
+Current hook needs expansion:
+```typescript
+interface UseThemeReturn {
+  theme: 'light' | 'dark' | 'auto';
+  effectiveTheme: 'light' | 'dark';
+  setTheme: (theme: Theme) => void;
+  toggleTheme: () => void;
+  // NEW: Add Doctor-Dok compatibility
+  isDark: boolean;
+  systemTheme: 'light' | 'dark';
+  resolvedTheme: 'light' | 'dark';
+}
+```
+
+#### B. Theme Provider Component
+File: `/apps/combined-template/src/providers/ThemeProvider.tsx`
+
+Create React Context provider that:
+- Wraps the application with theme context
+- Manages theme state globally
+- Handles localStorage persistence
+- Applies CSS classes and data attributes
+
+#### C. Theme Customizer Integration
+File: `/apps/combined-template/src/components/migrated/ui/ThemeCustomizer.tsx`
+
+Migrate and enhance from Rasket's ThemeCustomizer:
+- Color scheme picker (light/dark/auto)
+- Primary color customization
+- Typography scale options
+- Component style preferences
+
+#### D. CSS Variable Bridge
+File: `/apps/combined-template/src/styles/migration/theme-bridge.scss`
+
+Create SCSS bridge that:
+```scss
+// Map Doctor-Dok CSS variables to Bootstrap variables
+:root {
+  // Light theme mapping
+  --background: #{$body-bg};
+  --foreground: #{$body-color};
+  --primary: #{$primary};
+  --secondary: #{$secondary};
+  // ... more mappings
+}
+
+[data-bs-theme="dark"] {
+  // Dark theme mapping
+  --background: #{$dark-body-bg};
+  --foreground: #{$dark-body-color};
+  // ... dark mappings
+}
+```
+
+### 3. Component Integration
+
+#### Migrated Components to Update
+All components in `/apps/combined-template/src/components/migrated/`:
+
+1. **UI Components** (completed):
+   - Button.tsx - Ensure variant mapping works in both themes
+   - Input.tsx - Apply proper theming classes
+   - Label.tsx - Typography consistency
+   - Checkbox.tsx - Form control theming
+
+2. **Auth Components**:
+   - AuthorizationGuard.tsx - Loading states with theme
+   - (Future: Auth forms when migrated)
+
+3. **Layout Components**:
+   - TopNavigationBar.tsx - Theme toggle integration
+   - TopHeaderStatic.tsx - Logo switching based on theme
+
+#### Update Requirements per Component
+```typescript
+// Example pattern for each component
+import { useTheme } from '../../../hooks/useTheme';
+
+const Component = () => {
+  const { theme, effectiveTheme } = useTheme();
+  
+  // Use effectiveTheme for conditional logic
+  const logoSrc = effectiveTheme === 'dark' 
+    ? '/img/logo-white.svg' 
+    : '/img/logo.svg';
+    
+  return (
+    <div className={`component ${effectiveTheme}-theme`}>
+      {/* Component content */}
+    </div>
+  );
+};
+```
+
+### 4. Bootstrap Theme Configuration
+
+#### A. SCSS Variable Overrides
+File: `/apps/combined-template/src/styles/themes/bootstrap-themes.scss`
+
+```scss
+// Light theme (default Bootstrap variables)
+$primary: #0d6efd;
+$secondary: #6c757d;
+$success: #198754;
+// ... full variable set
+
+// Dark theme overrides
+[data-bs-theme="dark"] {
+  --bs-primary: #4c9eff;
+  --bs-secondary: #8a96a3;
+  --bs-success: #2db85d;
+  // ... dark variable set
+}
+```
+
+#### B. Component-Specific Styling
+Files: `/apps/combined-template/src/styles/components/*.scss`
+
+Create component-specific style sheets:
+- `_buttons.scss` - Button theme variations
+- `_forms.scss` - Form control theming
+- `_navigation.scss` - Header/nav theming
+- `_modals.scss` - Modal theming
+
+### 5. Integration Points
+
+#### A. Next.js App Integration
+Update: `/apps/combined-template/src/app/layout.tsx`
+```typescript
+import { ThemeProvider } from '../providers/ThemeProvider';
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+#### B. Vite/React Integration  
+Update: `/apps/combined-template/src/main.tsx`
+```typescript
+import { ThemeProvider } from './providers/ThemeProvider';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>
+);
+```
+
+### 6. Testing Requirements
+
+#### A. Unit Tests
+Create tests for:
+- Theme hook functionality
+- Theme provider state management
+- Component theme integration
+- CSS variable application
+
+#### B. Visual Tests
+- Theme switching animations
+- Component appearance in both themes
+- Responsive behavior with themes
+- Accessibility with high contrast
+
+### 7. Performance Considerations
+
+#### A. CSS Optimization
+- Minimize CSS variable recalculation
+- Optimize theme transition animations
+- Reduce layout thrash during switches
+
+#### B. JavaScript Optimization
+- Throttle theme switch events
+- Memoize theme-dependent calculations
+- Optimize localStorage operations
+
+## Expected Deliverables
+
+1. **Enhanced Theme Hook** with Doctor-Dok compatibility
+2. **Theme Provider Component** with global state management
+3. **Theme Customizer Component** with full functionality
+4. **CSS Variable Bridge** connecting both systems
+5. **Bootstrap Theme Configuration** with light/dark modes
+6. **Updated Migrated Components** with theme integration
+7. **Integration Documentation** with implementation guide
+8. **Test Suite** covering theme functionality
+
+## Success Criteria
+
+- [ ] Seamless theme switching without page refresh
+- [ ] All migrated components support both light and dark themes
+- [ ] Theme preference persists across sessions
+- [ ] No visual glitches during theme transitions
+- [ ] Bootstrap components automatically adapt to theme
+- [ ] Performance impact < 50ms for theme switches
+- [ ] Accessibility standards maintained in both themes
+
+## Implementation Notes
+
+### Priority Order
+1. Enhanced theme hook (foundation)
+2. Theme provider (state management)
+3. CSS variable bridge (styling)
+4. Component integration (UI)
+5. Theme customizer (user interface)
+
+### Architecture Decisions
+- Use CSS variables for maximum flexibility
+- Leverage Bootstrap's built-in dark mode support
+- Maintain compatibility with existing Doctor-Dok theme logic
+- Ensure SSR compatibility for Next.js
+
+### Compatibility Requirements
+- Support existing Doctor-Dok theme preferences
+- Maintain Rasket's theme customizer functionality
+- Work with both Vite and Next.js build systems
+- Compatible with existing shared auth components
+
+---
+
+**Context**: This theme system implementation enables unified theming across the combined template, ensuring that all UI components from both Doctor-Dok and Rasket work seamlessly with theme switching.
+
+**Dependencies**: 
+- Completed Phase 3a UI primitives (T305)
+- Bootstrap 5 configuration
+- Shared auth system from Phase 2
+
+**Blocks**: 
+- Further component migrations (T307)
+- Visual regression testing (T308)
