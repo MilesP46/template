@@ -1,134 +1,282 @@
-# Authentication Testing Framework
+# Authentication Tests Documentation
 
-This directory contains the comprehensive testing framework for the authentication system supporting both single-tenant and multi-tenant modes.
+## Overview
 
-## Current Status
+This directory contains comprehensive tests for the authentication system, covering both single-tenant and multi-tenant modes. The tests are organized into three main categories:
 
-⚠️ **BLOCKED**: Authentication implementation (Tasks T201-T207) must be completed before these tests can be executed.
+- **E2E Tests**: Complete user journey tests
+- **Integration Tests**: API endpoint tests  
+- **Performance Tests**: Benchmarks and load tests
 
-## Directory Structure
+## Test Structure
 
 ```
 tests/
-├── e2e/                    # End-to-end tests
-│   └── auth.test.ts       # Full user journey tests
-├── integration/           # Integration tests  
-│   └── auth-api.test.ts   # API endpoint tests
-├── performance/           # Performance tests
-│   └── auth-performance.test.ts # Load and benchmark tests
-├── utils/                 # Test utilities
-│   └── auth-test-helpers.ts # Shared test helpers
-├── test.config.ts         # Test configurations
-├── AUTH_TEST_CHECKLIST.md # Comprehensive test checklist
-└── README.md             # This file
+├── e2e/                    # End-to-end user journey tests
+│   └── auth.test.ts        # Complete authentication flows
+├── integration/            # API integration tests
+│   └── auth-api.test.ts    # API endpoint testing
+├── performance/            # Performance benchmarks
+│   └── auth-performance.test.ts  # Load and performance tests
+├── utils/                  # Test utilities
+│   ├── auth-test-helpers.ts      # Legacy test helpers
+│   ├── test-database.ts          # Database management utilities
+│   └── test-users.ts             # User creation utilities
+├── fixtures/               # Test data
+│   └── auth.fixtures.ts    # Consistent test data
+├── test.config.ts          # Test configuration
+├── setup.test.ts           # Test environment setup
+└── README.md               # This file
 ```
 
-## Test Configurations
+## Running Tests
 
-The framework supports testing both authentication modes:
-
-### Single-Tenant Mode
-- Encrypted database per user
-- Master key required
-- Individual user isolation
-- Client-side encryption
-
-### Multi-Tenant Mode  
-- Shared database
-- No master key required
-- Tenant-based isolation
-- Server-side data separation
-
-## Running Tests (When Implementation is Ready)
-
+### Run all tests
 ```bash
-# Run all tests
 npm test
+```
 
-# Run specific test suite
+### Run specific test suites
+```bash
+# E2E tests only
 npm test -- e2e/auth.test.ts
 
-# Run with coverage
-npm test -- --coverage
+# Integration tests only
+npm test -- integration/auth-api.test.ts
 
-# Run performance tests
-npm test -- performance/
+# Performance tests only
+npm test -- performance/auth-performance.test.ts
 ```
+
+### Run tests in watch mode
+```bash
+npm test -- --watch
+```
+
+### Generate coverage report
+```bash
+npm test -- --coverage
+```
+
+## Test Coverage
+
+The tests aim for >90% coverage across all authentication components:
+
+- **Unit Tests**: Individual function testing (in component directories)
+- **Integration Tests**: API endpoint and database integration
+- **E2E Tests**: Complete user journeys
+- **Performance Tests**: Load testing and benchmarks
 
 ## Test Categories
 
-### 1. Unit Tests (To be created)
-- Auth service methods
-- Token utilities
-- Validation functions
-- Encryption helpers
+### 1. E2E Authentication Tests (`e2e/auth.test.ts`)
 
-### 2. Integration Tests
-- API endpoint testing
-- Database operations
-- Auth context behavior
-- Middleware testing
+Complete user journey tests for both authentication modes.
 
-### 3. E2E Tests
-- Complete user registration flow
-- Login/logout cycles
-- Token refresh scenarios
-- Protected route access
+#### Single-Tenant Mode Tests:
+- **Registration Flow**
+  - ✅ Register with master key
+  - ✅ Validate master key strength
+  - ✅ Prevent duplicate registrations
+  
+- **Login Flow**
+  - ✅ Login with credentials and master key
+  - ✅ Handle invalid credentials
+  - ✅ Support "keep logged in" option
+  
+- **Token Management**
+  - ✅ Refresh expired tokens
+  - ✅ Logout and session cleanup
+  
+- **Security Tests**
+  - ✅ SQL injection prevention
+  - ✅ XSS attack prevention
+  - ✅ Data encryption verification
 
-### 4. Performance Tests
-- Registration benchmarks (< 500ms)
-- Login benchmarks (< 300ms)
-- Token verification (< 50ms)
-- Load testing (1000+ concurrent users)
+#### Multi-Tenant Mode Tests:
+- **Registration Flow**
+  - ✅ Register without master key
+  - ✅ Automatic tenant ID assignment
+  
+- **Login Flow**
+  - ✅ Email/password authentication
+  - ✅ Tenant isolation
+  
+- **Concurrent Operations**
+  - ✅ Handle 100 concurrent registrations
+  - ✅ Handle 1000 concurrent logins
 
-### 5. Security Tests
-- SQL injection prevention
-- XSS attack prevention
-- Token tampering detection
-- Cross-tenant isolation
+### 2. Integration Tests (`integration/auth-api.test.ts`)
 
-## Test Data
+API endpoint testing with request/response validation.
 
-Test users and configurations are defined in `test.config.ts`:
-- Valid user credentials for both modes
-- Invalid credentials for error testing
-- Performance benchmark targets
-- Security test payloads
+#### Endpoints Tested:
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User authentication
+- `POST /api/auth/refresh` - Token refresh
+- `POST /api/auth/logout` - Session termination
+- Protected routes with auth middleware
+
+#### Test Scenarios:
+- ✅ Valid request handling
+- ✅ Error response validation
+- ✅ Input validation
+- ✅ Security headers
+- ✅ Rate limiting (if implemented)
+
+### 3. Performance Tests (`performance/auth-performance.test.ts`)
+
+Comprehensive performance benchmarks ensuring operations meet targets.
+
+#### Performance Targets:
+- Registration: < 500ms
+- Login: < 300ms  
+- Token verification: < 50ms
+- Token refresh: < 200ms
+- Logout: < 100ms
+
+#### Load Tests:
+- ✅ Burst registration handling (100 users)
+- ✅ Sustained login load (1000 logins)
+- ✅ Token verification throughput (>10k/sec)
+- ✅ Memory leak prevention
+- ✅ Performance regression tests
+
+## Test Utilities
+
+### Database Utilities (`utils/test-database.ts`)
+- `createSingleTenantDatabase()` - Create encrypted test database
+- `cleanupAllTestDatabases()` - Clean up test data
+- `isDatabaseEncrypted()` - Verify encryption
+- `MockUserStorage` - In-memory user storage for tests
+
+### User Creation Utilities (`utils/test-users.ts`)
+- `createTestUser()` - Create test users for either mode
+- `loginTestUser()` - Simulate user login
+- `generateTestTokens()` - Generate JWT tokens
+- `cleanupTestUsers()` - Clean up test data
+
+### Test Fixtures (`fixtures/auth.fixtures.ts`)
+- Valid/invalid credentials
+- Security test payloads (SQL injection, XSS)
+- Error message matchers
+- Performance targets
+
+## Common Test Patterns
+
+### Creating a test user
+```typescript
+const user = await createTestUser('single-tenant', {
+  email: 'test@example.com',
+  password: 'SecurePass123!',
+  databaseId: 'test-db-001',
+  masterKey: 'MasterKey123!@#'
+});
+```
+
+### Simulating login
+```typescript
+const { tokens } = await loginTestUser(user, 'single-tenant');
+expect(tokens.accessToken).toBeDefined();
+```
+
+### Performance testing
+```typescript
+const benchmark = new PerformanceBenchmark();
+benchmark.start();
+// ... operation ...
+const duration = benchmark.end();
+expect(duration).toBeLessThan(PERFORMANCE_TARGETS.login);
+```
+
+## Debugging Test Failures
+
+### Common Issues:
+
+1. **Environment Variables**: Ensure test config is loaded
+   ```typescript
+   setupTestEnvironment('single-tenant');
+   ```
+
+2. **Cleanup**: Always clean up test data
+   ```typescript
+   afterEach(() => {
+     cleanupTestUsers();
+     cleanupAllTestDatabases();
+   });
+   ```
+
+3. **Async Operations**: Use proper async/await
+   ```typescript
+   await createTestUser(...);
+   ```
+
+4. **Token Validation**: Check token structure
+   ```typescript
+   const parts = token.split('.');
+   expect(parts.length).toBe(3);
+   ```
+
+## Security Testing
+
+The tests include comprehensive security validation:
+
+- **Input Validation**: Tests malformed inputs
+- **SQL Injection**: Tests common injection patterns
+- **XSS Prevention**: Tests script injection attempts
+- **Token Security**: Validates JWT structure and expiry
+- **Encryption**: Verifies data encryption in single-tenant mode
+
+## Performance Benchmarking
+
+Performance tests track multiple metrics:
+
+- **Average (avg)**: Mean response time
+- **Median**: Middle value
+- **95th percentile (p95)**: 95% of requests faster than this
+- **99th percentile (p99)**: 99% of requests faster than this
+- **Min/Max**: Best and worst case
+
+Example output:
+```
+Single-tenant login performance: {
+  min: 12.5,
+  max: 45.2,
+  avg: 23.7,
+  median: 22.1,
+  p95: 38.4,
+  p99: 43.2,
+  samples: 50
+}
+```
+
+## Continuous Integration
+
+The tests are designed to run in CI/CD pipelines:
+
+1. **Fast execution**: Most tests complete in <10 seconds
+2. **Isolated**: No external dependencies required
+3. **Deterministic**: Consistent results across runs
+4. **Comprehensive**: Full coverage of auth flows
 
 ## Contributing
 
-When the authentication implementation is ready:
+When adding new tests:
 
-1. Convert test stubs to actual tests
-2. Ensure all test cases from checklist are covered
-3. Add new test cases as edge cases are discovered
-4. Update performance benchmarks based on real data
-5. Document any test-specific setup requirements
+1. Follow the existing structure
+2. Use the provided utilities
+3. Clean up test data
+4. Document new patterns
+5. Ensure tests are deterministic
+6. Add performance benchmarks for new features
 
-## Test Standards
+## Future Enhancements
 
-- Use descriptive test names
-- Group related tests with `describe` blocks
-- Use `beforeAll`/`afterAll` for setup/cleanup
-- Mock external dependencies
-- Test both success and failure paths
-- Include performance assertions
-- Document complex test scenarios
+Planned improvements:
 
-## Next Steps
-
-1. Wait for authentication implementation completion
-2. Install test dependencies (Jest, Supertest, etc.)
-3. Configure test runners in package.json
-4. Set up CI/CD test automation
-5. Begin converting stubs to real tests
-
-## Related Documentation
-
-- Main project spec: `/docs/project-specification.md`
-- Auth architecture: `/docs/architecture/domains/auth.md`
-- Test report: `/reports/phase2_cp1/T208_phase2_cp1_VALIDATE_report.md`
-
----
-
-**Note**: All tests are currently `.skip`ped as they await the authentication implementation. Remove `.skip` as each test becomes implementable.
+- [ ] Real database integration tests
+- [ ] WebSocket authentication tests
+- [ ] OAuth provider tests
+- [ ] Multi-factor authentication tests
+- [ ] Session management tests
+- [ ] Rate limiting tests
