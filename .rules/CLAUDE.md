@@ -146,7 +146,7 @@ Add new rows here if you create extra modes; Claude recognises tags exactly as s
 
 ### 7.1 · Dynamic Instruction File Creation
 
-When Claude encounters a BG‑task, it creates task-specific instruction files:
+When Claude decides a BG‑task is needed, it must **immediately** create task-specific instruction files:
 
 1. **Create Task Directory**: `.instructions/T###_phaseX_cpY/`
 2. **Populate Template**: Use appropriate template from `.instructions/templates/` and fill with:
@@ -167,7 +167,7 @@ Claude provides concise prompts referencing instruction files:
 
 ```
 → Please start **{Agent mode}** with instructions at:
-`.instructions/T###_phaseX_cpY/bg-{mode}.mdc`
+`.instructions/T###_phaseX_cpY/bg-{mode}_T###_phaseX_cpY.mdc`
 
 (Ref: {Phase} › {Checkpoint})
 ```

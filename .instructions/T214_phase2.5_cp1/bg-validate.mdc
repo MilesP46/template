@@ -1,0 +1,184 @@
+---
+description: Execute full test suite and generate coverage report
+globs: 
+alwaysApply: false
+---
+# BG-VALIDATE Agent Instructions
+
+## Task Context
+**Task ID**: T214_phase2.5_cp1
+**Delegated by Claude**: 2025-01-29
+
+## Mission
+Execute the complete test suite for both authentication modes, validate all tests pass, measure code coverage, and generate a comprehensive test report with any issues found.
+
+## Required Resources (Request These First)
+### Rules
+- `mode-validation-refactor.mdc` (primary workflow)
+- `.rules/Claude.md` (foreman workflow understanding)
+- `.rules/testing.mdc` (testing principles)
+- `.rules/always/document-everything.mdc` (documentation standards)
+
+### Documentation Context
+- `/tests/AUTH_TEST_CHECKLIST.md` (validation checklist)
+- `/docs/architecture/auth/` (auth documentation)
+- Performance targets from `test.config.ts`
+- Previous validation report `/reports/phase2_cp1/T208_validation_report.md`
+
+## Claude's Task Checklist
+- [ ] Run all test suites (unit, integration, E2E)
+- [ ] Verify both auth modes tested
+- [ ] Generate coverage reports
+- [ ] Measure performance metrics
+- [ ] Identify any failing tests
+- [ ] Check for flaky tests
+- [ ] Validate security tests
+- [ ] Create comprehensive report
+- [ ] Update test checklist
+
+## Claude's Specific Expectations
+
+### 1. **Test Execution Strategy**
+Run tests in this order:
+```bash
+# 1. Unit tests first (fastest feedback)
+npm test -- packages/shared-auth
+npm test -- packages/shared-auth-react
+
+# 2. Integration tests
+npm test -- tests/integration
+
+# 3. E2E tests (both modes)
+AUTH_MODE=single-tenant npm test -- tests/e2e
+AUTH_MODE=multi-tenant npm test -- tests/e2e
+
+# 4. Performance tests
+npm test -- tests/performance
+
+# 5. Full suite with coverage
+npm test -- --coverage
+```
+
+### 2. **Coverage Requirements**
+Verify coverage meets targets:
+- Overall: > 90%
+- Auth services: > 95%
+- Critical paths: 100%
+- Generate HTML coverage report
+
+### 3. **Performance Validation**
+Measure actual vs target:
+```typescript
+// Expected output format
+Performance Results:
+- Registration (single-tenant): 342ms ✅ (target: 500ms)
+- Registration (multi-tenant): 187ms ✅ (target: 500ms)
+- Login (single-tenant): 234ms ✅ (target: 300ms)
+- Login (multi-tenant): 156ms ✅ (target: 300ms)
+- Token verification: 12ms ✅ (target: 50ms)
+- Token refresh: 89ms ✅ (target: 200ms)
+```
+
+### 4. **Security Test Validation**
+Ensure these pass:
+- SQL injection prevention
+- XSS attack prevention
+- Token tampering detection
+- Cross-tenant isolation
+- Encryption verification
+
+### 5. **Test Report Structure**
+```markdown
+# Authentication Test Suite Validation Report
+
+## Executive Summary
+- Total tests: X
+- Passed: X
+- Failed: X
+- Coverage: X%
+- Performance: All targets met/X targets missed
+
+## Test Results by Category
+
+### Unit Tests
+[Results]
+
+### Integration Tests
+[Results]
+
+### E2E Tests
+[Results]
+
+### Performance Tests
+[Results with metrics]
+
+### Security Tests
+[Results]
+
+## Coverage Report
+[Summary with uncovered lines]
+
+## Issues Found
+[Any failures or concerns]
+
+## Recommendations
+[Next steps]
+```
+
+## Task-Specific Success Criteria
+- All tests passing (zero failures)
+- Coverage targets met (>90%)
+- Performance benchmarks achieved
+- No security vulnerabilities
+- Both auth modes fully validated
+- No flaky tests identified
+- Clear report generated
+- Checklist updated
+
+## Context Claude Provides
+**Project State**: 
+- T213 completed (tests implemented)
+- Build system functional
+- Test runners configured
+**Dependencies**: All test implementation complete
+**Constraints**: 
+- Don't modify tests (only run them)
+- Report issues objectively
+- Focus on actionable findings
+
+## Files Claude Expects You to Touch
+- Read: All test files in `/tests/`
+- Create: `/reports/phase2.5_cp1/T214_test_validation_report.md`
+- Create: `/coverage/` directory with HTML reports
+- Update: `/tests/AUTH_TEST_CHECKLIST.md` (mark completed)
+- Create: `/reports/phase2.5_cp1/coverage-summary.json`
+- Create: Performance benchmark results
+- Update: CI configuration (if needed)
+
+## GitHub Copilot CLI Integration
+Recommended for:
+- Generating test execution scripts
+- Creating coverage visualization
+- Parsing test results
+- Generating report templates
+
+Example: `gh copilot suggest "script to run jest tests with coverage and generate HTML report"`
+
+## Documentation Workflow
+1. **Test Execution Log**: Document exact commands run
+2. **Results Summary**: Pass/fail counts by category
+3. **Coverage Analysis**: Which code isn't covered
+4. **Performance Data**: Actual measurements
+5. **Issue Tracking**: Any failures with details
+6. **Recommendations**: Prioritized next steps
+
+## Review Criteria
+Claude will evaluate your work against:
+1. Comprehensive test execution
+2. Accurate coverage measurement
+3. Performance data collected
+4. All auth modes validated
+5. Clear issue identification
+6. Professional report format
+7. Actionable recommendations
+8. Updated documentation

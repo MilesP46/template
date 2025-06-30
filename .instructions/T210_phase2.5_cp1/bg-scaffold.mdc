@@ -1,0 +1,166 @@
+---
+description: Fix workspace dependencies and install Turbo build system
+globs: 
+alwaysApply: false
+---
+# BG-SCAFFOLD Agent Instructions
+
+## Task Context
+**Task ID**: T210_phase2.5_cp1
+**Delegated by Claude**: 2025-01-29
+
+## Mission
+Fix the workspace dependency issues and properly install the Turbo build system to enable successful project builds and test execution. This is critical path work blocking all subsequent development.
+
+## Required Resources (Request These First)
+### Rules
+- `mode-scaffolding.mdc` (primary workflow)
+- `.rules/Claude.md` (foreman workflow understanding)
+- `.rules/always/document-everything.mdc` (documentation standards)
+
+### Documentation Context
+- `package.json` (root workspace configuration)
+- `turbo.json` (if exists)
+- `.env.example` (environment setup)
+- `/reports/phase2_cp1/T208_validation_report.md` (identified blockers)
+
+## Claude's Task Checklist
+- [ ] Diagnose workspace protocol issues in package.json
+- [ ] Install Turbo as devDependency
+- [ ] Configure turbo.json for monorepo tasks
+- [ ] Fix npm workspace configuration
+- [ ] Update package.json scripts for Turbo
+- [ ] Ensure all packages have proper exports
+- [ ] Create build order dependencies
+- [ ] Test build command works
+- [ ] Document any breaking changes
+
+## Claude's Specific Expectations
+
+### 1. **Workspace Configuration Fix**
+The current package.json uses `workspace:*` protocol which npm doesn't support. Convert to proper npm workspace configuration:
+
+```json
+// Current (broken)
+"dependencies": {
+  "@doctor-dok/shared-auth": "workspace:*"
+}
+
+// Fixed
+"dependencies": {
+  "@doctor-dok/shared-auth": "*"
+}
+```
+
+### 2. **Turbo Installation**
+```bash
+npm install --save-dev turbo
+```
+
+Create `turbo.json`:
+```json
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false
+    }
+  }
+}
+```
+
+### 3. **Package Export Maps**
+Ensure each package has proper export configuration:
+```json
+// packages/shared-auth/package.json
+{
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  }
+}
+```
+
+### 4. **Build Scripts**
+Update root package.json:
+```json
+{
+  "scripts": {
+    "build": "turbo run build",
+    "build:packages": "turbo run build --filter=./packages/*",
+    "test": "turbo run test",
+    "dev": "turbo run dev --parallel",
+    "clean": "turbo run clean && rm -rf node_modules"
+  }
+}
+```
+
+## Task-Specific Success Criteria
+- `npm install` completes without errors
+- `npm run build` successfully builds all packages
+- No workspace protocol errors
+- Turbo properly orchestrates build order
+- All TypeScript packages compile correctly
+- Test runners can import built packages
+
+## Context Claude Provides
+**Project State**: Phase 2 complete but tests blocked
+**Dependencies**: Monorepo with apps/* and packages/*
+**Constraints**: 
+- Must maintain existing monorepo structure
+- Cannot break existing code
+- Must support both single/multi-tenant auth modes
+**Integration Points**: All packages must build before apps
+
+## Files Claude Expects You to Touch
+- Update: `package.json` (root) - fix dependencies and scripts
+- Create: `turbo.json` - Turbo configuration
+- Update: All `packages/*/package.json` - fix exports and deps
+- Update: All `apps/*/package.json` - fix workspace refs
+- Create: `.npmrc` (if needed for workspace config)
+- Update: `tsconfig.json` files for proper references
+- Create: Build verification script
+- Update: README with new build commands
+
+## GitHub Copilot CLI Integration
+Recommended for:
+- Generating proper turbo.json configuration
+- Converting workspace protocols automatically
+- Creating build verification scripts
+- Fixing TypeScript project references
+
+Example: `gh copilot suggest "convert yarn workspace protocol to npm workspaces in monorepo"`
+
+## Documentation Workflow
+Create summary of changes:
+1. List all dependency fixes made
+2. Document new build commands
+3. Note any breaking changes
+4. Provide migration guide if needed
+
+## Review Criteria
+Claude will evaluate your work against:
+1. Clean npm install (no errors/warnings)
+2. Successful turbo build execution
+3. All packages properly linked
+4. TypeScript compilation working
+5. No regression in existing functionality
+6. Clear documentation of changes
+7. Build time under 60 seconds

@@ -4,7 +4,14 @@
       "Bash(mkdir:*)",
       "Bash(rm:*)",
       "Bash(ls:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(npm run build:packages:*)",
+      "Bash(npm run:*)",
+      "Bash(npm install)",
+      "Bash(chmod:*)",
+      "Bash(./scripts/verify-build.sh:*)",
+      "Bash(grep:*)",
+      "Bash(./scripts/setup-test-env.sh:*)"
     ],
     "deny": []
   }

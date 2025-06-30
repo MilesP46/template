@@ -1,0 +1,200 @@
+---
+description: Convert test stubs to executable tests for core auth flows
+globs: 
+alwaysApply: false
+---
+# BG-IMPL Agent Instructions
+
+## Task Context
+**Task ID**: T213_phase2.5_cp1
+**Delegated by Claude**: 2025-01-29
+
+## Mission
+Convert the test stub implementations into fully executable tests for core authentication flows. Focus on the most critical paths first to validate that the authentication system works correctly.
+
+## Required Resources (Request These First)
+### Rules
+- `mode-implementation-tdd.mdc` (primary workflow)
+- `.rules/Claude.md` (foreman workflow understanding)
+- `.rules/testing.mdc` (testing principles)
+- `.rules/always/document-everything.mdc` (documentation standards)
+
+### Documentation Context
+- `/tests/AUTH_TEST_CHECKLIST.md` (test requirements)
+- `/docs/architecture/auth/AUTH_FLOW.md` (auth flow specs)
+- `/docs/architecture/auth/QUICK_REFERENCE.md` (API reference)
+- `test.config.ts` (test configurations)
+
+## Claude's Task Checklist
+- [ ] Implement registration tests for both auth modes
+- [ ] Implement login tests with valid/invalid credentials
+- [ ] Implement token refresh and expiration tests
+- [ ] Implement logout and session cleanup tests
+- [ ] Add security validation tests
+- [ ] Create test helpers and utilities
+- [ ] Ensure 90%+ code coverage
+- [ ] Performance benchmarks met
+- [ ] Document test patterns
+
+## Claude's Specific Expectations
+
+### 1. **Priority Test Implementation Order**
+Focus on critical paths first:
+1. Registration (both modes)
+2. Login (both modes)
+3. Token refresh
+4. Protected route access
+5. Logout
+6. Security tests
+
+### 2. **Registration Test Implementation**
+```typescript
+// Single-tenant registration test
+test('should register new user with master key', async () => {
+  const userData = {
+    email: 'test@example.com',
+    password: 'SecurePass123!',
+    databaseId: 'test-db-001',
+    masterKey: 'MasterKey123!@#$%^&*()'
+  };
+  
+  const response = await request(app)
+    .post('/api/auth/register')
+    .send(userData);
+    
+  expect(response.status).toBe(201);
+  expect(response.body.user).toBeDefined();
+  expect(response.body.tokens.accessToken).toBeDefined();
+  expect(response.body.tokens.refreshToken).toBeDefined();
+  
+  // Verify database was created
+  const dbPath = path.join(DB_DIR, `${userData.databaseId}.db`);
+  expect(fs.existsSync(dbPath)).toBe(true);
+  
+  // Verify encryption
+  const dbContent = fs.readFileSync(dbPath);
+  expect(isEncrypted(dbContent)).toBe(true);
+});
+```
+
+### 3. **Login Test Implementation**
+```typescript
+test('should login with valid credentials', async () => {
+  // Setup: Create user first
+  const user = await createTestUser('single-tenant');
+  
+  const response = await request(app)
+    .post('/api/auth/login')
+    .send({
+      databaseId: user.databaseId,
+      password: user.password,
+      masterKey: user.masterKey
+    });
+    
+  expect(response.status).toBe(200);
+  expect(response.body.tokens).toBeDefined();
+  
+  // Verify JWT payload
+  const decoded = jwt.verify(
+    response.body.tokens.accessToken,
+    process.env.JWT_ACCESS_SECRET
+  );
+  expect(decoded.userId).toBe(user.id);
+  expect(decoded.databaseId).toBe(user.databaseId);
+});
+```
+
+### 4. **Token Refresh Test**
+```typescript
+test('should refresh expired access token', async () => {
+  const { tokens } = await loginTestUser();
+  
+  // Wait for access token to expire
+  await delay(ACCESS_TOKEN_EXPIRY + 1000);
+  
+  const response = await request(app)
+    .post('/api/auth/refresh')
+    .send({ refreshToken: tokens.refreshToken });
+    
+  expect(response.status).toBe(200);
+  expect(response.body.accessToken).toBeDefined();
+  expect(response.body.accessToken).not.toBe(tokens.accessToken);
+});
+```
+
+### 5. **Test Utilities to Create**
+```typescript
+// test-helpers.ts
+export async function createTestUser(mode: 'single-tenant' | 'multi-tenant') {
+  // Implementation
+}
+
+export async function loginTestUser(credentials: any) {
+  // Implementation
+}
+
+export async function cleanupTestDatabases() {
+  // Implementation
+}
+```
+
+## Task-Specific Success Criteria
+- Core auth flows have executable tests
+- Both auth modes thoroughly tested
+- Tests run reliably and quickly
+- Performance targets verified
+- Security vulnerabilities checked
+- Test helpers reusable
+- Coverage report shows >90%
+- No flaky tests
+
+## Context Claude Provides
+**Project State**: Build system fixed (T210-T212)
+**Dependencies**: 
+- Auth implementation complete
+- Test framework prepared
+- Test runners configured
+**Constraints**: 
+- Must test both auth modes
+- Cannot modify existing implementation
+- Must use prepared test structure
+- Follow TDD principles where applicable
+
+## Files Claude Expects You to Touch
+- Update: `/tests/e2e/auth.test.ts` - remove .skip, implement
+- Update: `/tests/integration/auth-api.test.ts` - implement API tests
+- Update: `/tests/performance/auth-performance.test.ts` - benchmark tests
+- Create: `/tests/utils/test-database.ts` - database helpers
+- Create: `/tests/utils/test-users.ts` - user creation helpers
+- Create: `/tests/fixtures/` - test data fixtures
+- Update: `/tests/test.config.ts` - enhance configurations
+- Create: Coverage report in `/reports/`
+
+## GitHub Copilot CLI Integration
+Recommended for:
+- Generating comprehensive test cases
+- Creating test data factories
+- Writing assertion helpers
+- Generating mock implementations
+
+Example: `gh copilot suggest "comprehensive JWT refresh token test with expiration scenarios"`
+
+## Documentation Workflow
+**Test Documentation Structure**:
+1. Test naming conventions
+2. Helper function usage
+3. Common test patterns
+4. Debugging test failures
+5. Running specific test suites
+6. Coverage report interpretation
+
+## Review Criteria
+Claude will evaluate your work against:
+1. All critical paths have tests
+2. Both auth modes tested equally
+3. Edge cases covered
+4. Performance benchmarks verified
+5. Security tests comprehensive
+6. No test interdependencies
+7. Clear test descriptions
+8. Maintainable test code

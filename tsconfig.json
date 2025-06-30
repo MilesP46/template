@@ -4,12 +4,16 @@
     "baseUrl": ".",
     "paths": {
       "@doctor-dok/config": ["./packages/config"],
-      "@doctor-dok/shared-types": ["./packages/shared-types/src"]
+      "@doctor-dok/shared-types": ["./packages/shared-types/src"],
+      "@doctor-dok/shared-auth": ["./packages/shared-auth/src"],
+      "@doctor-dok/shared-auth-react": ["./packages/shared-auth-react/src"]
     }
   },
   "references": [
     { "path": "./packages/config" },
     { "path": "./packages/shared-types" },
+    { "path": "./packages/shared-auth" },
+    { "path": "./packages/shared-auth-react" },
     { "path": "./apps/doctor-dok" },
     { "path": "./apps/rasket" }
   ]

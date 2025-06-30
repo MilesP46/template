@@ -1,0 +1,169 @@
+---
+description: Test both authentication modes end-to-end
+globs: 
+alwaysApply: false
+---
+# BG-VALIDATE Agent Instructions
+
+## Task Context
+**Task ID**: T208_phase2_cp1
+**Delegated by Claude**: 2025-01-29
+
+## Mission
+Perform comprehensive end-to-end testing of both authentication modes (single-tenant and multi-tenant) to ensure all authentication flows work correctly. This includes registration, login, token refresh, logout, and error scenarios for both modes.
+
+## Required Resources (Request These First)
+### Rules
+- `mode-validation-refactor.mdc` (primary workflow)
+- `.rules/Claude.md` (foreman workflow understanding)
+- `.rules/always/document-everything.mdc` (documentation standards)
+- `.rules/testing.mdc` (testing principles)
+
+### Documentation Context
+- `docs/project-specification.md` (authentication requirements)
+- `docs/architecture/auth/AUTH_FLOW.md` (authentication flow documentation)
+- `docs/architecture/auth/QUICK_REFERENCE.md` (quick reference guide)
+- `.env.example` (environment configuration)
+
+## Claude's Task Checklist
+- [ ] Set up test environment for both auth modes
+- [ ] Test single-tenant registration flow
+- [ ] Test single-tenant login/logout flow
+- [ ] Test multi-tenant registration flow  
+- [ ] Test multi-tenant login/logout flow
+- [ ] Test token refresh for both modes
+- [ ] Test error scenarios (invalid credentials, expired tokens, etc.)
+- [ ] Test master key functionality (single-tenant)
+- [ ] Test session persistence ("keep logged in")
+- [ ] Test protected route access
+- [ ] Performance test authentication operations
+- [ ] Create comprehensive test report
+
+## Claude's Specific Expectations
+
+### 1. **Test Environment Setup**
+Create test configurations for both modes:
+```typescript
+// Single-tenant test config
+{
+  AUTH_MODE: 'single-tenant',
+  JWT_ACCESS_SECRET: 'test-access-secret',
+  JWT_REFRESH_SECRET: 'test-refresh-secret',
+  DATABASE_URL: './test/single-tenant.db',
+  ENCRYPTION_ENABLED: true
+}
+
+// Multi-tenant test config  
+{
+  AUTH_MODE: 'multi-tenant',
+  JWT_ACCESS_SECRET: 'test-access-secret',
+  JWT_REFRESH_SECRET: 'test-refresh-secret',
+  DATABASE_URL: './test/multi-tenant.db',
+  ENCRYPTION_ENABLED: false
+}
+```
+
+### 2. **Test Scenarios**
+
+#### Registration Tests
+- Valid registration with all fields
+- Registration without optional fields
+- Master key validation (single-tenant)
+- Duplicate user prevention
+- Weak password rejection
+- Missing required fields
+
+#### Login Tests
+- Valid credentials login
+- Invalid password
+- Non-existent databaseId
+- Wrong master key (single-tenant)
+- Session persistence options
+
+#### Token Tests
+- Access token expiration
+- Refresh token flow
+- Invalid token handling
+- Token tampering detection
+- Concurrent refresh requests
+
+#### Security Tests
+- SQL injection attempts
+- XSS in user inputs
+- CSRF protection
+- Rate limiting (if implemented)
+- Encryption verification (single-tenant)
+
+### 3. **Performance Benchmarks**
+Measure and document:
+- Registration time (both modes)
+- Login time (both modes)
+- Token verification time
+- Database query performance
+- Encryption overhead (single-tenant)
+
+## Task-Specific Success Criteria
+- All happy path scenarios pass
+- All error scenarios handled gracefully
+- No security vulnerabilities found
+- Performance meets requirements (< 500ms for auth operations)
+- Both auth modes fully functional
+- Test coverage > 90% for auth code
+- Clear documentation of any issues found
+
+## Context Claude Provides
+**Project State**: All auth components implemented
+**Dependencies**: 
+- T201-T207 completed (auth implementation)
+- Frontend and backend integration complete
+**Constraints**: 
+- Must test both single and multi-tenant modes
+- Cannot modify existing implementation (only report issues)
+- Must use realistic test data
+- Follow security best practices in testing
+**Integration Points**: Tests should cover full stack (frontend → backend → database)
+
+## Files Claude Expects You to Touch
+- Create: `packages/shared-auth/src/__tests__/` test files
+- Create: `packages/shared-auth-react/src/__tests__/` test files  
+- Create: `apps/doctor-dok/src/auth/__tests__/` integration tests
+- Create: `apps/rasket/src/components/auth/__tests__/` component tests
+- Create: `tests/e2e/auth.test.ts` (end-to-end tests)
+- Create: `reports/phase2_cp1/T208_phase2_cp1_VALIDATE_report.md`
+- Create: Test database files in appropriate test directories
+- Update: Any test configuration files needed
+
+## GitHub Copilot CLI Integration
+Recommended for:
+- Generating comprehensive test cases
+- Creating test data fixtures
+- Writing assertion helpers
+- Generating performance test scenarios
+
+Example: `gh copilot suggest "comprehensive e2e test suite for JWT authentication with refresh tokens"`
+
+## Documentation Workflow
+**Test Report Structure**:
+1. Executive Summary
+2. Test Environment Setup
+3. Test Results by Category
+   - Registration Tests
+   - Login Tests
+   - Token Management Tests
+   - Security Tests
+   - Performance Tests
+4. Issues Found (with severity)
+5. Recommendations
+6. Test Coverage Report
+7. Performance Metrics
+
+## Review Criteria
+Claude will evaluate your work against:
+1. Comprehensive test coverage (> 90%)
+2. Both auth modes thoroughly tested
+3. All edge cases considered
+4. Security scenarios included
+5. Performance benchmarks documented
+6. Clear issue reporting with reproduction steps
+7. Actionable recommendations provided
+8. Test automation where possible
